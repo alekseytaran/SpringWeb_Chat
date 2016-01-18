@@ -2,7 +2,7 @@ package com.teamdev;
 
 import com.teamdev.dto.AuthenticationTokenDto;
 import com.teamdev.dto.UserDto;
-import com.teamdev.dto.wrappers.UserId;
+import com.teamdev.requestDto.wrappers.UserId;
 import com.teamdev.exception.RegistrationException;
 import com.teamdev.exception.ValidationException;
 import com.teamdev.jpa.repository.AuthenticationRepository;
@@ -26,7 +26,7 @@ public class AuthenticationServiceTest {
     private ApplicationContext context;
 
     private String name = "vasya";
-    private String mail = "vasya@gmail.com";
+    private String email = "vasya@gemail.com";
     private String password = "qwerty";
 
     @Before
@@ -36,7 +36,7 @@ public class AuthenticationServiceTest {
 
     @Test
     public void testSignUp() {
-        UserDto userDto = new UserDto(name, mail, password);
+        UserDto userDto = new UserDto(name, email, password);
         AuthenticationService authenticationService = context.getBean(AuthenticationService.class);
 
         try {
@@ -50,7 +50,7 @@ public class AuthenticationServiceTest {
 
     @Test
     public void testLogIn() {
-        UserDto userDto = new UserDto(name, mail, password);
+        UserDto userDto = new UserDto(name, email, password);
         AuthenticationService authenticationService = context.getBean(AuthenticationService.class);
         try {
             authenticationService.signUp(userDto);
@@ -67,7 +67,7 @@ public class AuthenticationServiceTest {
 
     @Test
     public void testLogOut() throws ValidationException {
-        AuthenticationTokenDto tokenDto = InitialData.logInInSystem(context, name, mail, password);
+        AuthenticationTokenDto tokenDto = InitialData.logInInSystem(context, name, email, password);
         assertNotNull("User doesn't exist in db", context.getBean(AuthenticationRepository.class).findByToken(tokenDto.getAccessToken()));
         context.getBean(AuthenticationService.class).logOut(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()));
 

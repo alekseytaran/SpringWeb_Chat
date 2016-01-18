@@ -35,7 +35,7 @@ public class UserTest extends ConfigData {
 
         ChatRoomDto chatRoomDto = new ChatRoomDto(0, "myRoom");
         json = gson.toJson(chatRoomDto);
-        String URL_CREATE_ROOM = URL + "/createchat/" + userId + "?token=" + token;
+        String URL_CREATE_ROOM = URL + "/chat/" + userId + "?token=" + token;
         createRoom(json, httpClient, URL_CREATE_ROOM);
 
         try {
@@ -52,10 +52,10 @@ public class UserTest extends ConfigData {
             JsonElement jelement = new JsonParser().parse(data);
             JsonObject jobject = jelement.getAsJsonObject();
             String name = jobject.get("name").getAsString();
-            String mail = jobject.get("mail").getAsString();
+            String email = jobject.get("email").getAsString();
 
             assertEquals("User name is incorrect", NAME, name);
-            assertEquals("Mail is incorrect", MAIL, mail);
+            assertEquals("Mail is incorrect", MAIL, email);
         } catch (IOException e) {
             fail("IOException was appeared");
         }
@@ -80,7 +80,7 @@ public class UserTest extends ConfigData {
 
         ChatRoomDto chatRoomDto = new ChatRoomDto(0, "myRoom");
         json = gson.toJson(chatRoomDto);
-        String URL_CREATE_ROOM = URL + "/createchat/" + userId + "?token=" + token;
+        String URL_CREATE_ROOM = URL + "/chat/" + userId + "?token=" + token;
         String roomId = createRoom(json, httpClient, URL_CREATE_ROOM);
 
         try {

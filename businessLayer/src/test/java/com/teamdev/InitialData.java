@@ -2,21 +2,20 @@ package com.teamdev;
 
 import com.teamdev.dto.AuthenticationTokenDto;
 import com.teamdev.dto.UserDto;
-import com.teamdev.dto.wrappers.ChatRoomId;
-import com.teamdev.dto.wrappers.UserId;
+import com.teamdev.requestDto.wrappers.ChatRoomId;
+import com.teamdev.requestDto.wrappers.UserId;
 import com.teamdev.exception.RegistrationException;
 import com.teamdev.exception.ValidationException;
 import com.teamdev.service.AuthenticationService;
 import com.teamdev.service.ChatRoomService;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import static org.junit.Assert.fail;
 
 public class InitialData {
 
-    public static AuthenticationTokenDto logInInSystem(ApplicationContext context, String name, String mail, String password) {
-        UserDto userDto = new UserDto(name, mail, password);
+    public static AuthenticationTokenDto logInInSystem(ApplicationContext context, String name, String email, String password) {
+        UserDto userDto = new UserDto(name, email, password);
         AuthenticationService authenticationService = context.getBean(AuthenticationService.class);
         try {
             authenticationService.signUp(userDto);
@@ -40,16 +39,16 @@ public class InitialData {
         final String password2 = "123456";
         final String name1 = "vasya";
         final String name2 = "petya";
-        final String mail1 = "vasya@gmail.com";
-        final String mail2 = "petya@gmail.com";
+        final String email1 = "vasya@gemail.com";
+        final String email2 = "petya@gemail.com";
         final String roomName1 = "room1";
         final String roomName2 = "room2";
 
         ChatRoomService chatRoomService = context.getBean(ChatRoomService.class);
         AuthenticationService authenticationService = context.getBean(AuthenticationService.class);
 
-        UserDto firstUser = new UserDto(name1, mail1, password1);
-        UserDto secondUser = new UserDto(name2, mail2, password2);
+        UserDto firstUser = new UserDto(name1, email1, password1);
+        UserDto secondUser = new UserDto(name2, email2, password2);
         UserId firstUserId = authenticationService.signUp(firstUser);
         UserId secondUserId = authenticationService.signUp(secondUser);
         try {

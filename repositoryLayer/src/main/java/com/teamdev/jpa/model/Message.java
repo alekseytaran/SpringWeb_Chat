@@ -23,7 +23,7 @@ public class Message {
     @ManyToOne
     private ChatRoom chatRoom;
 
-    public Message() {}
+    Message() {}
 
     public Message(String text, Date creationTime, User user, ChatRoom chatRoom) {
         this.text = text;

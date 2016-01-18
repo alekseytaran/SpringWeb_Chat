@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class ExceptionController {
+public class ExceptionAdvice {
 
     @ExceptionHandler(RegistrationException.class)
-    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
     @ResponseBody
     public String handleRegistrationException(RegistrationException exception) {
         return exception.getMessage();

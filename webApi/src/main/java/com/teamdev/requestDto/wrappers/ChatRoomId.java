@@ -1,4 +1,4 @@
-package com.teamdev.dto.wrappers;
+package com.teamdev.requestDto.wrappers;
 
 public class ChatRoomId {
 

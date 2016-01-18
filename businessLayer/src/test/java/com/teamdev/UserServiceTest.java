@@ -3,8 +3,7 @@ package com.teamdev;
 
 import com.teamdev.dto.AuthenticationTokenDto;
 import com.teamdev.dto.UserDto;
-import com.teamdev.dto.wrappers.UserId;
-import com.teamdev.service.AuthenticationService;
+import com.teamdev.requestDto.wrappers.UserId;
 import com.teamdev.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +16,7 @@ public class UserServiceTest {
     private ApplicationContext context;
 
     private String name = "vasya";
-    private String mail = "vasya@gmail.com";
+    private String email = "vasya@gemail.com";
     private String password = "qwerty";
 
     @Before
@@ -27,10 +26,10 @@ public class UserServiceTest {
 
     @Test
     public void getUserData() {
-        AuthenticationTokenDto tokenDto = InitialData.logInInSystem(context, name, mail, password);
+        AuthenticationTokenDto tokenDto = InitialData.logInInSystem(context, name, email, password);
         UserDto userData = context.getBean(UserService.class).getUserData(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()));
 
         assertEquals("User name is incorrect", name, userData.getName());
-        assertEquals("Mail is incorrect", mail, userData.getMail());
+        assertEquals("Mail is incorrect", email, userData.getMail());
     }
 }

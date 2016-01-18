@@ -1,4 +1,4 @@
-package com.teamdev.dto;
+package com.teamdev.requestDto;
 
 public class UserDto {
     private long id;

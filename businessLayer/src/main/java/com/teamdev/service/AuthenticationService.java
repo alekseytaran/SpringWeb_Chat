@@ -2,11 +2,8 @@ package com.teamdev.service;
 
 import com.teamdev.dto.AuthenticationTokenDto;
 import com.teamdev.dto.UserDto;
-import com.teamdev.dto.wrappers.UserId;
+import com.teamdev.requestDto.wrappers.UserId;
 import com.teamdev.exception.RegistrationException;
-import com.teamdev.exception.ValidationException;
-
-import java.nio.file.AccessDeniedException;
 
 public interface AuthenticationService {
 

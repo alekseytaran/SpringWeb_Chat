@@ -18,10 +18,10 @@ public class ChatRoom {
     @ManyToMany
     private final Set<User> users = new HashSet<>();
 
-    @ManyToOne
+    @OneToMany
     private final List<Message> messages = new ArrayList<>();
 
-    public ChatRoom() {}
+    ChatRoom() {}
 
     public ChatRoom(String roomName) {
         this.roomName = roomName;

@@ -14,7 +14,7 @@ public class User implements Serializable{
 
     private String name;
 
-    private String mail;
+    private String email;
 
     private String password;
 
@@ -24,11 +24,11 @@ public class User implements Serializable{
     @OneToMany
     private final Set<Message> messages = new HashSet<>();
 
-    public User() {}
+    User() {}
 
-    public User(String name, String mail, String password) {
+    public User(String name, String email, String password) {
         this.name = name;
-        this.mail = mail;
+        this.email = email;
         this.password = password;
     }
 
@@ -49,7 +49,7 @@ public class User implements Serializable{
     }
 
     public String getMail() {
-        return mail;
+        return email;
     }
 
     public String getPassword() {
@@ -72,7 +72,7 @@ public class User implements Serializable{
         User user = (User) o;
 
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
-        if (!mail.equals(user.mail)) return false;
+        if (!email.equals(user.email)) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (chatRooms != null ? !chatRooms.equals(user.chatRooms) : user.chatRooms != null) return false;
         return !(messages != null ? !messages.equals(user.messages) : user.messages != null);
@@ -82,7 +82,7 @@ public class User implements Serializable{
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + mail.hashCode();
+        result = 31 * result + email.hashCode();
         return result;
     }
 

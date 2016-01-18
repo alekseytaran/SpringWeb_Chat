@@ -2,8 +2,8 @@ package com.teamdev;
 
 import com.teamdev.dto.AuthenticationTokenDto;
 import com.teamdev.dto.MessageDto;
-import com.teamdev.dto.wrappers.ChatRoomId;
-import com.teamdev.dto.wrappers.UserId;
+import com.teamdev.requestDto.wrappers.ChatRoomId;
+import com.teamdev.requestDto.wrappers.UserId;
 import com.teamdev.jpa.model.ChatRoom;
 import com.teamdev.jpa.model.User;
 import com.teamdev.jpa.repository.ChatRoomRepository;
@@ -23,7 +23,7 @@ public class MessageServiceTest {
     private ApplicationContext context;
 
     private String name = "vasya";
-    private String mail = "vasya@gmail.com";
+    private String email = "vasya@gemail.com";
     private String password = "qwerty";
     private String roomName = "room";
     private String text = "message text";
@@ -35,7 +35,7 @@ public class MessageServiceTest {
 
     @Test
     public void testPostMessage() {
-        AuthenticationTokenDto tokenDto = InitialData.logInInSystem(context, name, mail, password);
+        AuthenticationTokenDto tokenDto = InitialData.logInInSystem(context, name, email, password);
 
         ChatRoomId chatRoomId = context.getBean(ChatRoomService.class).createChatRoom(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()), roomName);
         context.getBean(MessageService.class).postMessage(tokenDto.getAccessToken(),

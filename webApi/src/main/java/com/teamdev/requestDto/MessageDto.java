@@ -1,4 +1,4 @@
-package com.teamdev.dto;
+package com.teamdev.requestDto;
 
 import com.teamdev.requestDto.wrappers.ChatRoomId;
 import com.teamdev.requestDto.wrappers.UserId;
@@ -42,5 +42,4 @@ public class MessageDto {
     public long getId() {
         return id;
     }
-
 }

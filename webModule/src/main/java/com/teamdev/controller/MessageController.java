@@ -1,7 +1,7 @@
 package com.teamdev.controller;
 
 import com.teamdev.dto.MessageDto;
-import com.teamdev.dto.wrappers.MessageId;
+import com.teamdev.requestDto.wrappers.MessageId;
 import com.teamdev.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,7 @@ public class MessageController {
 
     @RequestMapping(value = "/message", params = {"token"}, method = RequestMethod.POST)
     @ResponseBody
-    public MessageId signUp(@RequestParam String token, @RequestBody MessageDto messageDto) {
+    public MessageId postMessage(@RequestParam String token, @RequestBody MessageDto messageDto) {
         return messageService.postMessage(token, messageDto);
     }
 }

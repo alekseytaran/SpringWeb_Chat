@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.teamdev.dto.UserDto;
 import com.teamdev.requestDto.LogInDto;
+import com.teamdev.requestDto.UserDto;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -113,7 +113,7 @@ public class AuthenticationTest extends ConfigData {
             int statusCode = response.getStatusLine().getStatusCode();
             String responseString = EntityUtils.toString(entity, "UTF-8");
 
-            assertEquals("Status code is incorrect", 405, statusCode);
+            assertEquals("Status code is incorrect", 403, statusCode);
             assertEquals("Exception message is incorrect", "user with this credentials has already existed in DB", responseString);
         } catch (IOException e) {
             fail("IOException was appeared");

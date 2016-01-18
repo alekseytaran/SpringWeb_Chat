@@ -21,7 +21,7 @@ import static org.junit.Assert.fail;
 public abstract class ConfigData {
 
     public final String NAME = "vasya";
-    public final String MAIL = "vasya@gmail.com";
+    public final String MAIL = "vasya@gemail.com";
     public final String PASSWORD = "qwerty";
 
     public final String QUERY = "http://";

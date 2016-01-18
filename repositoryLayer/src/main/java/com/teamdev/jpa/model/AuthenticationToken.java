@@ -20,7 +20,7 @@ public class AuthenticationToken {
 
     private Date validTime;
 
-    public AuthenticationToken() {}
+    AuthenticationToken() {}
 
     public AuthenticationToken(String accessToken, long userId, Date validTime) {
         this.accessToken = accessToken;

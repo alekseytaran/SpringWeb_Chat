@@ -1,9 +1,10 @@
 package com.teamdev.jpa.repository;
 
 import com.teamdev.jpa.model.Message;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MessageRepository extends GenericRepository<Message, Long> {
+public interface MessageRepository extends CrudRepository<Message, Long> {
 
 }

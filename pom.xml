@@ -14,7 +14,7 @@
         <module>businessLayer</module>
         <module>integrationTest</module>
         <module>repositoryLayer</module>
-        <module>requestDto</module>
+        <module>webApi</module>
     </modules>
 
     <properties>

@@ -36,7 +36,7 @@ public class ChatRoomTest extends ConfigData {
         try {
             ChatRoomDto chatRoomDto = new ChatRoomDto(0, "roomName");
             json = gson.toJson(chatRoomDto);
-            HttpPost request = new HttpPost(URL + "/createchat/" + userId + "?token=" + token);
+            HttpPost request = new HttpPost(URL + "/chat/" + userId + "?token=" + token);
             request.setHeader("Content-Type", "application/json");
             StringEntity stringEntity = new StringEntity(json);
             request.setEntity(stringEntity);
@@ -80,11 +80,11 @@ public class ChatRoomTest extends ConfigData {
 
         ChatRoomDto chatRoomDto = new ChatRoomDto(0, "myRoom");
         json = gson.toJson(chatRoomDto);
-        String URL_CREATE_ROOM = URL + "/createchat/" + userId + "?token=" + token;
+        String URL_CREATE_ROOM = URL + "/chat/" + userId + "?token=" + token;
         createRoom(json, httpClient, URL_CREATE_ROOM);
 
         try {
-            HttpGet request = new HttpGet(URL + "/allchats/" + userId + "?token=" + token);
+            HttpGet request = new HttpGet(URL + "/chats/" + userId + "?token=" + token);
             HttpResponse response = httpClient.execute(request);
             int code = response.getStatusLine().getStatusCode();
 
@@ -128,7 +128,7 @@ public class ChatRoomTest extends ConfigData {
 
         ChatRoomDto chatRoomDto = new ChatRoomDto(0, "myRoom");
         json = gson.toJson(chatRoomDto);
-        String URL_CREATE_ROOM = URL + "/createchat/" + userId + "?token=" + token;
+        String URL_CREATE_ROOM = URL + "/chat/" + userId + "?token=" + token;
         String roomId = createRoom(json, httpClient, URL_CREATE_ROOM);
 
         try {
@@ -175,7 +175,7 @@ public class ChatRoomTest extends ConfigData {
 
         ChatRoomDto chatRoomDto = new ChatRoomDto(0, "myRoom");
         json = gson.toJson(chatRoomDto);
-        String URL_CREATE_ROOM = URL + "/createchat/" + userId + "?token=" + token;
+        String URL_CREATE_ROOM = URL + "/chat/" + userId + "?token=" + token;
         String roomId = createRoom(json, httpClient, URL_CREATE_ROOM);
 
         String URL_JOIN_USER_TO_CHAT = URL + "/join/" + roomId + "/" + userId + "?token=" + token;
@@ -200,9 +200,9 @@ public class ChatRoomTest extends ConfigData {
                 JsonElement jsonElement = jsonArray.get(i);
                 JsonObject jobject = jsonElement.getAsJsonObject();
                 String name = jobject.get("name").getAsString();
-                String mail = jobject.get("mail").getAsString();
+                String email = jobject.get("email").getAsString();
                 assertEquals("Room name is incorrect", NAME, name);
-                assertEquals("Room name is incorrect", MAIL, mail);
+                assertEquals("Room name is incorrect", MAIL, email);
             }
         } catch (IOException e) {
             fail("IOException was appeared");

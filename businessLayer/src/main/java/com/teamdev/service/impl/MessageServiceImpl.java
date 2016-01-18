@@ -1,7 +1,7 @@
 package com.teamdev.service.impl;
 
 import com.teamdev.dto.MessageDto;
-import com.teamdev.dto.wrappers.MessageId;
+import com.teamdev.requestDto.wrappers.MessageId;
 import com.teamdev.jpa.model.ChatRoom;
 import com.teamdev.jpa.model.Message;
 import com.teamdev.jpa.model.User;

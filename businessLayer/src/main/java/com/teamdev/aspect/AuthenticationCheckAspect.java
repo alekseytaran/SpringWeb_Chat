@@ -1,7 +1,6 @@
 package com.teamdev.aspect;
 
-import com.teamdev.dto.wrappers.UserId;
-import com.teamdev.exception.ValidationException;
+import com.teamdev.requestDto.wrappers.UserId;
 import com.teamdev.service.AuthenticationService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
