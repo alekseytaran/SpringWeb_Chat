@@ -1,0 +1,36 @@
+package com.teamdev;
+
+
+import com.teamdev.dto.AuthenticationTokenDto;
+import com.teamdev.dto.UserDto;
+import com.teamdev.dto.wrappers.UserId;
+import com.teamdev.service.AuthenticationService;
+import com.teamdev.service.UserService;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import static org.junit.Assert.assertEquals;
+
+public class UserServiceTest {
+    private ApplicationContext context;
+
+    private String name = "vasya";
+    private String mail = "vasya@gmail.com";
+    private String password = "qwerty";
+
+    @Before
+    public void setUp() {
+        context = new AnnotationConfigApplicationContext(AuthenticationServiceTest.class);
+    }
+
+    @Test
+    public void getUserData() {
+        AuthenticationTokenDto tokenDto = InitialData.logInInSystem(context, name, mail, password);
+        UserDto userData = context.getBean(UserService.class).getUserData(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()));
+
+        assertEquals("User name is incorrect", name, userData.getName());
+        assertEquals("Mail is incorrect", mail, userData.getMail());
+    }
+}
