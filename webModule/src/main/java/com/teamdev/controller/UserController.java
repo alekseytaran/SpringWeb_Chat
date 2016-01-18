@@ -17,13 +17,15 @@ public class UserController {
 
     @RequestMapping(value = "/user/{userid}", params = {"token"}, method = RequestMethod.GET)
     @ResponseBody
-    public UserDto getUserData(@RequestParam String token, @PathVariable String userid) {
-        return userService.getUserData(token, new UserId(Integer.parseInt(userid)));
+    public UserDto getUserData(@RequestParam String token, @PathVariable Long userid) {
+        UserId userId = new UserId(userid);
+        return userService.getUserData(token, userId);
     }
 
-    @RequestMapping(value = "/userchats/{userid}", params = {"token"}, method = RequestMethod.GET)
+    @RequestMapping(value = "/user/chats/{userid}", params = {"token"}, method = RequestMethod.GET)
     @ResponseBody
-    public ImmutableSet<ChatRoomDto> getUserChats(@RequestParam String token, @PathVariable int userid) {
-        return userService.getUserChats(token, new UserId(userid));
+    public ImmutableSet<ChatRoomDto> getUserChats(@RequestParam String token, @PathVariable Long userid) {
+        UserId userId = new UserId(userid);
+        return userService.getUserChats(token, userId);
     }
 }

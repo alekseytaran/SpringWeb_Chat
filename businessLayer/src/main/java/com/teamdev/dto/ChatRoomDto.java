@@ -1,10 +1,10 @@
 package com.teamdev.dto;
 
 public class ChatRoomDto {
-    private long id;
+    private Long id;
     private String roomName;
 
-    public ChatRoomDto(long id, String roomName) {
+    public ChatRoomDto(Long id, String roomName) {
         this.id = id;
         this.roomName = roomName;
     }
@@ -13,11 +13,11 @@ public class ChatRoomDto {
         return roomName;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }

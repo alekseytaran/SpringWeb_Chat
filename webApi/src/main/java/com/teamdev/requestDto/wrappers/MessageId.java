@@ -2,17 +2,17 @@ package com.teamdev.requestDto.wrappers;
 
 public class MessageId {
 
-    private long messageId;
+    private Long messageId;
 
-    public MessageId(long messageId) {
+    public MessageId(Long messageId) {
         this.messageId = messageId;
     }
 
-    public long getMessageId() {
+    public Long getMessageId() {
         return messageId;
     }
 
-    public void setMessageId(long messageId) {
+    public void setMessageId(Long messageId) {
         this.messageId = messageId;
     }
 }

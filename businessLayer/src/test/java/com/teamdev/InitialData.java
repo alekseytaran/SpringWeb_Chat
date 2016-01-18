@@ -59,8 +59,8 @@ public class InitialData {
         }
 
 
-        ChatRoomId chatRoomId1 = chatRoomService.createChatRoom("qwertyvasya", new UserId(1), roomName1);
-        ChatRoomId chatRoomId2 = chatRoomService.createChatRoom("123456petya", new UserId(2), roomName2);
+        ChatRoomId chatRoomId1 = chatRoomService.createChatRoom("qwertyvasya", new UserId(1L), roomName1);
+        ChatRoomId chatRoomId2 = chatRoomService.createChatRoom("123456petya", new UserId(2L), roomName2);
 
         chatRoomService.joinUserToChat("qwertyvasya", firstUserId, chatRoomId1);
         chatRoomService.joinUserToChat("qwertyvasya", firstUserId, chatRoomId2);

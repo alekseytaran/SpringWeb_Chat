@@ -1,12 +1,12 @@
 package com.teamdev;
 
 import com.teamdev.dto.AuthenticationTokenDto;
-import com.teamdev.requestDto.wrappers.ChatRoomId;
-import com.teamdev.requestDto.wrappers.UserId;
 import com.teamdev.jpa.model.ChatRoom;
 import com.teamdev.jpa.model.User;
 import com.teamdev.jpa.repository.ChatRoomRepository;
 import com.teamdev.jpa.repository.UserRepository;
+import com.teamdev.requestDto.wrappers.ChatRoomId;
+import com.teamdev.requestDto.wrappers.UserId;
 import com.teamdev.service.ChatRoomService;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +14,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 public class ChatRoomServiceTest {
     private ApplicationContext context;

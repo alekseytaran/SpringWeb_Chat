@@ -1,8 +1,8 @@
 package com.teamdev;
 
 import com.google.gson.*;
-import com.teamdev.dto.ChatRoomDto;
-import com.teamdev.dto.UserDto;
+import com.teamdev.requestDto.ChatRoomDto;
+import com.teamdev.requestDto.UserDto;
 import com.teamdev.requestDto.LogInDto;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -24,7 +24,7 @@ public class UserTest extends ConfigData {
     public void testGetUserData() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserDto userDto = new UserDto(0, NAME, MAIL, PASSWORD);
+        UserDto userDto = new UserDto(0L, NAME, MAIL, PASSWORD);
         Gson gson = new Gson();
         String json = gson.toJson(userDto);
         String userId = signUp(json, httpClient, URL_SIGN_UP);
@@ -33,7 +33,7 @@ public class UserTest extends ConfigData {
         json = gson.toJson(logInDto);
         String token = logIn(json, httpClient, URL_LOG_IN);
 
-        ChatRoomDto chatRoomDto = new ChatRoomDto(0, "myRoom");
+        ChatRoomDto chatRoomDto = new ChatRoomDto(0L, "myRoom");
         json = gson.toJson(chatRoomDto);
         String URL_CREATE_ROOM = URL + "/chat/" + userId + "?token=" + token;
         createRoom(json, httpClient, URL_CREATE_ROOM);
@@ -69,7 +69,7 @@ public class UserTest extends ConfigData {
     public void testGetUserChats() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserDto userDto = new UserDto(0, NAME, MAIL, PASSWORD);
+        UserDto userDto = new UserDto(0L, NAME, MAIL, PASSWORD);
         Gson gson = new Gson();
         String json = gson.toJson(userDto);
         String userId = signUp(json, httpClient, URL_SIGN_UP);
@@ -78,7 +78,7 @@ public class UserTest extends ConfigData {
         json = gson.toJson(logInDto);
         String token = logIn(json, httpClient, URL_LOG_IN);
 
-        ChatRoomDto chatRoomDto = new ChatRoomDto(0, "myRoom");
+        ChatRoomDto chatRoomDto = new ChatRoomDto(0L, "myRoom");
         json = gson.toJson(chatRoomDto);
         String URL_CREATE_ROOM = URL + "/chat/" + userId + "?token=" + token;
         String roomId = createRoom(json, httpClient, URL_CREATE_ROOM);
@@ -91,7 +91,7 @@ public class UserTest extends ConfigData {
         }
 
         try {
-            HttpGet request = new HttpGet(URL + "/userchats/" + userId + "?token=" + token);
+            HttpGet request = new HttpGet(URL + "/user/chats/" + userId + "?token=" + token);
             HttpResponse response = httpClient.execute(request);
             int code = response.getStatusLine().getStatusCode();
 

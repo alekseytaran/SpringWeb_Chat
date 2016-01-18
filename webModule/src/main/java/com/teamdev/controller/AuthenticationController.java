@@ -2,8 +2,9 @@ package com.teamdev.controller;
 
 import com.teamdev.dto.AuthenticationTokenDto;
 import com.teamdev.dto.UserDto;
-import com.teamdev.requestDto.wrappers.UserId;
+
 import com.teamdev.requestDto.LogInDto;
+import com.teamdev.requestDto.wrappers.UserId;
 import com.teamdev.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,20 +31,23 @@ public class AuthenticationController {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/check/{userid}", params = {"token"}, method = RequestMethod.GET)
-    public void checkToken(@RequestParam String token, @PathVariable int userid) {
-        authenticationService.checkToken(token, new UserId(userid));
+    public void checkToken(@RequestParam String token, @PathVariable Long userid) {
+        UserId userId = new UserId(userid);
+        authenticationService.checkToken(token, userId);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/logout/{userid}", params = {"token"}, method = RequestMethod.GET)
-    public void logOut(@RequestParam String token, @PathVariable int userid) {
-        authenticationService.logOut(token, new UserId(userid));
+    public void logOut(@RequestParam String token, @PathVariable Long userid) {
+        UserId userId = new UserId(userid);
+        authenticationService.logOut(token, userId);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/delete/{userid}", params = {"token"}, method = RequestMethod.GET)
-    public void deleteUser(@RequestParam String token, @PathVariable int userid) {
-        authenticationService.deleteUser(token, new UserId(userid));
+    public void deleteUser(@RequestParam String token, @PathVariable Long userid) {
+        UserId userId = new UserId(userid);
+        authenticationService.deleteUser(token, userId);
     }
 
 }

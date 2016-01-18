@@ -11,24 +11,24 @@ public class AuthenticationToken {
 
     @Id
     @GeneratedValue
-    private long accessTokenId;
+    private Long accessTokenId;
 
     private String accessToken;
 
     @OneToOne
-    private long userId;
+    private User user;
 
     private Date validTime;
 
     AuthenticationToken() {}
 
-    public AuthenticationToken(String accessToken, long userId, Date validTime) {
+    public AuthenticationToken(String accessToken, User user, Date validTime) {
         this.accessToken = accessToken;
-        this.userId = userId;
+        this.user = user;
         this.validTime = validTime;
     }
 
-    public void setAccessTokenId(long accessTokenId) {
+    public void setAccessTokenId(Long accessTokenId) {
         this.accessTokenId = accessTokenId;
     }
 
@@ -36,12 +36,12 @@ public class AuthenticationToken {
         return accessToken;
     }
 
-    public long getUserId() {
-        return userId;
+    public User getUserId() {
+        return user;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUserId(User user) {
+        this.user = user;
     }
 
     @Override
@@ -51,23 +51,20 @@ public class AuthenticationToken {
 
         AuthenticationToken that = (AuthenticationToken) o;
 
-        if (userId != that.userId) return false;
         return accessToken != null ? accessToken.equals(that.accessToken) : that.accessToken == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = accessToken != null ? accessToken.hashCode() : 0;
-        result = 31 * result + (int) (userId ^ (userId >>> 32));
-        return result;
+        return accessToken != null ? accessToken.hashCode() : 0;
     }
 
     @Override
     public String toString() {
         return "AuthenticationToken{" +
-                "accessToken='" + accessToken + '\'' +
-                ", userId=" + userId +
+                "user=" + user +
+                ", accessToken='" + accessToken + '\'' +
                 '}';
     }
 }

@@ -32,7 +32,7 @@ public class MessageTest extends ConfigData{
     public void testSendMessage() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserDto userDto = new UserDto(0, NAME, MAIL, PASSWORD);
+        UserDto userDto = new UserDto(0L, NAME, MAIL, PASSWORD);
         Gson gson = new Gson();
         String json = gson.toJson(userDto);
         String userId = signUp(json, httpClient, URL_SIGN_UP);
@@ -41,7 +41,7 @@ public class MessageTest extends ConfigData{
         json = gson.toJson(logInDto);
         String token = logIn(json, httpClient, URL_LOG_IN);
 
-        ChatRoomDto chatRoomDto = new ChatRoomDto(0, "myRoom");
+        ChatRoomDto chatRoomDto = new ChatRoomDto(0L, "myRoom");
         json = gson.toJson(chatRoomDto);
         String URL_CREATE_ROOM = URL + "/chat/" + userId + "?token=" + token;
         String roomId = createRoom(json, httpClient, URL_CREATE_ROOM);
@@ -50,7 +50,7 @@ public class MessageTest extends ConfigData{
         joinUserToChat(httpClient, URL_JOIN_USER_TO_CHAT);
 
         try {
-            MessageDto messageDto = new MessageDto("hello chat", new UserId(Integer.parseInt(userId)), new ChatRoomId(Integer.parseInt(roomId)), new Date(System.currentTimeMillis()));
+            MessageDto messageDto = new MessageDto("hello chat", new UserId(Long.parseLong(userId)), new ChatRoomId(Long.parseLong(roomId)), new Date(System.currentTimeMillis()));
             json = gson.toJson(messageDto);
             HttpPost request = new HttpPost(URL + "/message" + "?token=" + token);
             request.setHeader("Content-Type", "application/json");

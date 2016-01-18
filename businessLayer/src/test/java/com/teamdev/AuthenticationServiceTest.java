@@ -68,10 +68,10 @@ public class AuthenticationServiceTest {
     @Test
     public void testLogOut() throws ValidationException {
         AuthenticationTokenDto tokenDto = InitialData.logInInSystem(context, name, email, password);
-        assertNotNull("User doesn't exist in db", context.getBean(AuthenticationRepository.class).findByToken(tokenDto.getAccessToken()));
+        assertNotNull("User doesn't exist in db", context.getBean(AuthenticationRepository.class).findByAccessToken(tokenDto.getAccessToken()));
         context.getBean(AuthenticationService.class).logOut(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()));
 
-        assertNull("User wasn't logged out", context.getBean(AuthenticationRepository.class).findByToken(tokenDto.getAccessToken()));
+        assertNull("User wasn't logged out", context.getBean(AuthenticationRepository.class).findByAccessToken(tokenDto.getAccessToken()));
     }
 
 }

@@ -44,7 +44,7 @@
         </dependency>
         <dependency>
             <groupId>com.teamdev</groupId>
-            <artifactId></artifactId>
+            <artifactId>webApi</artifactId>
             <version>1.0</version>
             <scope>test</scope>
         </dependency>

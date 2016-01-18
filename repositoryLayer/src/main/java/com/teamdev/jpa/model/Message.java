@@ -11,7 +11,7 @@ public class Message {
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     private String text;
 
@@ -32,11 +32,11 @@ public class Message {
         this.chatRoom = chatRoom;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

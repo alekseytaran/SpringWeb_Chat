@@ -3,12 +3,13 @@ package com.teamdev.jpa.repository;
 import com.teamdev.jpa.model.AuthenticationToken;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface AuthenticationRepository extends CrudRepository<AuthenticationToken, Long> {
 
-    AuthenticationToken findByToken(String token);
+    AuthenticationToken findByAccessToken(String token);
 
-    void deleteById(long id);
+    void deleteByAccessTokenId(Long id);
 
 }

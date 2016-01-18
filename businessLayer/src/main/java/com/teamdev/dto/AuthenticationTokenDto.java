@@ -4,9 +4,9 @@ package com.teamdev.dto;
 public class AuthenticationTokenDto {
 
     private String accessToken;
-    private long userId;
+    private Long userId;
 
-    public AuthenticationTokenDto(String accessToken, long userId) {
+    public AuthenticationTokenDto(String accessToken, Long userId) {
         this.accessToken = accessToken;
         this.userId = userId;
     }
@@ -15,11 +15,11 @@ public class AuthenticationTokenDto {
         return accessToken;
     }
 
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 }

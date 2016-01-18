@@ -19,27 +19,34 @@ public class ChatController {
 
     @RequestMapping(value = "/chat/{userid}", params = {"token"}, method = RequestMethod.POST)
     @ResponseBody
-    public ChatRoomId createChat(@RequestParam String token, @RequestBody ChatRoomDto chatRoomDto, @PathVariable int userid) {
-        return chatRoomService.createChatRoom(token, new UserId(userid), chatRoomDto.getRoomName());
+    public ChatRoomId createChat(@RequestParam String token, @RequestBody ChatRoomDto chatRoomDto, @PathVariable Long userid) {
+        UserId userId = new UserId(userid);
+        String roomName = chatRoomDto.getRoomName();
+        return chatRoomService.createChatRoom(token, userId, roomName);
     }
 
     @RequestMapping(value = "/chats/{userid}", params = {"token"}, method = RequestMethod.GET)
     @ResponseBody
-    public ImmutableSet<ChatRoomDto> findAllChats(@RequestParam String token, @PathVariable int userid) {
-        return chatRoomService.findAllChatRooms(token, new UserId(userid));
+    public ImmutableSet<ChatRoomDto> findAllChats(@RequestParam String token, @PathVariable Long userid) {
+        UserId userId = new UserId(userid);
+        return chatRoomService.findAllChatRooms(token, userId);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/join/{chatid}/{userid}", params = {"token"}, method = RequestMethod.GET)
     @ResponseBody
-    public void joinUserToChat(@RequestParam String token, @PathVariable int userid, @PathVariable int chatid) {
-        chatRoomService.joinUserToChat(token, new UserId(userid), new ChatRoomId(chatid));
+    public void joinUserToChat(@RequestParam String token, @PathVariable Long userid, @PathVariable Long chatid) {
+        UserId userId = new UserId(userid);
+        ChatRoomId chatRoomId = new ChatRoomId(chatid);
+        chatRoomService.joinUserToChat(token, userId, chatRoomId);
     }
 
     @RequestMapping(value = "/users/{chatid}/{userid}", params = {"token"}, method = RequestMethod.GET)
     @ResponseBody
-    public ImmutableSet<UserDto> getUsersFromChat(@RequestParam String token, @PathVariable int userid, @PathVariable int chatid) {
-        return chatRoomService.getUsersDataInChat(token, new UserId(userid), new ChatRoomId(chatid));
+    public ImmutableSet<UserDto> getUsersFromChat(@RequestParam String token, @PathVariable Long userid, @PathVariable Long chatid) {
+        UserId userId = new UserId(userid);
+        ChatRoomId chatRoomId = new ChatRoomId(chatid);
+        return chatRoomService.getUsersDataInChat(token, userId, chatRoomId);
     }
 
 

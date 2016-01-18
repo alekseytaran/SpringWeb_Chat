@@ -1,12 +1,12 @@
 package com.teamdev.dto;
 
 public class UserDto {
-    private long id;
+    private Long id;
     private String name;
     private String email;
     private String password;
 
-    public UserDto(long id, String name, String email, String password) {
+    public UserDto(Long id, String name, String email, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -35,7 +35,7 @@ public class UserDto {
         return email;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 }

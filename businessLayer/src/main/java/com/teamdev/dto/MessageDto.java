@@ -6,7 +6,7 @@ import com.teamdev.requestDto.wrappers.UserId;
 import java.util.Date;
 
 public class MessageDto {
-    private long id;
+    private Long id;
     private String text;
     private UserId userId;
     private ChatRoomId chatRoomId;
@@ -39,7 +39,7 @@ public class MessageDto {
         return chatRoomId;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

@@ -27,7 +27,7 @@ public class AuthenticationTest extends ConfigData {
 
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserDto userDto = new UserDto(0, NAME, MAIL, PASSWORD);
+        UserDto userDto = new UserDto(0L, NAME, MAIL, PASSWORD);
         Gson gson = new Gson();
         String json = gson.toJson(userDto);
 
@@ -93,7 +93,7 @@ public class AuthenticationTest extends ConfigData {
     public void testFailSignUp() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserDto userDto = new UserDto(0, NAME, MAIL, PASSWORD);
+        UserDto userDto = new UserDto(0L, NAME, MAIL, PASSWORD);
         Gson gson = new Gson();
         String json = gson.toJson(userDto);
 
@@ -160,7 +160,7 @@ public class AuthenticationTest extends ConfigData {
     public void testCheckToken() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserDto userDto = new UserDto(0, NAME, MAIL, PASSWORD);
+        UserDto userDto = new UserDto(0L, NAME, MAIL, PASSWORD);
         Gson gson = new Gson();
         String json = gson.toJson(userDto);
         String userId = signUp(json, httpClient, URL_SIGN_UP);
@@ -188,7 +188,7 @@ public class AuthenticationTest extends ConfigData {
     public void testLogOut() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserDto userDto = new UserDto(0, NAME, MAIL, PASSWORD);
+        UserDto userDto = new UserDto(0L, NAME, MAIL, PASSWORD);
         Gson gson = new Gson();
         String json = gson.toJson(userDto);
         String userId = signUp(json, httpClient, URL_SIGN_UP);
@@ -219,7 +219,7 @@ public class AuthenticationTest extends ConfigData {
     public void testDeleteUser() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserDto userDto = new UserDto(0, NAME, MAIL, PASSWORD);
+        UserDto userDto = new UserDto(0L, NAME, MAIL, PASSWORD);
         Gson gson = new Gson();
         String json = gson.toJson(userDto);
         String userId = signUp(json, httpClient, URL_SIGN_UP);

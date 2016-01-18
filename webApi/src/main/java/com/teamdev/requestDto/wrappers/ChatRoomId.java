@@ -2,13 +2,13 @@ package com.teamdev.requestDto.wrappers;
 
 public class ChatRoomId {
 
-    private long chatRoomId;
+    private Long chatRoomId;
 
-    public ChatRoomId(long chatRoomId) {
+    public ChatRoomId(Long chatRoomId) {
         this.chatRoomId = chatRoomId;
     }
 
-    public long getChatRoomId() {
+    public Long getChatRoomId() {
         return chatRoomId;
     }
 

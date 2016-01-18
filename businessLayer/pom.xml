@@ -81,6 +81,12 @@
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.teamdev</groupId>
+            <artifactId>webApi</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
