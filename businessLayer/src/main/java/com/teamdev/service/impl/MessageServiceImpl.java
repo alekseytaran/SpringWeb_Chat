@@ -32,9 +32,6 @@ public class MessageServiceImpl implements MessageService {
         ChatRoom chatRoom = chatRoomRepository.findOne(messageDto.getChatRoomId().getChatRoomId());
         Message message = new Message(messageDto.getText(), messageDto.getCreationTime(), user, chatRoom);
 
-        chatRoom.getMessages().add(message);
-        user.getMessages().add(message);
-
         return new MessageId(messageRepository.save(message).getId());
     }
 
