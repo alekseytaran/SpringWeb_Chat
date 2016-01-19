@@ -1,9 +1,6 @@
 package com.teamdev.jpa.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -17,10 +14,10 @@ public class Message {
 
     private Date creationTime;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     private ChatRoom chatRoom;
 
     Message() {}

@@ -73,8 +73,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public void deleteUser(String accessToken, UserId userId) {
-        User user = userRepository.findOne(userId.getUserId());
-        userRepository.delete(user);
+        authenticationRepository.delete(userId.getUserId());
+        userRepository.delete(userId.getUserId());
     }
 
     @Override

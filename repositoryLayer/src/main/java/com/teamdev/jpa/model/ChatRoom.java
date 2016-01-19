@@ -15,10 +15,10 @@ public class ChatRoom {
 
     private String roomName;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REFRESH)
     private final Set<User> users = new HashSet<>();
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REFRESH)
     private final List<Message> messages = new ArrayList<>();
 
     ChatRoom() {}

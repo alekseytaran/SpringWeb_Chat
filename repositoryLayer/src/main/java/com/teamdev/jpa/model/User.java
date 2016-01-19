@@ -18,10 +18,13 @@ public class User implements Serializable{
 
     private String password;
 
-    @ManyToMany
+    @OneToOne(cascade = CascadeType.REMOVE)
+    private AuthenticationToken authenticationToken;
+
+    @ManyToMany(cascade = CascadeType.REFRESH)
     private final Set<ChatRoom> chatRooms = new HashSet<>();
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REFRESH)
     private final Set<Message> messages = new HashSet<>();
 
     User() {}

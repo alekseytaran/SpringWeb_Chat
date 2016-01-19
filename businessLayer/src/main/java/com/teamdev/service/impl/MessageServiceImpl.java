@@ -17,8 +17,6 @@ import org.springframework.stereotype.Service;
 public class MessageServiceImpl implements MessageService {
 
     @Autowired
-    private AuthenticationService authenticationService;
-    @Autowired
     private MessageRepository messageRepository;
     @Autowired
     private UserRepository userRepository;
