@@ -17,7 +17,7 @@
 
         <dependency>
             <groupId>com.teamdev</groupId>
-            <artifactId>requestDto</artifactId>
+            <artifactId>webApi</artifactId>
             <version>1.0</version>
         </dependency>
 
@@ -82,11 +82,6 @@
             <version>2.5</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.teamdev</groupId>
-            <artifactId>webApi</artifactId>
-            <version>1.0</version>
-        </dependency>
     </dependencies>
 
     <build>

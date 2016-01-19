@@ -33,7 +33,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new RegistrationException("user with this credentials has already existed in DB");
         }
 
-        User user = userRepository.save(new User(userDto.getName(), userDto.getMail(), userDto.getPassword()));
+        User userEntity = new User(userDto.getName(), userDto.getMail(), userDto.getPassword());
+        User user = userRepository.save(userEntity);
 
         return new UserId(user.getId());
     }
@@ -53,11 +54,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         int periodTokenLife = 1000 * 60 * 30;
         Date validTime = new Date(System.currentTimeMillis() + periodTokenLife);
 
-
         AuthenticationToken tokenEntity = authenticationRepository.findByAccessToken(token);
 
         authenticationRepository.save(new AuthenticationToken(token, user, validTime));
-
 
         return new AuthenticationTokenDto(token, user.getId());
     }
@@ -74,7 +73,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public void deleteUser(String accessToken, UserId userId) {
-        userRepository.deleteById(userId.getUserId());
+        User user = userRepository.findOne(userId.getUserId());
+        userRepository.delete(user);
     }
 
     @Override
