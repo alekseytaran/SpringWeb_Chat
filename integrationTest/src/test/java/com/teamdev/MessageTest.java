@@ -75,6 +75,10 @@ public class MessageTest extends ConfigData{
         } catch (IOException e) {
             fail("IOException was appeared");
         }
+
+        String URL_CLEAN_DB = URL + "/delete/" + userId + "?token=" + token;
+
+        cleanDb(URL_CLEAN_DB, httpClient);
     }
 
 }

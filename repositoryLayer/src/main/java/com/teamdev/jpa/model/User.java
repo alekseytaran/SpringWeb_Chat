@@ -71,6 +71,14 @@ public class User implements Serializable{
         this.id = id;
     }
 
+    public AuthenticationToken getAuthenticationToken() {
+        return authenticationToken;
+    }
+
+    public void setAuthenticationToken(AuthenticationToken authenticationToken) {
+        this.authenticationToken = authenticationToken;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

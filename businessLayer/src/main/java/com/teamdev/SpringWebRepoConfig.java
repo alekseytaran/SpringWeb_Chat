@@ -1,5 +1,6 @@
 package com.teamdev;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
@@ -24,6 +26,14 @@ import javax.sql.DataSource;
 @EnableJpaRepositories("com.teamdev.jpa")
 @EnableTransactionManagement
 public class SpringWebRepoConfig {
+
+    private static final Logger LOG = Logger.getLogger(SpringWebRepoConfig.class);
+
+    @PostConstruct
+    public void info() {
+        LOG.info("Spring configuration was enable");
+    }
+
     @Bean
     public DataSource dataSource() {
 

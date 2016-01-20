@@ -1,10 +1,11 @@
 package com.teamdev.jpa.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class AuthenticationToken {
+public class AuthenticationToken implements Serializable{
 
     @Id
     @GeneratedValue
@@ -25,6 +26,10 @@ public class AuthenticationToken {
         this.validTime = validTime;
     }
 
+    public Long getAccessTokenId() {
+        return accessTokenId;
+    }
+
     public void setAccessTokenId(Long accessTokenId) {
         this.accessTokenId = accessTokenId;
     }
@@ -39,6 +44,26 @@ public class AuthenticationToken {
 
     public void setUserId(User user) {
         this.user = user;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Date getValidTime() {
+        return validTime;
+    }
+
+    public void setValidTime(Date validTime) {
+        this.validTime = validTime;
     }
 
     @Override

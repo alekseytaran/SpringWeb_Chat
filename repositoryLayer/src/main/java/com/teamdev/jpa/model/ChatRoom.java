@@ -15,7 +15,7 @@ public class ChatRoom {
 
     private String roomName;
 
-    @ManyToMany(cascade = CascadeType.REFRESH)
+    @ManyToMany(mappedBy = "chatRooms", cascade = CascadeType.REFRESH)
     private final Set<User> users = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.REFRESH)
@@ -45,6 +45,10 @@ public class ChatRoom {
 
     public String getRoomName() {
         return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
     }
 
     @Override

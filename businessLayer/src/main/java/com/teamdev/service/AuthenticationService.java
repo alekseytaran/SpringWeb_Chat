@@ -4,7 +4,9 @@ import com.teamdev.dto.AuthenticationTokenDto;
 import com.teamdev.dto.UserDto;
 import com.teamdev.requestDto.wrappers.UserId;
 import com.teamdev.exception.RegistrationException;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public interface AuthenticationService {
 
     UserId signUp(UserDto user) throws RegistrationException;

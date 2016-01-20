@@ -45,20 +45,28 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new NullPointerException("login data is null");
         }
 
-        String token = password + name;
+        String accessToken = password + name;
 
         User user = userRepository.findByPasswordAndName(password, name);
         if (user == null) {
             throw new ValidationException("User with current credentials not found");
         }
+//        AuthenticationToken oldAuthenticationToken = authenticationRepository.findByAccessToken(user.getAuthenticationToken().getAccessToken());
+//        if (!(oldAuthenticationToken == null)) {
+//            throw new ValidationException("Current user is already in system");
+//        }
+
         int periodTokenLife = 1000 * 60 * 30;
         Date validTime = new Date(System.currentTimeMillis() + periodTokenLife);
 
-        AuthenticationToken tokenEntity = authenticationRepository.findByAccessToken(token);
+        AuthenticationToken authenticationToken = new AuthenticationToken(accessToken, user, validTime);
 
-        AuthenticationToken authenticationTokenId = authenticationRepository.save(new AuthenticationToken(token, user, validTime));
+        AuthenticationToken newAuthenticationToken = authenticationRepository.save(authenticationToken);
 
-        return new AuthenticationTokenDto(token, user.getId());
+        user.setAuthenticationToken(newAuthenticationToken);
+        userRepository.save(user);
+
+        return new AuthenticationTokenDto(accessToken, user.getId());
     }
 
     @Override
@@ -66,14 +74,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         for (AuthenticationToken token: authenticationRepository.findAll()) {
             if (token.getAccessToken().equals(accessToken) &&
                     token.getUserId().getId().equals(userId.getUserId())) {
-                authenticationRepository.delete(userId.getUserId());
+                authenticationRepository.delete(token);
             }
         }
     }
 
     @Override
     public void deleteUser(String accessToken, UserId userId) {
-        authenticationRepository.delete(userId.getUserId());
         userRepository.delete(userId.getUserId());
     }
 
