@@ -10,6 +10,4 @@ public interface AuthenticationRepository extends CrudRepository<AuthenticationT
 
     AuthenticationToken findByAccessToken(String token);
 
-    void deleteByAccessTokenId(Long id);
-
 }

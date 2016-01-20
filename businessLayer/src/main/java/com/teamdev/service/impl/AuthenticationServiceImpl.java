@@ -56,7 +56,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         AuthenticationToken tokenEntity = authenticationRepository.findByAccessToken(token);
 
-        authenticationRepository.save(new AuthenticationToken(token, user, validTime));
+        AuthenticationToken authenticationTokenId = authenticationRepository.save(new AuthenticationToken(token, user, validTime));
 
         return new AuthenticationTokenDto(token, user.getId());
     }
@@ -66,7 +66,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         for (AuthenticationToken token: authenticationRepository.findAll()) {
             if (token.getAccessToken().equals(accessToken) &&
                     token.getUserId().getId().equals(userId.getUserId())) {
-                authenticationRepository.deleteByAccessTokenId(userId.getUserId());
+                authenticationRepository.delete(userId.getUserId());
             }
         }
     }

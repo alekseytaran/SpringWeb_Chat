@@ -18,13 +18,17 @@ public class User implements Serializable{
 
     private String password;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
     private AuthenticationToken authenticationToken;
 
     @ManyToMany(cascade = CascadeType.REFRESH)
+    @JoinTable(
+            name = "users_to_chats",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "chat_id", referencedColumnName = "id")})
     private final Set<ChatRoom> chatRooms = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REFRESH)
     private final Set<Message> messages = new HashSet<>();
 
     User() {}

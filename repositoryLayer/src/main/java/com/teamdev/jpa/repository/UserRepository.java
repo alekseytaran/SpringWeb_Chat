@@ -9,6 +9,5 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserRepository extends CrudRepository<User, Long> {
 
     User findByPasswordAndName(String password, String name);
-
-//    void deleteById(Long id);
+    
 }

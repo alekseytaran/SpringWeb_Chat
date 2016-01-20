@@ -17,7 +17,7 @@ public class Message {
     @ManyToOne(cascade = CascadeType.REFRESH)
     private User user;
 
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.REFRESH)
     private ChatRoom chatRoom;
 
     Message() {}
