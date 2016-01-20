@@ -13,16 +13,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import static org.junit.Assert.assertEquals;
 
 public class UserServiceTest {
-    private ApplicationContext context;
 
     private String name = "vasya";
     private String email = "vasya@gemail.com";
     private String password = "qwerty";
-
-    @Before
-    public void setUp() {
-        context = new AnnotationConfigApplicationContext(AuthenticationServiceTest.class);
-    }
 
     @Test
     public void getUserData() {

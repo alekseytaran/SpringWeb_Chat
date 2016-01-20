@@ -20,18 +20,12 @@ import java.util.Date;
 import static org.junit.Assert.assertEquals;
 
 public class MessageServiceTest {
-    private ApplicationContext context;
 
     private String name = "vasya";
     private String email = "vasya@gemail.com";
     private String password = "qwerty";
     private String roomName = "room";
     private String text = "message text";
-
-    @Before
-    public void setUp() {
-        context = new AnnotationConfigApplicationContext(AuthenticationServiceTest.class);
-    }
 
     @Test
     public void testPostMessage() {

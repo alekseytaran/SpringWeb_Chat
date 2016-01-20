@@ -18,7 +18,7 @@ public class ChatRoom {
     @ManyToMany(mappedBy = "chatRooms", cascade = CascadeType.REFRESH)
     private final Set<User> users = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.REFRESH)
     private final List<Message> messages = new ArrayList<>();
 
     ChatRoom() {}

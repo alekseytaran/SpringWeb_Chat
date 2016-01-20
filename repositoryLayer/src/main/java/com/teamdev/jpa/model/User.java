@@ -28,7 +28,7 @@ public class User implements Serializable{
             inverseJoinColumns = {@JoinColumn(name = "chat_id", referencedColumnName = "id")})
     private final Set<ChatRoom> chatRooms = new HashSet<>();
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH)
     private final Set<Message> messages = new HashSet<>();
 
     User() {}

@@ -14,10 +14,10 @@ public class Message {
 
     private Date creationTime;
 
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.MERGE)
     private User user;
 
-    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.MERGE)
     private ChatRoom chatRoom;
 
     Message() {}

@@ -14,9 +14,8 @@ import static org.junit.Assert.fail;
 
 public class InitialData {
 
-    public static AuthenticationTokenDto logInInSystem(ApplicationContext context, String name, String email, String password) {
+    public static AuthenticationTokenDto logInInSystem(String name, String email, String password) {
         UserDto userDto = new UserDto(name, email, password);
-        AuthenticationService authenticationService = context.getBean(AuthenticationService.class);
         try {
             authenticationService.signUp(userDto);
         } catch (RegistrationException e) {

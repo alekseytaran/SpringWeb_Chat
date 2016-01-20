@@ -16,18 +16,12 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import static org.junit.Assert.assertEquals;
 
 public class ChatRoomServiceTest {
-    private ApplicationContext context;
 
     private String name = "vasya";
     private String email = "vasya@gemail.com";
     private String password = "qwerty";
     private String roomName = "room";
     private String roomName1 = "room1";
-
-    @Before
-    public void setUp() {
-        context = new AnnotationConfigApplicationContext(AuthenticationServiceTest.class);
-    }
 
     @Test
     public void testCreateChatRoom() {
