@@ -51,10 +51,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (user == null) {
             throw new ValidationException("User with current credentials not found");
         }
-//        AuthenticationToken oldAuthenticationToken = authenticationRepository.findByAccessToken(user.getAuthenticationToken().getAccessToken());
-//        if (!(oldAuthenticationToken == null)) {
-//            throw new ValidationException("Current user is already in system");
-//        }
 
         int periodTokenLife = 1000 * 60 * 30;
         Date validTime = new Date(System.currentTimeMillis() + periodTokenLife);

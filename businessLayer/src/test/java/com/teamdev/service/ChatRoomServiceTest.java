@@ -1,16 +1,11 @@
-package com.teamdev;
+package com.teamdev.service;
 
 import com.google.common.collect.ImmutableSet;
 import com.teamdev.dto.AuthenticationTokenDto;
 import com.teamdev.dto.ChatRoomDto;
 import com.teamdev.dto.UserDto;
-import com.teamdev.jpa.model.ChatRoom;
-import com.teamdev.jpa.model.User;
-import com.teamdev.jpa.repository.ChatRoomRepository;
-import com.teamdev.jpa.repository.UserRepository;
 import com.teamdev.requestDto.wrappers.ChatRoomId;
 import com.teamdev.requestDto.wrappers.UserId;
-import com.teamdev.service.ChatRoomService;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -26,7 +21,7 @@ public class ChatRoomServiceTest extends InitialData {
     @Test
     public void testCreateChatRoom() {
         UserId userId = signUp(name, email, password);
-        AuthenticationTokenDto tokenDto = logIn(name, email, password);
+        AuthenticationTokenDto tokenDto = logIn(name, password);
 
         assertEquals("ChatRoom wasn't create", 0, chatRoomService.findAllChatRooms(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId())).size());
 
@@ -38,7 +33,7 @@ public class ChatRoomServiceTest extends InitialData {
     @Test
     public void testGetAllChatRooms() {
         UserId userId = signUp(name, email, password);
-        AuthenticationTokenDto tokenDto = logIn(name, email, password);
+        AuthenticationTokenDto tokenDto = logIn(name, password);
 
         chatRoomService.createChatRoom(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()), roomName);
         chatRoomService.createChatRoom(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()), roomName1);
@@ -49,7 +44,7 @@ public class ChatRoomServiceTest extends InitialData {
     @Test
     public void testJoinUserInChat() {
         UserId userId = signUp(name, email, password);
-        AuthenticationTokenDto tokenDto = logIn(name, email, password);
+        AuthenticationTokenDto tokenDto = logIn(name, password);
 
         ChatRoomId chatRoomId = chatRoomService.createChatRoom(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()), name);
         chatRoomService.joinUserToChat(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()), chatRoomId);
@@ -64,7 +59,7 @@ public class ChatRoomServiceTest extends InitialData {
     @Test
     public void testGetUsersDataFromChat() {
         UserId userId = signUp(name, email, password);
-        AuthenticationTokenDto tokenDto = logIn(name, email, password);;
+        AuthenticationTokenDto tokenDto = logIn(name, password);;
 
         ChatRoomId chatRoomId = chatRoomService.createChatRoom(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()), name);
         chatRoomService.getUsersDataInChat(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()), chatRoomId);

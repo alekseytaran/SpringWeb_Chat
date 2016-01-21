@@ -1,4 +1,4 @@
-package com.teamdev;
+package com.teamdev.service;
 
 import com.teamdev.dto.AuthenticationTokenDto;
 import com.teamdev.dto.MessageDto;
@@ -22,7 +22,7 @@ public class MessageServiceTest extends InitialData{
     @Test
     public void testPostMessage() {
         UserId userId = signUp(name, email, password);
-        AuthenticationTokenDto tokenDto = logIn(name, email, password);
+        AuthenticationTokenDto tokenDto = logIn(name, password);
 
         ChatRoomId chatRoomId = chatRoomService.createChatRoom(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()), roomName);
         MessageId messageId = messageService.postMessage(tokenDto.getAccessToken(),

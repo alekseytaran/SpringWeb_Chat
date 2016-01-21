@@ -13,7 +13,7 @@ public class AuthenticationToken implements Serializable{
 
     private String accessToken;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REFRESH)
     private User user;
 
     private Date validTime;

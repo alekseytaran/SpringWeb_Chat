@@ -207,7 +207,7 @@ public class AuthenticationTest extends ConfigData {
             fail("IOException was appeared");
         }
 
-//        token = logIn(json, httpClient, URL_LOG_IN);
+        token = logIn(json, httpClient, URL_LOG_IN);
 
         String URL_CLEAN_DB = URL + "/delete/" + userId + "?token=" + token;
 

@@ -1,4 +1,4 @@
-package com.teamdev;
+package com.teamdev.service;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,27 +15,26 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
-@Configuration
+@Configuration("com.teamdev.service")
 @ComponentScan("com.teamdev")
 @EnableAspectJAutoProxy
 @EnableJpaRepositories("com.teamdev.jpa")
 public class SpringContextForTest {
+
     @Bean
     public DataSource dataSource() {
-
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         return builder.setType(EmbeddedDatabaseType.HSQL).build();
     }
 
     @Bean
     public EntityManagerFactory entityManagerFactory() {
-
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("com.teamdev.jpa");
+        factory.setPackagesToScan("com.teamdev");
         factory.setDataSource(dataSource());
         factory.afterPropertiesSet();
 
@@ -44,7 +43,6 @@ public class SpringContextForTest {
 
     @Bean
     public PlatformTransactionManager transactionManager() {
-
         JpaTransactionManager txManager = new JpaTransactionManager();
         txManager.setEntityManagerFactory(entityManagerFactory());
         return txManager;

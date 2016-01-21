@@ -1,4 +1,4 @@
-package com.teamdev;
+package com.teamdev.service;
 
 import com.teamdev.dto.AuthenticationTokenDto;
 import com.teamdev.dto.UserDto;
@@ -47,7 +47,7 @@ public class AuthenticationServiceTest extends InitialData {
     @Test
     public void testLogOut() throws ValidationException {
         UserId userId = signUp(name, email, password);
-        AuthenticationTokenDto tokenDto = logIn(name, email, password);
+        AuthenticationTokenDto tokenDto = logIn(name, password);
         authenticationService.logOut(tokenDto.getAccessToken(), userId);
 
         assertNull("User wasn't logged out", authenticationService.logIn(password, name));

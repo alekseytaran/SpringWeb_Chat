@@ -1,4 +1,4 @@
-package com.teamdev;
+package com.teamdev.service;
 
 
 import com.teamdev.dto.AuthenticationTokenDto;
@@ -16,7 +16,8 @@ public class UserServiceTest extends InitialData {
 
     @Test
     public void getUserData() {
-        AuthenticationTokenDto tokenDto = logIn(name, email, password);
+        UserId userId = signUp(name, email, password);
+        AuthenticationTokenDto tokenDto = logIn(name, password);
         UserDto userData = userService.getUserData(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()));
 
         assertEquals("User name is incorrect", name, userData.getName());

@@ -49,7 +49,7 @@ public class SpringWebRepoConfig {
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("com.teamdev");
+        factory.setPackagesToScan("com.teamdev.jpa");
         factory.setDataSource(dataSource());
         factory.afterPropertiesSet();
 
