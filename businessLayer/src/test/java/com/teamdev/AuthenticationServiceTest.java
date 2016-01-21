@@ -2,33 +2,14 @@ package com.teamdev;
 
 import com.teamdev.dto.AuthenticationTokenDto;
 import com.teamdev.dto.UserDto;
-import com.teamdev.requestDto.wrappers.UserId;
 import com.teamdev.exception.RegistrationException;
 import com.teamdev.exception.ValidationException;
-import com.teamdev.jpa.repository.AuthenticationRepository;
-import com.teamdev.jpa.repository.UserRepository;
-import com.teamdev.service.AuthenticationService;
-import org.junit.Before;
+import com.teamdev.requestDto.wrappers.UserId;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import static org.junit.Assert.*;
 
-@Configuration
-@EnableAspectJAutoProxy
-@ComponentScan(basePackages = {"com.teamdev.repository.impl", "com.teamdev.service.impl", "com.teamdev.aspect"})
-public class AuthenticationServiceTest {
-
-    @Autowired
-    private AuthenticationService authenticationService;
-    @Autowired
-    private UserRepository userRepository;
-
+public class AuthenticationServiceTest extends InitialData {
 
     private String name = "vasya";
     private String email = "vasya@gemail.com";
@@ -39,12 +20,12 @@ public class AuthenticationServiceTest {
         UserDto userDto = new UserDto(name, email, password);
 
         try {
-            authenticationService.signUp(userDto);
+            UserId userId = authenticationService.signUp(userDto);
+            assertNotEquals("User wasn't registered", 0 , userId);
         } catch (RegistrationException e) {
             fail("User has already existed in db");
         }
 
-        assertNotNull("User wasn't registered", userRepository.findByPasswordAndName(password, name));
     }
 
     @Test
@@ -65,11 +46,11 @@ public class AuthenticationServiceTest {
 
     @Test
     public void testLogOut() throws ValidationException {
-        AuthenticationTokenDto tokenDto = InitialData.logInInSystem(name, email, password);
-        assertNotNull("User doesn't exist in db", context.getBean(AuthenticationRepository.class).findByAccessToken(tokenDto.getAccessToken()));
-        context.getBean(AuthenticationService.class).logOut(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()));
+        UserId userId = signUp(name, email, password);
+        AuthenticationTokenDto tokenDto = logIn(name, email, password);
+        authenticationService.logOut(tokenDto.getAccessToken(), userId);
 
-        assertNull("User wasn't logged out", context.getBean(AuthenticationRepository.class).findByAccessToken(tokenDto.getAccessToken()));
+        assertNull("User wasn't logged out", authenticationService.logIn(password, name));
     }
 
 }

@@ -20,7 +20,11 @@
             <artifactId>webApi</artifactId>
             <version>1.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.teamdev</groupId>
+            <artifactId>businessLayer</artifactId>
+            <version>1.0</version>
+        </dependency>
         <dependency>
             <groupId>com.teamdev</groupId>
             <artifactId>repositoryLayer</artifactId>
@@ -43,12 +47,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>4.2.4.RELEASE</version>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
         </dependency>
 
         <dependency>
@@ -80,6 +78,26 @@
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>4.2.4.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons-core</artifactId>
+            <version>1.4.1.RELEASE</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

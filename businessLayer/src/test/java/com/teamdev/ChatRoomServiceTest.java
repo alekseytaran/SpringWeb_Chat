@@ -1,6 +1,9 @@
 package com.teamdev;
 
+import com.google.common.collect.ImmutableSet;
 import com.teamdev.dto.AuthenticationTokenDto;
+import com.teamdev.dto.ChatRoomDto;
+import com.teamdev.dto.UserDto;
 import com.teamdev.jpa.model.ChatRoom;
 import com.teamdev.jpa.model.User;
 import com.teamdev.jpa.repository.ChatRoomRepository;
@@ -8,14 +11,11 @@ import com.teamdev.jpa.repository.UserRepository;
 import com.teamdev.requestDto.wrappers.ChatRoomId;
 import com.teamdev.requestDto.wrappers.UserId;
 import com.teamdev.service.ChatRoomService;
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import static org.junit.Assert.assertEquals;
 
-public class ChatRoomServiceTest {
+public class ChatRoomServiceTest extends InitialData {
 
     private String name = "vasya";
     private String email = "vasya@gemail.com";
@@ -25,9 +25,8 @@ public class ChatRoomServiceTest {
 
     @Test
     public void testCreateChatRoom() {
-        AuthenticationTokenDto tokenDto = InitialData.logInInSystem(context, name, email, password);
-
-        ChatRoomService chatRoomService = context.getBean(ChatRoomService.class);
+        UserId userId = signUp(name, email, password);
+        AuthenticationTokenDto tokenDto = logIn(name, email, password);
 
         assertEquals("ChatRoom wasn't create", 0, chatRoomService.findAllChatRooms(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId())).size());
 
@@ -38,9 +37,9 @@ public class ChatRoomServiceTest {
 
     @Test
     public void testGetAllChatRooms() {
-        AuthenticationTokenDto tokenDto = InitialData.logInInSystem(context, name, email, password);
+        UserId userId = signUp(name, email, password);
+        AuthenticationTokenDto tokenDto = logIn(name, email, password);
 
-        ChatRoomService chatRoomService = context.getBean(ChatRoomService.class);
         chatRoomService.createChatRoom(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()), roomName);
         chatRoomService.createChatRoom(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()), roomName1);
 
@@ -49,30 +48,30 @@ public class ChatRoomServiceTest {
 
     @Test
     public void testJoinUserInChat() {
-        AuthenticationTokenDto tokenDto = InitialData.logInInSystem(context, name, email, password);
+        UserId userId = signUp(name, email, password);
+        AuthenticationTokenDto tokenDto = logIn(name, email, password);
 
-        ChatRoomService chatRoomService = context.getBean(ChatRoomService.class);
         ChatRoomId chatRoomId = chatRoomService.createChatRoom(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()), name);
         chatRoomService.joinUserToChat(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()), chatRoomId);
 
-        User user = context.getBean(UserRepository.class).findByPasswordAndName(password, name);
-        ChatRoom chatRoom = context.getBean(ChatRoomRepository.class).findOne(chatRoomId.getChatRoomId());
+        ImmutableSet<ChatRoomDto> chatRooms = userService.getUserChats(password, userId);
+        ImmutableSet<UserDto> usersInChat = chatRoomService.getUsersDataInChat(tokenDto.getAccessToken(), userId, chatRoomId);
 
-        assertEquals("User doesn't have room", 1, user.getChatRooms().size());
-        assertEquals("Room doesn't have user", 1, chatRoom.getUsers().size());
+        assertEquals("User doesn't have room", 1, chatRooms.size());
+        assertEquals("Room doesn't have user", 1, usersInChat.size());
     }
 
     @Test
     public void testGetUsersDataFromChat() {
-        AuthenticationTokenDto tokenDto = InitialData.logInInSystem(context, name, email, password);;
+        UserId userId = signUp(name, email, password);
+        AuthenticationTokenDto tokenDto = logIn(name, email, password);;
 
-        ChatRoomService chatRoomService = context.getBean(ChatRoomService.class);
         ChatRoomId chatRoomId = chatRoomService.createChatRoom(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()), name);
         chatRoomService.getUsersDataInChat(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()), chatRoomId);
 
-        User user = context.getBean(UserRepository.class).findByPasswordAndName(password, name);
+        UserDto userData = userService.getUserData(password, userId);
 
-        assertEquals("Incorrect name", "vasya", user.getName());
-        assertEquals("Incorrect email", "vasya@gemail.com", user.getMail());
+        assertEquals("Incorrect name", "vasya", userData.getName());
+        assertEquals("Incorrect email", "vasya@gemail.com", userData.getMail());
     }
 }
