@@ -70,6 +70,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         for (AuthenticationToken token: authenticationRepository.findAll()) {
             if (token.getAccessToken().equals(accessToken) &&
                     token.getUserId().getId().equals(userId.getUserId())) {
+                User user = userRepository.findOne(userId.getUserId());
+                user.setAuthenticationToken(null);
                 authenticationRepository.delete(token);
             }
         }

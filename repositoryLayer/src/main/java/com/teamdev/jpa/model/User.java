@@ -18,7 +18,7 @@ public class User implements Serializable{
 
     private String password;
 
-    @OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "user", fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
     private AuthenticationToken authenticationToken;
 
     @ManyToMany(cascade = CascadeType.REFRESH)
