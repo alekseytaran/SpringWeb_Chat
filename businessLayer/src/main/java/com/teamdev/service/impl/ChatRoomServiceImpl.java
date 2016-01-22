@@ -53,13 +53,14 @@ public class ChatRoomServiceImpl implements ChatRoomService {
             throw new NullPointerException("Chat room with current id wasn't found");
         }
 
-        User userById = userRepository.findOne(userId.getUserId());
-        if (userById == null) {
+        User user = userRepository.findOne(userId.getUserId());
+        if (user == null) {
             throw new NullPointerException("User with current id wasn't found");
         }
 
-        currentChatRoom.getUsers().add(userById);
-        userById.getChatRooms().add(currentChatRoom);
+        user.getChatRooms().add(currentChatRoom);
+        currentChatRoom.getUsers().add(user);
+        userRepository.save(user);
     }
 
     @Override

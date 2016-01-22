@@ -49,7 +49,7 @@ public class ChatRoomServiceTest extends InitialData {
         ChatRoomId chatRoomId = chatRoomService.createChatRoom(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()), name);
         chatRoomService.joinUserToChat(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()), chatRoomId);
 
-        ImmutableSet<ChatRoomDto> chatRooms = userService.getUserChats(password, userId);
+        ImmutableSet<ChatRoomDto> chatRooms = userService.getUserChats(tokenDto.getAccessToken(), userId);
         ImmutableSet<UserDto> usersInChat = chatRoomService.getUsersDataInChat(tokenDto.getAccessToken(), userId, chatRoomId);
 
         assertEquals("User doesn't have room", 1, chatRooms.size());
@@ -59,12 +59,12 @@ public class ChatRoomServiceTest extends InitialData {
     @Test
     public void testGetUsersDataFromChat() {
         UserId userId = signUp(name, email, password);
-        AuthenticationTokenDto tokenDto = logIn(name, password);;
+        AuthenticationTokenDto tokenDto = logIn(name, password);
 
         ChatRoomId chatRoomId = chatRoomService.createChatRoom(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()), name);
         chatRoomService.getUsersDataInChat(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()), chatRoomId);
 
-        UserDto userData = userService.getUserData(password, userId);
+        UserDto userData = userService.getUserData(tokenDto.getAccessToken(), userId);
 
         assertEquals("Incorrect name", "vasya", userData.getName());
         assertEquals("Incorrect email", "vasya@gemail.com", userData.getMail());

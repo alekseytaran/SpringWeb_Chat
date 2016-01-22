@@ -50,7 +50,15 @@ public class AuthenticationServiceTest extends InitialData {
         AuthenticationTokenDto tokenDto = logIn(name, password);
         authenticationService.logOut(tokenDto.getAccessToken(), userId);
 
-        assertNull("User wasn't logged out", authenticationService.logIn(password, name));
+        try {
+            chatRoomService.createChatRoom(tokenDto.getAccessToken(), userId, "newRoom");
+        } catch (ValidationException e) {
+            assertEquals("Exception message is incorrect", "Validation data is invalid", e.getMessage());
+        }
+
+
+
+
     }
 
 }
