@@ -21,14 +21,14 @@ public class User implements Serializable{
     @OneToOne(mappedBy = "user", fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
     private AuthenticationToken authenticationToken;
 
-    @ManyToMany(cascade = CascadeType.REFRESH)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     @JoinTable(
             name = "users_to_chats",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "chat_id", referencedColumnName = "id")})
     private final Set<ChatRoom> chatRooms = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.DETACH})
     private final Set<Message> messages = new HashSet<>();
 
     User() {}
