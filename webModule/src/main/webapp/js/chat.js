@@ -1,3 +1,7 @@
+//$(document).ready(function() {
+//    chat.init();
+//});
+
 var chat = function(rootDivId, users) {
 
     var eb = new EventBus();

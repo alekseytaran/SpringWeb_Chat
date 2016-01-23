@@ -19,6 +19,11 @@ var ChatRoomView = function(users, rootDivId) {
 
                 $("#" + users[i].name).html(innerHtml);
             }
+
+            var inputSignUp = $('<button></button>').text('Sign Up');
+            inputSignUp.on('click', {user:"Name", email: "email@asd.sd", password: "pass"}, authUser);
+            $('body').append(inputSignUp);
+
         },
 
         "listnerClick": function(eb) {
