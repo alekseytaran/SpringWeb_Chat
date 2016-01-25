@@ -1,5 +1,5 @@
-function authUser(event) {
-    var data = event.data;
+function signUp(signUpJson) {
+    var data = JSON.stringify(signUpJson);
     $.ajax({
         url: "http://localhost:8080/chats/chat/signup",
         type: "POST",
@@ -14,4 +14,5 @@ function authUser(event) {
         dataType: 'json',
     });
 }
+
 

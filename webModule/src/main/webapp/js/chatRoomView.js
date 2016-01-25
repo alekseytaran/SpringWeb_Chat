@@ -4,30 +4,31 @@ var ChatRoomView = function(users, rootDivId) {
         "init": function () {
             var innerHtml = '';
 
-            for(var i = 0; i < users.length; i++) {
-                innerHtml += '<div id="' + users[i].name + '_name">' + users[i].name + ':</div>'
-                innerHtml += '<div id="' + users[i].name + '"> </div>';
-            }
-            innerHtml += '<div id="chatAreaDialog' + rootDivId +'" style="width: 180px; height: 150px; background-color:#E8EDF2"></div>'
+            innerHtml += 'Sign Up form:';
+            innerHtml += '<p>Name:<br><input id="name" type="text" size="40"></p>';
+            innerHtml += '<p>Email:<br><input id="email" type="text" size="40"></p>';
+            innerHtml += '<p>Password:<br><input type="password" size="40"></p>';
+
             $("#" + rootDivId).html(innerHtml);
 
-            for(var i = 0; i < users.length; i++) {
-                var textarea = users[i].name + '_textarea';
-                var button = users[i].name + '_button';
-                innerHtml = '<textarea id="' + textarea + '" userId = "' + users[i].userId + '" rows="1" cols="15" maxlength="55"></textarea>' +
-                    '<button id="' + button + '"> Send! </button>';
-
-                $("#" + users[i].name).html(innerHtml);
-            }
-
             var inputSignUp = $('<button></button>').text('Sign Up');
-            inputSignUp.on('click', {user:"Name", email: "email@asd.sd", password: "pass"}, authUser);
-            $('body').append(inputSignUp);
 
-            var deleteUser = $('<button></button>').text('Delete');
-            deleteUser.on('click', {user:"Name", email: "email@asd.sd", password: "pass"}, authUser);
-            $('body').append(inputSignUp);
+            inputSignUp.on('click', function(){
 
+                var name = $('#name').val();
+                var email = $('#email').val();
+                var password = $('#password').val();
+
+                var signUpJson = {};
+                signUpJson.id = 0;
+                signUpJson.name = name;
+                signUpJson.email = email;
+                signUpJson.password = password;
+
+                signUp(signUpJson);
+            });
+
+            $('body').append(inputSignUp);
         },
 
         "listnerClick": function(eb) {
