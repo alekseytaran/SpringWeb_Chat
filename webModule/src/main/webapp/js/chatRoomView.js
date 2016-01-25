@@ -24,6 +24,10 @@ var ChatRoomView = function(users, rootDivId) {
             inputSignUp.on('click', {user:"Name", email: "email@asd.sd", password: "pass"}, authUser);
             $('body').append(inputSignUp);
 
+            var deleteUser = $('<button></button>').text('Delete');
+            deleteUser.on('click', {user:"Name", email: "email@asd.sd", password: "pass"}, authUser);
+            $('body').append(inputSignUp);
+
         },
 
         "listnerClick": function(eb) {
