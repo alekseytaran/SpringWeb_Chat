@@ -6,10 +6,10 @@ function signUp(signUpJson) {
         data: data,
         contentType:"application/json; charset=utf-8",
         success: function () {
-            console.log('Yes');
+            alert('User was registered')
         },
         error: function () {
-            console.log('error');
+            alert('User was not registerd');
         },
         dataType: 'json',
     });
