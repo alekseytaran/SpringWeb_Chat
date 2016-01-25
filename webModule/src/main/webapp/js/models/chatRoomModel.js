@@ -20,3 +20,5 @@ ChatRoomModel.prototype.getAllDialogs = function() {
     return this._allDialogs;
 };
 
+
+

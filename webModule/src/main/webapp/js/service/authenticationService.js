@@ -1,4 +1,4 @@
-function signUp(signUpDto) {
+function signUp(signUpDto, eb) {
     var data = JSON.stringify(signUpDto);
     $.ajax({
         url: "http://localhost:8080/chats/chat/signup",
@@ -6,7 +6,7 @@ function signUp(signUpDto) {
         data: data,
         contentType:"application/json; charset=utf-8",
         success: function (response) {
-            return response.userId;
+            eb.postMessage("GET_USERID", response.userId);
         },
         error: function () {
             alert('User was not registered');
@@ -15,7 +15,7 @@ function signUp(signUpDto) {
     });
 }
 
-function logIn(logInDto) {
+function logIn(logInDto, eb) {
     var data = JSON.stringify(logInDto);
     $.ajax({
         url: "http://localhost:8080/chats/chat/login",
@@ -23,7 +23,7 @@ function logIn(logInDto) {
         data: data,
         contentType:"application/json; charset=utf-8",
         success: function (response) {
-            return response.accessToken;
+            eb.postMessage("LOGIN", response.accessToken);
         },
         error: function () {
             alert('User was not logged in');

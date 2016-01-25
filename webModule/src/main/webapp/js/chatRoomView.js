@@ -1,7 +1,10 @@
 var ChatRoomView = function(users, rootDivId) {
     var allText = '';
     return {
-        "init": function () {
+        "init": function (eb) {
+
+            this._eb = eb;
+
             var innerHtml = '';
 
             var name = '<p>Name:<br><input name="name"  type="text" size="40"></p>';
@@ -18,8 +21,8 @@ var ChatRoomView = function(users, rootDivId) {
             var signUpButton = $('<button></button>').text('Sign Up');
             signUpButton.on('click', function() {
                 var signUpData = getSignUpData();
-                userId = signUp(signUpData);
-            });
+                userId = signUp(signUpData, this._eb);
+            }.bind(this));
 
             $('#signup').append(signUpButton);
 
@@ -30,12 +33,12 @@ var ChatRoomView = function(users, rootDivId) {
             var accessToken;
             logInButton.on('click', function() {
                 var logInData = getLogInData();
-                accessToken = logIn(logInData);
-            });
+                accessToken = logIn(logInData, this._eb);
+            }.bind(this));
             $('#login').append(logInButton);
         },
 
-        "listnerClick": function(eb) {
+        "listnerClick": function() {
             var text = '';
             for(var i = 0, len = users.length; i < len; i++) {
                 var catchIndex = (function(x) {
@@ -43,8 +46,8 @@ var ChatRoomView = function(users, rootDivId) {
                     $('#' + currentName + '_button').click(function(){
                         text = $('#' + currentName + '_textarea').val();
                         var userId = $('#' + currentName + '_textarea').attr('userId');
-                        eb.postMessage("ADDED_MESSAGE", (new Message(userId, text)));
-                    });
+                        this._eb.postMessage("ADDED_MESSAGE", (new Message(userId, text)));
+                    }.bind(this));
                 })(i);
             }
         },
@@ -56,6 +59,24 @@ var ChatRoomView = function(users, rootDivId) {
             }
             chat.innerHTML = allText;
             allText = '';
+        },
+
+        "updateStatus": function(userId) {
+            if (userId !== null) {
+                $('#userstatus').append(' user registered and has id ' + userId);
+            } else {
+                $('#userstatus').append(' user id is not valid and = ' + userId);
+            }
+        },
+
+        "functionalityForLogInUser": function(accessToken) {
+            if (accessToken === null) {
+                $('#userstatus').append(' and user access token is not valid and = ' + accessToken);
+                return;
+            }
+
+            var createChatRoom = $('<button></button>').text('Create chat');
+            $('#chatsbutton').append(createChatRoom);
         }
     };
 };

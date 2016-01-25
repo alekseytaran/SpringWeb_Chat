@@ -7,9 +7,11 @@ var chat = function(rootDivId, users) {
 
     var chatRoomView = new ChatRoomView(users, rootDivId);
 
-    chatRoomView.init(rootDivId);
+    chatRoomView.init(eb);
 
     chatRoomView.listnerClick(eb);
+    eb.registerConsumer("LOGIN", chatRoomView.functionalityForLogInUser);
+    eb.registerConsumer("GET_USERID", chatRoomView.updateStatus);
     eb.registerConsumer("ADDED_MESSAGE", chatRoomModel.validatedToPush.bind(chatRoomModel));
     eb.registerConsumer("RERENDER_UI", chatRoomView.renderUI);
 
