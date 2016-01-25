@@ -7,7 +7,7 @@ var ChatRoomView = function(users, rootDivId) {
             innerHtml += 'Sign Up form:';
             innerHtml += '<p>Name:<br><input id="name" type="text" size="40"></p>';
             innerHtml += '<p>Email:<br><input id="email" type="text" size="40"></p>';
-            innerHtml += '<p>Password:<br><input type="password" size="40"></p>';
+            innerHtml += '<p>Password:<br><input id="password" type="password" size="40"></p>';
 
             $("#" + rootDivId).html(innerHtml);
 
