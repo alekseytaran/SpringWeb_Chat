@@ -16,8 +16,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
-@Configuration("com.teamdev.service")
-@ComponentScan("com.teamdev")
+@Configuration
+@ComponentScan("com.teamdev.service")
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
 @EnableJpaRepositories("com.teamdev.jpa")

@@ -23,7 +23,7 @@ import java.util.Properties;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan({"com.teamdev.controller", "com.teamdev"})
+@ComponentScan({"com.teamdev.controller", "com.teamdev.service"})
 @EnableAspectJAutoProxy
 @EnableJpaRepositories("com.teamdev.jpa")
 @EnableTransactionManagement
