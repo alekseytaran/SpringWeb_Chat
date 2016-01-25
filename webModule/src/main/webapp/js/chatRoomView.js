@@ -4,31 +4,35 @@ var ChatRoomView = function(users, rootDivId) {
         "init": function () {
             var innerHtml = '';
 
-            innerHtml += 'Sign Up form:';
-            innerHtml += '<p>Name:<br><input id="name" type="text" size="40"></p>';
-            innerHtml += '<p>Email:<br><input id="email" type="text" size="40"></p>';
-            innerHtml += '<p>Password:<br><input id="password" type="password" size="40"></p>';
+            var name = '<p>Name:<br><input name="name"  type="text" size="40"></p>';
+            var password = '<p>Password:<br><input name="password" type="password" size="40"></p>';
+            var email = '<p>Email:<br><input name="email" type="text" size="40"></p>';
 
-            $("#" + rootDivId).html(innerHtml);
+            innerHtml += name;
+            innerHtml += email;
+            innerHtml += password;
 
-            var inputSignUp = $('<button></button>').text('Sign Up');
+            $('#signup').append(innerHtml);
 
-            inputSignUp.on('click', function(){
-
-                var name = $('#name').val();
-                var email = $('#email').val();
-                var password = $('#password').val();
-
-                var signUpJson = {};
-                signUpJson.id = 0;
-                signUpJson.name = name;
-                signUpJson.email = email;
-                signUpJson.password = password;
-
-                signUp(signUpJson);
+            var userId;
+            var signUpButton = $('<button></button>').text('Sign Up');
+            signUpButton.on('click', function() {
+                var signUpData = getSignUpData();
+                userId = signUp(signUpData);
             });
 
-            $('body').append(inputSignUp);
+            $('#signup').append(signUpButton);
+
+            $('#login').append(name);
+            $('#login').append(password);
+
+            var logInButton= $('<button></button>').text('Log In');
+            var accessToken;
+            logInButton.on('click', function() {
+                var logInData = getLogInData();
+                accessToken = logIn(logInData);
+            });
+            $('#login').append(logInButton);
         },
 
         "listnerClick": function(eb) {

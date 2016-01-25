@@ -1,6 +1,3 @@
-//$(document).ready(function() {
-//    chat.init();
-//});
 
 var chat = function(rootDivId, users) {
 
