@@ -23,9 +23,9 @@ import java.util.Properties;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan({"com.teamdev.controller", "com.teamdev.service"})
+@ComponentScan({"com.teamdev.controller", "com.teamdev"})
 @EnableAspectJAutoProxy
-@EnableJpaRepositories("com.teamdev.jpa")
+@EnableJpaRepositories("com.teamdev.jpa.repository")
 @EnableTransactionManagement
 public class SpringWebRepoConfig {
 

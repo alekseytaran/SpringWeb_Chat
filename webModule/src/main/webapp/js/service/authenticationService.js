@@ -23,7 +23,7 @@ function logIn(logInDto, eb) {
         data: data,
         contentType:"application/json; charset=utf-8",
         success: function (response) {
-            eb.postMessage("LOGIN", response.accessToken);
+            eb.postMessage("LOGIN", response);
         },
         error: function () {
             alert('User was not logged in');

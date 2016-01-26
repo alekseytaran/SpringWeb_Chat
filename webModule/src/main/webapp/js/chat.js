@@ -21,9 +21,10 @@ var chat = function(rootDivId, users) {
     eb.registerConsumer("CREATE_CHATROOM", function(chatRoomId) {
         appState.chatRoomsId.push(chatRoomId);
     });
-    eb.registerConsumer("LOGIN", function(accessToken) {
-        chatRoomView.createChatRoom(accessToken, appState.userId, eb);
-        appState.accessToken = accessToken;
+    eb.registerConsumer("LOGIN", function(logInDto) {
+        chatRoomView.createChatRoom(logInDto.accessToken, logInDto.userId, eb);
+        appState.accessToken = logInDto.accessToken;
+        appState.userId = logInDto.userId;
     });
     eb.registerConsumer("GET_USERID", function(userId) {
         chatRoomView.updateStatus(userId);

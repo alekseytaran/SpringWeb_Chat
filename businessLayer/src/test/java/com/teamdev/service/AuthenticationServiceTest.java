@@ -11,8 +11,8 @@ import static org.junit.Assert.*;
 
 public class AuthenticationServiceTest extends InitialData {
 
-    private String name = "vasya";
-    private String email = "vasya@gemail.com";
+    private String name = "vasya1";
+    private String email = "vasya1@gemail.com";
     private String password = "qwerty";
 
     @Test
