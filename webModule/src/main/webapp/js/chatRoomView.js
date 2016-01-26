@@ -83,6 +83,7 @@ var ChatRoomView = function(users, rootDivId) {
         },
 
         "renderListChats": function(chats) {
+            $('#chatsarea').prepend('<p>List of available chats:</p>');
             var $ul  = $('#chatslist');
             for(var i = 0; i < chats.length; i++) {
                 var $li  = $('<li>');
