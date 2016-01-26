@@ -11,7 +11,7 @@ EventBus.prototype.postMessage = function(topic, message){
     for(var i in this._consumers) {
         if (topic === this._consumers[i].topic) {
             var callback = this._consumers[i];
-            setTimeout(function () {;
+            setTimeout(function () {
                 callback.context(message);
             }, 0);
         }
