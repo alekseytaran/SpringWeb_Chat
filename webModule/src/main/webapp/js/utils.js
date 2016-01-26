@@ -1,7 +1,3 @@
-function signUpForm(innerHtml) {
-
-}
-
 function getSignUpData() {
     var name = $('#signup input[name=name]').val();
     var email = $('#signup  input[name=email]').val();
@@ -27,8 +23,11 @@ function getLogInData() {
     return logInObject;
 }
 
-function changeStatus() {
-
+function updateChatsRoomList (accessToken, userId, eb) {
+    //this._eb = eb;
+    //var update = setInterval(function() {
+    //    findChatRooms(accessToken, userId, this._eb);
+    //}, 5000);
 }
 
 

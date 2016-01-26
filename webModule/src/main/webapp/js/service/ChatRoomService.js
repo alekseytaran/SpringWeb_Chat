@@ -6,7 +6,7 @@ function createRoom(chatRoomDto, userId, accessToken, eb) {
         data: data,
         contentType:"application/json; charset=utf-8",
         success: function (response) {
-             eb.postMessage("CREATE_CHATROOM", response.chatRoomId);
+            eb.postMessage("CREATE_CHATROOM", response.chatRoomId);
         },
         error: function () {
             alert('Chat room was not created');

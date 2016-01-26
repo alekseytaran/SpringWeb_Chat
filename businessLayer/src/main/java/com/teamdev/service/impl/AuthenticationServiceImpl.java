@@ -57,6 +57,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         AuthenticationToken authenticationToken = new AuthenticationToken(accessToken, user, validTime);
 
+        if (authenticationRepository.findByAccessToken(accessToken) != null) {
+            throw new ValidationException("Access token has already existed in db");
+        }
         AuthenticationToken newAuthenticationToken = authenticationRepository.save(authenticationToken);
 
         user.setAuthenticationToken(newAuthenticationToken);

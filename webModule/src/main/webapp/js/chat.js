@@ -15,8 +15,12 @@ var chat = function(rootDivId, users) {
 
     chatRoomView.init(eb);
 
+    eb.registerConsumer("OPEN_CHAT", function(name) {
+        chatRoomView.openChatRoom(name);
+    });
     eb.registerConsumer("FIND_ALL_CHATS", function(chats) {
-        chatRoomView.renderListChats(chats);
+        chatRoomView.renderListChats(chats, eb);
+        updateChatsRoomList(appState.accessToken, appState.userId, eb);
     });
     eb.registerConsumer("CREATE_CHATROOM", function(chatRoomId) {
         appState.chatRoomsId.push(chatRoomId);

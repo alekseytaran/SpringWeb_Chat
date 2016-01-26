@@ -31,7 +31,7 @@ var ChatRoomView = function(users, rootDivId) {
             $login.append(name);
             $login.append(password);
 
-            var logInButton= $('<button></button>').text('Log In');
+            var logInButton= $('<button>').text('Log In');
             var accessToken;
             logInButton.on('click', function() {
                 var logInData = getLogInData();
@@ -65,7 +65,7 @@ var ChatRoomView = function(users, rootDivId) {
 
             this._eb = eb;
 
-            var createChatRoom = $('<button></button>').text('Create chat');
+            var createChatRoom = $('<button>').text('Create chat');
             var chatRoomName = '<p>Chat room name:<br><input name="chatRoomName"  type="text" size="40"></p>';
             var $chatsarea = $('#chatsarea');
             $chatsarea.append(chatRoomName);
@@ -78,21 +78,48 @@ var ChatRoomView = function(users, rootDivId) {
 
                 userId = createRoom(chatRoomDto, userId, accessToken, this._eb);
             }.bind(this));
-
             findChatRooms(accessToken, userId, eb);
         },
 
-        "renderListChats": function(chats) {
-            $('#chatsarea').prepend('<p>List of available chats:</p>');
-            var $ul  = $('#chatslist');
-            for(var i = 0; i < chats.length; i++) {
-                var $li  = $('<li>');
-                txt = chats[i].roomName;
-                $li.append(txt);
-                $ul.append($li);
+        "renderListChats": function(chats, eb) {
+            var $chatslist = $('#chatslist');
+
+            $chatslist.empty();
+
+            var $ul  = $('<ul>');
+
+            var $chatsTxt = $('<p>');
+
+            if (chats.length === 0) {
+                $chatsTxt.html('List of available chats: empty');
+            } else {
+                $chatsTxt.html('List of available chats:');
+                for(var i = 0; i < chats.length; i++) {
+                    var $li  = $('<li>');
+                    name = chats[i].roomName;
+                    $li.append(name);
+                    $li.on('click', function() {
+                        eb.postMessage("OPEN_CHAT", name);
+                    });
+                    $ul.append($li);
+                }
             }
 
-        }
+            $chatslist.prepend($chatsTxt);
+            $chatslist.append($ul);
+        },
 
+        "openChatRoom": function(name) {
+            var roomName = name+"Room";
+            var chatDiv = '<div id='+ roomName + '>';
+            var divElement = $('#Main_chat').append(chatDiv);
+
+            var postMessage = $('<button>').text('Send');
+            var chatTextarea = $('<textarea rows="4" cols="50">');
+            var userTextarea = $('<textarea rows="2" cols="30">');
+            $(divElement).append(chatTextarea);
+            $(divElement).append(postMessage);
+            $(divElement).append(userTextarea);
+        }
     };
 };
