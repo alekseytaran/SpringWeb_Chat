@@ -19,7 +19,7 @@ var ChatRoomView = function(users, rootDivId) {
             $signup.append(innerHtml);
 
             var userId;
-            var signUpButton = $('<button></button>').text('Sign Up');
+            var signUpButton = $('<button>').text('Sign Up').addClass("btn btn-sm btn-primary");
             signUpButton.on('click', function() {
                 var signUpData = getSignUpData();
                 userId = signUp(signUpData, this._eb);
@@ -31,7 +31,7 @@ var ChatRoomView = function(users, rootDivId) {
             $login.append(name);
             $login.append(password);
 
-            var logInButton= $('<button>').text('Log In');
+            var logInButton= $('<button>').text('Log In').addClass("btn btn-sm btn-primary");
             var accessToken;
             logInButton.on('click', function() {
                 var logInData = getLogInData();
@@ -76,12 +76,12 @@ var ChatRoomView = function(users, rootDivId) {
                 chatRoomDto.id = 0;
                 chatRoomDto.roomName = name;
 
-                userId = createRoom(chatRoomDto, userId, accessToken, this._eb);
+                chatRoomId = createRoom(chatRoomDto, userId, accessToken, this._eb);
             }.bind(this));
             findChatRooms(accessToken, userId, eb);
         },
 
-        "renderListChats": function(chats, eb) {
+        "renderListChats": function(chats, userId, accessToken, eb) {
             var $chatslist = $('#chatslist');
 
             $chatslist.empty();
@@ -94,32 +94,58 @@ var ChatRoomView = function(users, rootDivId) {
                 $chatsTxt.html('List of available chats: empty');
             } else {
                 $chatsTxt.html('List of available chats:');
-                for(var i = 0; i < chats.length; i++) {
+            }
+            for(var i = 0; i < chats.length; i++) {
+                var catchIndex = (function(x) {
                     var $li  = $('<li>');
-                    name = chats[i].roomName;
-                    $li.append(name);
+                    $li.append(chats[x].roomName);
                     $li.on('click', function() {
-                        eb.postMessage("OPEN_CHAT", name);
+                        joinUserInChat(chats[x], userId, accessToken);
+                        eb.postMessage("OPEN_CHAT", chats[x]);
                     });
                     $ul.append($li);
-                }
+                })(i);
             }
 
             $chatslist.prepend($chatsTxt);
             $chatslist.append($ul);
         },
 
-        "openChatRoom": function(name) {
-            var roomName = name+"Room";
-            var chatDiv = '<div id='+ roomName + '>';
-            var divElement = $('#Main_chat').append(chatDiv);
+        "openChatRoom": function(chatName, chatRoomId, accessToken, userId, eb) {
+            var roomName = chatName+"Room";
+            var chatDiv = $('<div>').attr({id: roomName});
 
-            var postMessage = $('<button>').text('Send');
-            var chatTextarea = $('<textarea rows="4" cols="50">');
-            var userTextarea = $('<textarea rows="2" cols="30">');
-            $(divElement).append(chatTextarea);
-            $(divElement).append(postMessage);
-            $(divElement).append(userTextarea);
+            var postMessageButton = $('<button>').text('Send');
+            var messageWindow = $('<div rows="4" cols="50">').attr({id: chatRoomId});
+            var userField = $('<input>');
+            chatDiv.text(roomName + ':');
+            chatDiv.append(messageWindow);
+            chatDiv.append(postMessageButton);
+            chatDiv.append(userField);
+
+            $('#Main_chat').append(chatDiv);
+
+            postMessageButton.on('click', function() {
+                var text = userField.val();
+                var messageDto = {};
+                messageDto.text = text;
+                messageDto.userId = userId;
+                messageDto.chatRoomId = chatRoomId;
+
+                var messageId = postUserMessage(accessToken, userId, messageDto, eb);
+            })
+        },
+
+        "updateChatMessages": function(messages) {
+
+            for(var i = 0; i < messages.length; i++) {
+                var chatRoomId = messages[i].chatRoomId.chatRoomId;
+                var $chatRoomId = $('#' + chatRoomId);
+                if (i == 0) {
+                    $chatRoomId.empty();
+                }
+                $($chatRoomId).append(messages[i].text + '<br>');
+            }
         }
     };
 };

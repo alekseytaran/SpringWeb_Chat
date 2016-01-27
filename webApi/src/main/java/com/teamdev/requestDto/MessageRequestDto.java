@@ -5,18 +5,18 @@ import com.teamdev.requestDto.wrappers.UserId;
 
 import java.util.Date;
 
-public class MessageDto {
+public class MessageRequestDto {
     private Long id;
     private String text;
-    private UserId userId;
-    private ChatRoomId chatRoomId;
+    private Long userId;
+    private Long chatRoomId;
     private Date creationTime;
 
-    public MessageDto(String text, UserId userId, ChatRoomId chatRoomId, Date creationTime) {
+    public MessageRequestDto(String text, Long userId, Long chatRoomId) {
         this.text = text;
         this.userId = userId;
         this.chatRoomId = chatRoomId;
-        this.creationTime = creationTime;
+        this.creationTime = new Date(System.currentTimeMillis());
     }
 
     public String getText() {
@@ -27,15 +27,15 @@ public class MessageDto {
         return creationTime;
     }
 
-    public UserId getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(UserId userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public ChatRoomId getChatRoomId() {
+    public Long getChatRoomId() {
         return chatRoomId;
     }
 

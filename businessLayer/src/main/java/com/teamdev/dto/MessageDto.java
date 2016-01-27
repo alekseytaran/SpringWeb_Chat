@@ -5,18 +5,18 @@ import com.teamdev.requestDto.wrappers.UserId;
 
 import java.util.Date;
 
-public class MessageDto {
+public class MessageDto implements Comparable<MessageDto> {
     private Long id;
     private String text;
     private UserId userId;
     private ChatRoomId chatRoomId;
     private Date creationTime;
 
-    public MessageDto(String text, UserId userId, ChatRoomId chatRoomId, Date creationTime) {
+    public MessageDto(String text, UserId userId, ChatRoomId chatRoomId) {
         this.text = text;
         this.userId = userId;
         this.chatRoomId = chatRoomId;
-        this.creationTime = creationTime;
+        this.creationTime = new Date(System.currentTimeMillis());
     }
 
     public String getText() {
@@ -43,4 +43,8 @@ public class MessageDto {
         return id;
     }
 
+    @Override
+    public int compareTo(MessageDto anotherMessageDto) {
+        return this.getCreationTime().getTime() > anotherMessageDto.getCreationTime().getTime() ? 1 : -1;
+    }
 }

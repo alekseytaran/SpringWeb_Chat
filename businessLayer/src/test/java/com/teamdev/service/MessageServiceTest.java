@@ -1,7 +1,6 @@
 package com.teamdev.service;
 
 import com.teamdev.dto.AuthenticationTokenDto;
-import com.teamdev.dto.MessageDto;
 import com.teamdev.requestDto.wrappers.ChatRoomId;
 import com.teamdev.requestDto.wrappers.MessageId;
 import com.teamdev.requestDto.wrappers.UserId;
@@ -25,8 +24,7 @@ public class MessageServiceTest extends InitialData{
         AuthenticationTokenDto tokenDto = logIn(name, password);
 
         ChatRoomId chatRoomId = chatRoomService.createChatRoom(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()), roomName);
-        MessageId messageId = messageService.postMessage(tokenDto.getAccessToken(),
-                new MessageDto(text, new UserId(tokenDto.getUserId()), new ChatRoomId(chatRoomId.getChatRoomId()), new Date(System.currentTimeMillis())));
+        MessageId messageId = messageService.postMessage(tokenDto.getAccessToken(), userId, chatRoomId, text, new Date(System.currentTimeMillis()));
 
         assertNotEquals("Message wasn't sent", 0, messageId);
     }

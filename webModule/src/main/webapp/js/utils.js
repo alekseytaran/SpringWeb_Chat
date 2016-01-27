@@ -24,10 +24,20 @@ function getLogInData() {
 }
 
 function updateChatsRoomList (accessToken, userId, eb) {
-    //this._eb = eb;
-    //var update = setInterval(function() {
-    //    findChatRooms(accessToken, userId, this._eb);
-    //}, 5000);
+    this._eb = eb;
+    setTimeout(function() {
+        findChatRooms(accessToken, userId, this._eb);
+    }, 5000);
+}
+
+function updateChat(accessToken, userId, chatRoomsId, eb) {
+    for (var i = 0; i < chatRoomsId.length; i++) {
+        var catchIndex = (function (x) {
+            setTimeout(function () {
+                getMessagesFromChat(accessToken, userId, chatRoomsId[x], eb);
+            }, 5000);
+        })(i);
+    }
 }
 
 

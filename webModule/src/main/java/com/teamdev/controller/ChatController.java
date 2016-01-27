@@ -2,10 +2,13 @@ package com.teamdev.controller;
 
 import com.google.common.collect.ImmutableSet;
 import com.teamdev.dto.ChatRoomDto;
+import com.teamdev.dto.MessageDto;
 import com.teamdev.dto.UserDto;
 import com.teamdev.requestDto.wrappers.ChatRoomId;
+import com.teamdev.requestDto.wrappers.MessageId;
 import com.teamdev.requestDto.wrappers.UserId;
 import com.teamdev.service.ChatRoomService;
+import com.teamdev.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -33,7 +36,7 @@ public class ChatController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(value = "/join/{chatid}/{userid}", params = {"token"}, method = RequestMethod.GET)
+    @RequestMapping(value = "/join/{chatid}/{userid}", params = {"token"}, method = RequestMethod.POST)
     @ResponseBody
     public void joinUserToChat(@RequestParam String token, @PathVariable Long userid, @PathVariable Long chatid) {
         UserId userId = new UserId(userid);
@@ -48,6 +51,5 @@ public class ChatController {
         ChatRoomId chatRoomId = new ChatRoomId(chatid);
         return chatRoomService.getUsersDataInChat(token, userId, chatRoomId);
     }
-
 
 }

@@ -1,6 +1,6 @@
 package com.teamdev.dto;
 
-public class ChatRoomDto {
+public class ChatRoomDto implements Comparable<ChatRoomDto>{
     private Long id;
     private String roomName;
 
@@ -19,5 +19,10 @@ public class ChatRoomDto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public int compareTo(ChatRoomDto anotherChatRoomDto) {
+        return this.id > anotherChatRoomDto.id ? 1 : -1 ;
     }
 }

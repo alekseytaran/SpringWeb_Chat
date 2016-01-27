@@ -29,3 +29,16 @@ function findChatRooms(accessToken, userId, eb) {
         dataType: 'json'
     });
 }
+
+function joinUserInChat(chatsInfo, userid, accessToken) {
+    var chatId = chatsInfo.id;
+    $.ajax({
+        url: "http://localhost:8080/chats/chat/join/" + chatId + "/" + userid + "?token=" + accessToken,
+        type: "POST",
+        success: function () {
+        },
+        error: function () {
+        }
+    });
+
+}

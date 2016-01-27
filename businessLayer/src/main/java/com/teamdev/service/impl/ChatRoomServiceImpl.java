@@ -2,6 +2,7 @@ package com.teamdev.service.impl;
 
 import com.google.common.collect.ImmutableSet;
 import com.teamdev.dto.ChatRoomDto;
+import com.teamdev.dto.MessageDto;
 import com.teamdev.dto.UserDto;
 import com.teamdev.requestDto.wrappers.ChatRoomId;
 import com.teamdev.requestDto.wrappers.UserId;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Service
 public class ChatRoomServiceImpl implements ChatRoomService {
@@ -38,7 +40,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
     @Override
     public ImmutableSet<ChatRoomDto> findAllChatRooms(String accessToken, UserId userId) {
-        Set<ChatRoomDto> allChatRooms = new HashSet<>();
+        Set<ChatRoomDto> allChatRooms = new TreeSet<>();
         for (ChatRoom chatRoom: chatRoomRepository.findAll()) {
             allChatRooms.add(new ChatRoomDto(chatRoom.getId(), chatRoom.getRoomName()));
         }
@@ -83,4 +85,6 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
         return ImmutableSet.copyOf(usersDto);
     }
+
+
 }

@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.teamdev.requestDto.ChatRoomDto;
 import com.teamdev.requestDto.LogInDto;
-import com.teamdev.requestDto.MessageDto;
+import com.teamdev.requestDto.MessageRequestDto;
 import com.teamdev.requestDto.UserDto;
 import com.teamdev.requestDto.wrappers.ChatRoomId;
 import com.teamdev.requestDto.wrappers.UserId;
@@ -20,7 +20,6 @@ import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -50,9 +49,9 @@ public class MessageTest extends ConfigData{
         joinUserToChat(httpClient, URL_JOIN_USER_TO_CHAT);
 
         try {
-            MessageDto messageDto = new MessageDto("hello chat", new UserId(Long.parseLong(userId)), new ChatRoomId(Long.parseLong(roomId)), new Date(System.currentTimeMillis()));
-            json = gson.toJson(messageDto);
-            HttpPost request = new HttpPost(URL + "/message" + "?token=" + token);
+            MessageRequestDto messageRequestDto = new MessageRequestDto("hello chat", Long.parseLong(userId), Long.parseLong(roomId));
+            json = gson.toJson(messageRequestDto);
+            HttpPost request = new HttpPost(URL + "/message/" + userId + "?token=" + token);
             request.setHeader("Content-Type", "application/json");
             StringEntity stringEntity = new StringEntity(json);
             request.setEntity(stringEntity);
@@ -76,9 +75,6 @@ public class MessageTest extends ConfigData{
             fail("IOException was appeared");
         }
 
-        String URL_CLEAN_DB = URL + "/delete/" + userId + "?token=" + token;
-
-        cleanDb(URL_CLEAN_DB, httpClient);
     }
 
 }
