@@ -1,5 +1,5 @@
 
-var chat = function(rootDivId, users) {
+var chat = function(rootDivId) {
 
     var eb = new EventBus();
 
@@ -10,13 +10,12 @@ var chat = function(rootDivId, users) {
         openChatsId: []
     };
 
-    var chatRoomModel = new ChatRoomModel(eb, users);
-
-    var chatRoomView = new ChatRoomView(users, rootDivId);
+    var chatRoomView = new ChatRoomView(rootDivId);
 
     chatRoomView.init(eb);
 
     eb.registerConsumer("UPDATE_CHATS", function(messages) {
+        updateChat(appState.accessToken, appState.userId, appState.openChatsId, eb);
         chatRoomView.updateChatMessages(messages);
     });
 
@@ -43,19 +42,17 @@ var chat = function(rootDivId, users) {
         chatRoomView.createChatRoom(logInDto.accessToken, logInDto.userId, eb);
         appState.accessToken = logInDto.accessToken;
         appState.userId = logInDto.userId;
+        updateUserStatus('Congratulations! You are in chat!');
     });
 
     eb.registerConsumer("GET_USERID", function(userId) {
         chatRoomView.updateStatus(userId);
         appState.userId = userId;
+        updateUserStatus('You were registered! Please, log in!');
     });
-
-    eb.registerConsumer("ADDED_MESSAGE", chatRoomModel.validatedToPush.bind(chatRoomModel));
-
-    eb.registerConsumer("RERENDER_UI", chatRoomView.renderUI);
 
 };
 
 $(function() {
-    new chat('Main_chat', [new User('stas', 0), new User('ira', 1), new User('dasha', 2)]);
+    new chat('Main_chat');
 });

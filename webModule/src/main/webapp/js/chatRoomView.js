@@ -1,4 +1,4 @@
-var ChatRoomView = function(users, rootDivId) {
+var ChatRoomView = function(rootDivId) {
     var allText = '';
     return {
         "init": function (eb) {

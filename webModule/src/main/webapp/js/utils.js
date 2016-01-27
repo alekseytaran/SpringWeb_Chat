@@ -40,4 +40,10 @@ function updateChat(accessToken, userId, chatRoomsId, eb) {
     }
 }
 
+function updateUserStatus (text) {
+    var $userstatus = $('#userstatus');
+    $userstatus.empty();
+    $userstatus.text(text);
+}
+
 

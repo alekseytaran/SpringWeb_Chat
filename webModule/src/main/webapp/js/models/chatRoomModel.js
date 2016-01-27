@@ -1,4 +1,4 @@
-var ChatRoomModel = function(eb, users) {
+var ChatRoomModel = function(eb) {
     this._eb = eb;
     this._userOfDialogs = users;
     this._allDialogs = [];
