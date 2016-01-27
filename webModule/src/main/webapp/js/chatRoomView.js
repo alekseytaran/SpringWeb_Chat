@@ -7,9 +7,9 @@ var ChatRoomView = function(rootDivId) {
 
             var innerHtml = '';
 
-            var name = '<p>Name:<br><input name="name"  type="text" size="40"></p>';
-            var password = '<p>Password:<br><input name="password" type="password" size="40"></p>';
-            var email = '<p>Email:<br><input name="email" type="text" size="40"></p>';
+            var name = '<label class="control-label">Name:</label><input name="name"  type="text" size="40" class="form-control">';
+            var password = '<label class="control-label">Password:</label><input name="password" type="password" size="40" class="form-control">';
+            var email = '<label class="control-label">Email:</label><input name="email" type="text" size="40" class="form-control">';
 
             innerHtml += name;
             innerHtml += email;
@@ -25,7 +25,8 @@ var ChatRoomView = function(rootDivId) {
                 userId = signUp(signUpData, this._eb);
             }.bind(this));
 
-            $signup.append(signUpButton);
+            $signup.parents('.form-horizontal').append(signUpButton);
+            //$signup.parents('.form-horizontal').append('<hr>');
 
             var $login = $('#login');
             $login.append(name);
@@ -37,7 +38,9 @@ var ChatRoomView = function(rootDivId) {
                 var logInData = getLogInData();
                 accessToken = logIn(logInData, this._eb);
             }.bind(this));
-            $login.append(logInButton);
+            $login.parents('.form-horizontal').append(logInButton);
+
+            //$login.parents('.form-horizontal').append('<hr>');
         },
 
         "renderUI": function(allDialogs) {
