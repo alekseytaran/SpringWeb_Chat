@@ -20,6 +20,7 @@ import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -49,7 +50,7 @@ public class MessageTest extends ConfigData{
         joinUserToChat(httpClient, URL_JOIN_USER_TO_CHAT);
 
         try {
-            MessageRequestDto messageRequestDto = new MessageRequestDto("hello chat", Long.parseLong(userId), Long.parseLong(roomId));
+            MessageRequestDto messageRequestDto = new MessageRequestDto("hello chat", Long.parseLong(userId), Long.parseLong(roomId), new Date(System.currentTimeMillis()));
             json = gson.toJson(messageRequestDto);
             HttpPost request = new HttpPost(URL + "/message/" + userId + "?token=" + token);
             request.setHeader("Content-Type", "application/json");

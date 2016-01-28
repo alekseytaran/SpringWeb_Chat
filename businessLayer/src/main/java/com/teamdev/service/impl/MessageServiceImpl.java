@@ -45,7 +45,7 @@ public class MessageServiceImpl implements MessageService {
         Set<MessageDto> allMessagesFromChat = new TreeSet<>();
         for (Message message: messageRepository.findByChatRoomId(chatRoomId.getChatRoomId())) {
             allMessagesFromChat.add(new MessageDto(message.getText(), new UserId(message.getUser().getId()), message.getUser().getName(),
-                    new ChatRoomId(message.getChatRoom().getId())));
+                    new ChatRoomId(message.getChatRoom().getId()), message.getCreationTime()));
         }
 
         return ImmutableSet.copyOf(allMessagesFromChat);

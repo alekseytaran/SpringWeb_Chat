@@ -12,11 +12,11 @@ public class MessageRequestDto {
     private Long chatRoomId;
     private Date creationTime;
 
-    public MessageRequestDto(String text, Long userId, Long chatRoomId) {
+    public MessageRequestDto(String text, Long userId, Long chatRoomId, Date creationTime) {
         this.text = text;
         this.userId = userId;
         this.chatRoomId = chatRoomId;
-        this.creationTime = new Date(System.currentTimeMillis());
+        this.creationTime = creationTime;
     }
 
     public String getText() {

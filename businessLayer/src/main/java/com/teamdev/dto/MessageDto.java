@@ -13,12 +13,12 @@ public class MessageDto implements Comparable<MessageDto> {
     private ChatRoomId chatRoomId;
     private Date creationTime;
 
-    public MessageDto(String text, UserId userId, String userName, ChatRoomId chatRoomId) {
+    public MessageDto(String text, UserId userId, String userName, ChatRoomId chatRoomId, Date creationTime) {
         this.text = text;
         this.userId = userId;
         this.userName = userName;
         this.chatRoomId = chatRoomId;
-        this.creationTime = new Date(System.currentTimeMillis());
+        this.creationTime = creationTime;
     }
 
     public String getText() {
