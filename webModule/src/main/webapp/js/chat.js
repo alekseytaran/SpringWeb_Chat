@@ -47,7 +47,7 @@ var chat = function(rootDivId) {
     });
 
     eb.registerConsumer("GET_USERID", function(userId) {
-        chatRoomView.updateStatus(userId);
+        //chatRoomView.updateStatus(userId);
         appState.userId = userId;
         updateUserStatus('You were registered! Please, log in!');
     });

@@ -115,12 +115,15 @@ var ChatRoomView = function(rootDivId) {
             var $openchatarea = $('#openchatarea');
 
             var postMessageButton = $('<button>').text('Send').addClass("btn btn-sm btn-primary");
-            var messagesWindow = $('<div rows="4" cols="50">').attr({id: chatRoomId});
+            var messagesWindow = $('<div rows="4" cols="50">').attr('id' ,'messageswindow').addClass("panel-footer");
             var userField = $('<input>');
-            $openchatarea.text(chatName + ':');
-            $openchatarea.append(messagesWindow);
+
+            var $chatName = $('<div>').text(chatName + ':').addClass("panel-body");
+
+            $openchatarea.append($chatName);
             $openchatarea.append(postMessageButton);
             $openchatarea.append(userField);
+            $openchatarea.append(messagesWindow);
 
             postMessageButton.on('click', function(e) {
                 var text = userField.val();
@@ -139,15 +142,16 @@ var ChatRoomView = function(rootDivId) {
         },
 
         "updateChatMessages": function(messages) {
+            var $messageswindow = $('#messageswindow');
+            $messageswindow.empty();
+            var $ul = $('<ul>').addClass("list-group");
 
             for(var i = 0; i < messages.length; i++) {
-                var chatRoomId = messages[i].chatRoomId.chatRoomId;
-                var $chatRoomId = $('#' + chatRoomId);
-                if (i == 0) {
-                    $chatRoomId.empty();
-                }
-                $($chatRoomId).append(messages[i].userName + ":  " + messages[i].text + ' :   ' + messages[i].creationTime +'<br>');
+                var messageText = messages[i].userName + ":  <b>" + messages[i].text + '</b> :   ' + messages[i].creationTime;
+                var $li = $('<li>').html(messageText).attr({role: "presentation"}).addClass("list-group-item");
+                $ul.append($li);
             }
+            $messageswindow.append($ul);
         }
     };
 };
