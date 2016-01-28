@@ -7,14 +7,6 @@ EventBus.prototype.registerConsumer = function(topic, context){
     this._consumers.push({topic: topic, context: ctx});
 };
 
-EventBus.prototype.unsubscribeConsumer = function(topic, context){
-    for(var i in this._consumers) {
-        if (topic === this._consumers[i].topic) {
-
-        }
-    }
-};
-
 EventBus.prototype.postMessage = function(topic, message){
     for(var i in this._consumers) {
         if (topic === this._consumers[i].topic) {
