@@ -44,7 +44,7 @@ public class MessageServiceImpl implements MessageService {
     public ImmutableSet<MessageDto> findAllMessagesInChat(String accessToken, UserId userId, ChatRoomId chatRoomId) {
         Set<MessageDto> allMessagesFromChat = new TreeSet<>();
         for (Message message: messageRepository.findByChatRoomId(chatRoomId.getChatRoomId())) {
-            allMessagesFromChat.add(new MessageDto(message.getText(), new UserId(message.getUser().getId()),
+            allMessagesFromChat.add(new MessageDto(message.getText(), new UserId(message.getUser().getId()), message.getUser().getName(),
                     new ChatRoomId(message.getChatRoom().getId())));
         }
 

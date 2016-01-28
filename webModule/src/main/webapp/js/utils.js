@@ -31,13 +31,9 @@ function updateChatsRoomList (accessToken, userId, eb) {
 }
 
 function updateChat(accessToken, userId, chatRoomsId, eb) {
-    for (var i = 0; i < chatRoomsId.length; i++) {
-        var catchIndex = (function (x) {
-            setTimeout(function () {
-                getMessagesFromChat(accessToken, userId, chatRoomsId[x], eb);
-            }, 5000);
-        })(i);
-    }
+    setTimeout(function () {
+        getMessagesFromChat(accessToken, userId, chatRoomsId, eb);
+    }, 5000);
 }
 
 function updateUserStatus (text) {

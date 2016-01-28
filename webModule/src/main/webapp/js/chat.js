@@ -7,7 +7,7 @@ var chat = function(rootDivId) {
         userId: null,
         accessToken: null,
         chatRoomsId: [],
-        openChatsId: []
+        openChatId: null
     };
 
     var chatRoomView = new ChatRoomView(rootDivId);
@@ -15,18 +15,19 @@ var chat = function(rootDivId) {
     chatRoomView.init(eb);
 
     eb.registerConsumer("UPDATE_CHATS", function(messages) {
-        updateChat(appState.accessToken, appState.userId, appState.openChatsId, eb);
+        updateChat(appState.accessToken, appState.userId, appState.openChatId, eb);
         chatRoomView.updateChatMessages(messages);
     });
 
     eb.registerConsumer("POST_MESSAGE", function (messageId) {
-        updateChat(appState.accessToken, appState.userId, appState.openChatsId, eb);
+        updateChat(appState.accessToken, appState.userId, appState.openChatId, eb);
     });
 
     eb.registerConsumer("OPEN_CHAT", function(chatInfo) {
+        chatRoomView.closeChatRoom();
         chatRoomView.openChatRoom(chatInfo.roomName, chatInfo.id, appState.accessToken, appState.userId, eb);
-        appState.openChatsId.push(chatInfo.id);
-        updateChat(appState.accessToken, appState.userId, appState.openChatsId, eb);
+        appState.openChatId = chatInfo.id;
+        updateChat(appState.accessToken, appState.userId, appState.openChatId, eb);
     });
 
     eb.registerConsumer("FIND_ALL_CHATS", function(chats) {
