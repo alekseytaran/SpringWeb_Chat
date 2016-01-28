@@ -9,24 +9,26 @@
 <body>
 <div id="Main_chat" class="col-md-12">
     <h2 id="userstatus">Hello! Register, please!</h2>
-    <h4>Sign Up form:</h4>
-    <form class="form-horizontal">
-        <div class="form-group">
-            <div id="signup" class="col-md-4"></div>
-        </div>
-    </form>
-    <div class="row">
-        <hr class="col-md-4">
-    </div>
-    <h4>Log In form:</h4>
-    <form class="form-horizontal">
-        <div class="form-group">
-            <div id="login" class="col-md-4">
+    <div id="registration">
+        <h4>Sign Up form:</h4>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div id="signup" class="col-md-4"></div>
             </div>
+        </form>
+        <div class="row">
+            <hr class="col-md-4">
         </div>
-    </form>
-    <div class="row">
-        <hr class="col-md-4">
+        <h4>Log In form:</h4>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div id="login" class="col-md-4">
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <hr class="col-md-4">
+        </div>
     </div>
 
     <form class="form-horizontal">
@@ -35,8 +37,10 @@
                 <div id="createchat"></div>
                 <div id="chatslist"></div>
                 <div class="panel panel-default">
-                    <div id="openchatarea">
+                    <label>Users in current chat:</label>
+                    <div id="userlist">
                     </div>
+                    <div id="openchatarea"></div>
                 </div>
             </div>
         </div>
@@ -49,7 +53,6 @@
 
 <script type="text/javascript" src="js/models/user.js"> </script>
 <script type="text/javascript" src="js/models/message.js"> </script>
-<script type="text/javascript" src="js/models/chatRoomModel.js"> </script>
 <script type="text/javascript" src="js/utils.js"> </script>
 <script type="text/javascript" src="js/service/authenticationService.js"> </script>
 <script type="text/javascript" src="js/service/chatRoomService.js"> </script>

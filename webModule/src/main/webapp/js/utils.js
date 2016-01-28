@@ -32,7 +32,7 @@ function updateChatsRoomList (accessToken, userId, eb) {
 
 function updateChat(accessToken, userId, chatRoomsId, eb) {
     setTimeout(function () {
-        getMessagesFromChat(accessToken, userId, chatRoomsId, eb);
+        getPublicMessagesFromChat(accessToken, userId, chatRoomsId, eb);
     }, 5000);
 }
 
@@ -42,4 +42,12 @@ function updateUserStatus (text) {
     $userstatus.text(text);
 }
 
+function hideSignUpAndLogIn() {
+    $('#registration').hide();
+}
 
+function updateChatUsers(accessToken, userId, chatRoomId, eb) {
+    setTimeout(function () {
+        getUsersFromChat(accessToken, userId, chatRoomId, eb);
+    }, 5000);
+}

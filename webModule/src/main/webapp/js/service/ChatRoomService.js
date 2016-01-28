@@ -40,5 +40,19 @@ function joinUserInChat(chatsInfo, userid, accessToken) {
         error: function () {
         }
     });
+}
 
+function getUsersFromChat(accessToken, userId, chatRoomId, eb) {
+    $.ajax({
+        url: "http://localhost:8080/chats/chat/users/" + chatRoomId + "/" + userId + "?token=" + accessToken,
+        type: "GET",
+        contentType:"application/json; charset=utf-8",
+        success: function (response) {
+            eb.postMessage("GET_USERS_IN_CHAT", response);
+        },
+        error: function () {
+            alert('ChatRooms was not got');
+        },
+        dataType: 'json'
+    });
 }

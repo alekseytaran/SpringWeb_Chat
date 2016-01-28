@@ -12,7 +12,9 @@ import java.util.Date;
 @Transactional
 public interface MessageService {
 
-    MessageId postMessage(String accessToken, UserId userId, ChatRoomId chatRoomId, String text, Date creationTime) throws RuntimeException;
+    MessageId postMessage(String accessToken, UserId authorId, ChatRoomId chatRoomId, String text, Date creationTime) throws RuntimeException;
 
     ImmutableSet<MessageDto> findAllMessagesInChat(String accessToken, UserId userId, ChatRoomId chatRoomId);
+
+    MessageId postPrivateMessage(String accessToken, UserId authorId, UserId recipientId, ChatRoomId chatRoomId, String text, Date creationTime);
 }

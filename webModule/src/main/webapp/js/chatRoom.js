@@ -51,14 +51,6 @@ var ChatRoomView = function(rootDivId) {
             allText = '';
         },
 
-        "updateStatus": function(userId) {
-            if (userId !== null) {
-                $('#userstatus').append(' user registered and has id ' + userId);
-            } else {
-                $('#userstatus').append(' user id is not valid and = ' + userId);
-            }
-        },
-
         "createChatRoom": function(accessToken, userId, eb) {
             this._eb = eb;
 
@@ -152,6 +144,27 @@ var ChatRoomView = function(rootDivId) {
                 $ul.append($li);
             }
             $messageswindow.append($ul);
+        },
+
+        "updateUsersList": function(users) {
+            $('#userlist').empty();
+
+            var $ul  = $('<ul>').addClass("nav nav-tabs");
+            for(var i = 0; i < users.length; i++) {
+                var catchIndex = (function(x) {
+                    var $li = $('<li>').attr({role: "presentation"}).addClass("dropdown");
+                    var $a = $('<a>').text(users[x].name);
+                    $li.append($a);
+                    $li.on('click', function(e) {
+                        joinUserInChat(users[x], userId, accessToken);
+                        eb.postMessage("OPEN_CHAT", chats[x]);
+                        e.preventDefault(false);
+                    });
+                    $ul.append($li);
+                })(i);
+            }
+
+            $('#userlist').append($ul);
         }
     };
 };

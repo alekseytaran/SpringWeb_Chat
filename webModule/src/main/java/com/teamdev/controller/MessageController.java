@@ -36,5 +36,13 @@ public class MessageController {
         return messageService.findAllMessagesInChat(token, userId, chatRoomId);
     }
 
-
+    @RequestMapping(value = "/message/{userid}/{recipientid}", params = {"token"}, method = RequestMethod.POST)
+    @ResponseBody
+    public MessageId postPrivateMessage(@RequestParam String token, @RequestBody MessageRequestDto messageRequestDto, @PathVariable Long userid, @PathVariable Long recipientid) {
+        UserId authorId = new UserId(userid);
+        UserId recipientId = new UserId(recipientid);
+        ChatRoomId chatRoomId = new ChatRoomId(messageRequestDto.getChatRoomId());
+        String text = messageRequestDto.getText();
+        return messageService.postPrivateMessage(token, authorId, recipientId, chatRoomId, text, new Date(System.currentTimeMillis()));
+    }
 }

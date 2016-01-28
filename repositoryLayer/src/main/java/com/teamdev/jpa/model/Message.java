@@ -17,6 +17,8 @@ public class Message {
     @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.MERGE)
     private User user;
 
+    private User recipient;
+
     @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.MERGE)
     private ChatRoom chatRoom;
 
@@ -26,6 +28,14 @@ public class Message {
         this.text = text;
         this.creationTime = creationTime;
         this.user = user;
+        this.chatRoom = chatRoom;
+    }
+
+    public Message(String text, Date creationTime, User user, User recipient, ChatRoom chatRoom) {
+        this.text = text;
+        this.creationTime = creationTime;
+        this.user = user;
+        this.recipient = recipient;
         this.chatRoom = chatRoom;
     }
 
@@ -67,6 +77,14 @@ public class Message {
 
     public void setChatRoom(ChatRoom chatRoom) {
         this.chatRoom = chatRoom;
+    }
+
+    public User getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(User recipient) {
+        this.recipient = recipient;
     }
 
     @Override

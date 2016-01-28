@@ -31,11 +31,10 @@ public class MessageServiceImpl implements MessageService {
     private ChatRoomRepository chatRoomRepository;
 
     @Override
-    public MessageId postMessage(String accessToken, UserId userId, ChatRoomId chatRoomId, String text, Date creationTime) throws RuntimeException {
-
-        User user = userRepository.findOne(userId.getUserId());
+    public MessageId postMessage(String accessToken, UserId authorId, ChatRoomId chatRoomId, String text, Date creationTime) throws RuntimeException {
+        User author = userRepository.findOne(authorId.getUserId());
         ChatRoom chatRoom = chatRoomRepository.findOne(chatRoomId.getChatRoomId());
-        Message message = new Message(text, creationTime, user, chatRoom);
+        Message message = new Message(text, creationTime, author,  chatRoom);
 
         return new MessageId(messageRepository.save(message).getId());
     }
@@ -43,13 +42,24 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public ImmutableSet<MessageDto> findAllMessagesInChat(String accessToken, UserId userId, ChatRoomId chatRoomId) {
         Set<MessageDto> allMessagesFromChat = new TreeSet<>();
+        User user = userRepository.findOne(userId.getUserId());
         for (Message message: messageRepository.findByChatRoomId(chatRoomId.getChatRoomId())) {
-            allMessagesFromChat.add(new MessageDto(message.getText(), new UserId(message.getUser().getId()), message.getUser().getName(),
-                    new ChatRoomId(message.getChatRoom().getId()), message.getCreationTime()));
+            if (message.getRecipient() == null || message.getRecipient() == user) {
+                allMessagesFromChat.add(new MessageDto(message.getText(), new UserId(message.getUser().getId()), message.getUser().getName(),
+                        new ChatRoomId(message.getChatRoom().getId()), message.getCreationTime()));
+            }
         }
 
         return ImmutableSet.copyOf(allMessagesFromChat);
     }
 
+    @Override
+    public MessageId postPrivateMessage(String accessToken, UserId authorId, UserId recipientId, ChatRoomId chatRoomId, String text, Date creationTime) {
+        User author = userRepository.findOne(authorId.getUserId());
+        User recipient = userRepository.findOne(recipientId.getUserId());
+        ChatRoom chatRoom = chatRoomRepository.findOne(chatRoomId.getChatRoomId());
+        Message message = new Message(text, creationTime, author, recipient, chatRoom);
 
+        return new MessageId(messageRepository.save(message).getId());
+    }
 }
