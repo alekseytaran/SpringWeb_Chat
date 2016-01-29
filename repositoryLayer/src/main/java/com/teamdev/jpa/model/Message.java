@@ -17,6 +17,7 @@ public class Message {
     @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.MERGE)
     private User user;
 
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.MERGE)
     private User recipient;
 
     @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.MERGE)

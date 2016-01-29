@@ -106,9 +106,9 @@ var ChatRoomView = function(rootDivId) {
         "openChatRoom": function(chatName, chatRoomId, accessToken, userId, eb) {
             var $openchatarea = $('#openchatarea');
 
-            var postMessageButton = $('<button>').text('Send').addClass("btn btn-sm btn-primary");
+            var postMessageButton = $('<button>').text('Send').attr('id', 'sendbutton').addClass("btn btn-sm btn-primary");
             var messagesWindow = $('<div rows="4" cols="50">').attr('id' ,'messageswindow').addClass("panel-footer");
-            var userField = $('<input>');
+            var userField = $('<input>').attr('id', 'messageinput');
 
             var $chatName = $('<div>').text(chatName + ':').addClass("panel-body");
 
@@ -146,7 +146,7 @@ var ChatRoomView = function(rootDivId) {
             $messageswindow.append($ul);
         },
 
-        "updateUsersList": function(users) {
+        "updateUsersList": function(users, eb) {
             $('#userlist').empty();
 
             var $ul  = $('<ul>').addClass("nav nav-tabs");
@@ -156,15 +156,39 @@ var ChatRoomView = function(rootDivId) {
                     var $a = $('<a>').text(users[x].name);
                     $li.append($a);
                     $li.on('click', function(e) {
-                        joinUserInChat(users[x], userId, accessToken);
-                        eb.postMessage("OPEN_CHAT", chats[x]);
+                        eb.postMessage("OPEN_PRIVATE_CHAT", users[x]);
                         e.preventDefault(false);
                     });
                     $ul.append($li);
                 })(i);
             }
 
+            var $publicLi = $('<li>').attr({role: "presentation"}).addClass("dropdown");
+            $publicLi.append($('<a>').text('public'));
+            $ul.append($publicLi);
+            $publicLi.on('click', function(e) {
+                eb.postMessage();
+            });
+
             $('#userlist').append($ul);
+        },
+
+        "sendPrivateMessage": function (userId, accessToken, recipientId, chatRoomId, eb) {
+            var postPrivateMessageButton = $('<button>').text('Send').attr('id', 'sendprivatebutton').addClass("btn btn-sm btn-primary");
+            $('#sendbutton').hide();
+            $('#openchatarea').append(postPrivateMessageButton);
+
+            $('#sendprivatebutton').on('click', function(e) {
+                var text = $('#messageinput').val();
+                var messageDto = {};
+                messageDto.text = text;
+                messageDto.userId = userId;
+                messageDto.recipientId = recipientId;
+                messageDto.chatRoomId = chatRoomId;
+
+                postPrivateMessage(accessToken, userId, recipientId, messageDto, eb);
+                e.preventDefault(false);
+            })
         }
     };
 };

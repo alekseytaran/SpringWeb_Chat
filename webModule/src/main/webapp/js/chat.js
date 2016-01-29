@@ -14,9 +14,13 @@ var chat = function(rootDivId) {
 
     chatRoomView.init(eb);
 
+    eb.registerConsumer("OPEN_PRIVATE_CHAT", function(recipient) {
+        chatRoomView.sendPrivateMessage(appState.userId, appState.accessToken, recipient.id, appState.openChatId, eb)
+    });
+
     eb.registerConsumer("GET_USERS_IN_CHAT", function (users) {
         updateChatUsers(appState.accessToken, appState.userId, appState.openChatId, eb);
-        chatRoomView.updateUsersList(users);
+        chatRoomView.updateUsersList(users, eb);
     });
 
     eb.registerConsumer("UPDATE_CHATS", function (messages) {

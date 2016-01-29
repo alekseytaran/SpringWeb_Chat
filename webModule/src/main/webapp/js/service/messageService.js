@@ -28,10 +28,10 @@ function getPublicMessagesFromChat(accessToken, userId, chatRoomId, eb) {
     });
 }
 
-function postPrivateMessage(accessToken, authorId, recipientId, eb) {
+function postPrivateMessage(accessToken, authorId, recipientId, messageDto, eb) {
     var data = JSON.stringify(messageDto);
     $.ajax({
-        url: "http://localhost:8080/chats/chat/message/" + userId + "?token=" + accessToken,
+        url: "http://localhost:8080/chats/chat/message/" + authorId + "/" + recipientId +"?token=" + accessToken,
         type: "POST",
         data: data,
         contentType:"application/json; charset=utf-8",
