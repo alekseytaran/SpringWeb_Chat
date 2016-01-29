@@ -1,5 +1,4 @@
-
-var chat = function(rootDivId) {
+var chat = function() {
 
     var eb = new EventBus();
 
@@ -10,9 +9,13 @@ var chat = function(rootDivId) {
         openChatId: null
     };
 
-    var chatRoomView = new ChatRoomView(rootDivId);
+    var chatRoomView = new chatRoom();
 
     chatRoomView.init(eb);
+
+    eb.registerConsumer("POST_PUBLIC_MESSAGE", function() {
+        chatRoomView.sendPublicMessage(appState.openChatId, appState.accessToken, appState.userId, eb);
+    });
 
     eb.registerConsumer("OPEN_PRIVATE_CHAT", function(recipient) {
         chatRoomView.sendPrivateMessage(appState.userId, appState.accessToken, recipient.id, appState.openChatId, eb)
@@ -33,8 +36,9 @@ var chat = function(rootDivId) {
     });
 
     eb.registerConsumer("OPEN_CHAT", function (chatInfo) {
-        chatRoomView.closeChatRoom();
-        chatRoomView.openChatRoom(chatInfo.roomName, chatInfo.id, appState.accessToken, appState.userId, eb);
+        chatRoomView.cleanOldMessages();
+        chatRoomView.displayChatName(chatInfo.roomName);
+        chatRoomView.sendPublicMessage(chatInfo.id, appState.accessToken, appState.userId, eb);
         appState.openChatId = chatInfo.id;
         updateChat(appState.accessToken, appState.userId, appState.openChatId, eb);
         updateChatUsers(appState.accessToken, appState.userId, appState.openChatId, eb);
@@ -54,7 +58,7 @@ var chat = function(rootDivId) {
         appState.accessToken = logInDto.accessToken;
         appState.userId = logInDto.userId;
         updateUserStatus('Congratulations! You are in chat!');
-        hideSignUpAndLogIn();
+        goToChatsArea();
     });
 
     eb.registerConsumer("GET_USERID", function (userId) {
@@ -65,5 +69,5 @@ var chat = function(rootDivId) {
 };
 
 $(function() {
-    new chat('Main_chat');
+    new chat();
 });

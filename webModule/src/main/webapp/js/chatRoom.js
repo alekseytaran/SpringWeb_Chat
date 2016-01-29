@@ -1,71 +1,30 @@
-var ChatRoomView = function(rootDivId) {
-    var allText = '';
+var chatRoom = function() {
     return {
         "init": function (eb) {
 
             this._eb = eb;
 
-            var innerHtml = '';
-
-            var name = '<label class="control-label">Name:</label><input name="name"  type="text" size="40" class="form-control">';
-            var password = '<label class="control-label">Password:</label><input name="password" type="password" size="40" class="form-control">';
-            var email = '<label class="control-label">Email:</label><input name="email" type="text" size="40" class="form-control">';
-
-            innerHtml += name;
-            innerHtml += email;
-            innerHtml += password;
-
-            var $signup = $('#signup');
-            $signup.append(innerHtml);
-
-            var userId;
-            var signUpButton = $('<button>').text('Sign Up').addClass("btn btn-sm btn-primary");
-            signUpButton.on('click', function(e) {
+            $('#sb').on('click', function(e) {
                 var signUpData = getSignUpData();
-                userId = signUp(signUpData, this._eb);
+                signUp(signUpData, this._eb);
                 e.preventDefault(false);
             }.bind(this));
 
-            $signup.parents('.form-horizontal').append(signUpButton);
-
-            var $login = $('#login');
-            $login.append(name);
-            $login.append(password);
-
-            var logInButton= $('<button>').text('Log In').addClass("btn btn-sm btn-primary");
-            var accessToken;
-            logInButton.on('click', function(e) {
+            $('#lb').on('click', function(e) {
                 var logInData = getLogInData();
-                accessToken = logIn(logInData, this._eb);
+                logIn(logInData, this._eb);
                 e.preventDefault(false);
             }.bind(this));
-            $login.parents('.form-horizontal').append(logInButton);
-        },
-
-        "renderUI": function(allDialogs) {
-            var chat = document.getElementById('chatAreaDialog' + rootDivId);
-            for (var i = 0; i < allDialogs.length; i++) {
-                allText += allDialogs[i] + "</br>";
-            }
-            chat.innerHTML = allText;
-            allText = '';
         },
 
         "createChatRoom": function(accessToken, userId, eb) {
-            this._eb = eb;
-
-            var createChatRoom = $('<button>').text('Create chat').addClass("btn btn-sm btn-primary");
-            var chatRoomName = '<label class="control-label">Create new chat room:</label><input name="chatRoomName" class="form-control" type="text" size="40">';
-            var $createchat = $('#createchat');
-            $createchat.append(chatRoomName);
-            $createchat.append(createChatRoom);
-            createChatRoom.on('click', function(e) {
+            $('#createchat').on('click', function(e) {
                 var name = $('#chatsarea input[name=chatRoomName]').val();
                 var chatRoomDto = {};
                 chatRoomDto.id = 0;
                 chatRoomDto.roomName = name;
 
-                chatRoomId = createRoom(chatRoomDto, userId, accessToken, this._eb);
+                createRoom(chatRoomDto, userId, accessToken, eb);
                 e.preventDefault(false);
             }.bind(this));
             findChatRooms(accessToken, userId, eb);
@@ -73,13 +32,10 @@ var ChatRoomView = function(rootDivId) {
 
         "renderListChats": function(chats, userId, accessToken, eb) {
             var $chatslist = $('#chatslist');
-
             $chatslist.empty();
 
             var $ul  = $('<ul>').addClass("nav nav-tabs");
-
-            var $chatsTxt = $('<h4>');
-
+            var $chatsTxt = $('<h3>');
             if (chats.length === 0) {
                 $chatsTxt.html('Available chats: empty');
             } else {
@@ -103,38 +59,50 @@ var ChatRoomView = function(rootDivId) {
             $chatslist.append($ul);
         },
 
-        "openChatRoom": function(chatName, chatRoomId, accessToken, userId, eb) {
-            var $openchatarea = $('#openchatarea');
+        "displayChatName": function(chatName) {
+            $('#chatname').text(chatName + ':');
 
-            var postMessageButton = $('<button>').text('Send').attr('id', 'sendbutton').addClass("btn btn-sm btn-primary");
-            var messagesWindow = $('<div rows="4" cols="50">').attr('id' ,'messageswindow').addClass("panel-footer");
-            var userField = $('<input>').attr('id', 'messageinput');
+        },
 
-            var $chatName = $('<div>').text(chatName + ':').addClass("panel-body");
+        "sendPublicMessage": function(chatRoomId, accessToken, userId, eb) {
+            var $sendbutton = $('#sendbutton');
 
-            $openchatarea.append($chatName);
-            $openchatarea.append(postMessageButton);
-            $openchatarea.append(userField);
-            $openchatarea.append(messagesWindow);
+            $sendbutton.off('click');
 
-            postMessageButton.on('click', function(e) {
-                var text = userField.val();
+            $sendbutton.on('click', function(e) {
+                var text = $('#messageinput').val();
                 var messageDto = {};
                 messageDto.text = text;
                 messageDto.userId = userId;
                 messageDto.chatRoomId = chatRoomId;
 
-                var messageId = postUserMessage(accessToken, userId, messageDto, eb);
+                postUserMessage(accessToken, userId, messageDto, eb);
                 e.preventDefault(false);
             })
         },
 
-        "closeChatRoom": function() {
-            $('#openchatarea').empty();
+        "sendPrivateMessage": function (userId, accessToken, recipientId, chatRoomId, eb) {
+            $('#sendbutton').off('click');
+            $('#sendbutton').on('click', function(e) {
+                var text = $('#messageinput').val();
+                var messageDto = {};
+                messageDto.text = text;
+                messageDto.userId = userId;
+                messageDto.recipientId = recipientId;
+                messageDto.chatRoomId = chatRoomId;
+
+                postPrivateMessage(accessToken, userId, recipientId, messageDto, eb);
+                e.preventDefault(false);
+            })
+        },
+
+        "cleanOldMessages": function() {
+            $('#openchat').show();
+            $('#meesagewindow').empty();
         },
 
         "updateChatMessages": function(messages) {
-            var $messageswindow = $('#messageswindow');
+            var $messageswindow = $('#messagewindow');
             $messageswindow.empty();
             var $ul = $('<ul>').addClass("list-group");
 
@@ -152,10 +120,11 @@ var ChatRoomView = function(rootDivId) {
             var $ul  = $('<ul>').addClass("nav nav-tabs");
             for(var i = 0; i < users.length; i++) {
                 var catchIndex = (function(x) {
-                    var $li = $('<li>').attr({role: "presentation"}).addClass("dropdown");
+                    var $li = $('<li>').attr({role: "presentation"});
                     var $a = $('<a>').text(users[x].name);
                     $li.append($a);
                     $li.on('click', function(e) {
+                        $li.addClass("active");
                         eb.postMessage("OPEN_PRIVATE_CHAT", users[x]);
                         e.preventDefault(false);
                     });
@@ -167,29 +136,12 @@ var ChatRoomView = function(rootDivId) {
             $publicLi.append($('<a>').text('public'));
             $ul.append($publicLi);
             $publicLi.on('click', function(e) {
-                findChat(accessToken, userId, chatId, eb);
+                $publicLi.addClass("active");
+                eb.postMessage("POST_PUBLIC_MESSAGE");
                 e.preventDefault(false);
             });
 
             $('#userlist').append($ul);
         },
-
-        "sendPrivateMessage": function (userId, accessToken, recipientId, chatRoomId, eb) {
-            var postPrivateMessageButton = $('<button>').text('Send').attr('id', 'sendprivatebutton').addClass("btn btn-sm btn-primary");
-            $('#sendbutton').hide();
-            $('#openchatarea').append(postPrivateMessageButton);
-
-            $('#sendprivatebutton').on('click', function(e) {
-                var text = $('#messageinput').val();
-                var messageDto = {};
-                messageDto.text = text;
-                messageDto.userId = userId;
-                messageDto.recipientId = recipientId;
-                messageDto.chatRoomId = chatRoomId;
-
-                postPrivateMessage(accessToken, userId, recipientId, messageDto, eb);
-                e.preventDefault(false);
-            })
-        }
     };
 };

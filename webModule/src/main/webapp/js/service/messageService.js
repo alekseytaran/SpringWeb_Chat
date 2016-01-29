@@ -24,7 +24,7 @@ function getPublicMessagesFromChat(accessToken, userId, chatRoomId, eb) {
         },
         error: function () {
             alert('ChatRooms were not not updated');
-        },
+        }
     });
 }
 

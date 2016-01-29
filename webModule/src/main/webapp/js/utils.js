@@ -42,8 +42,9 @@ function updateUserStatus (text) {
     $userstatus.text(text);
 }
 
-function hideSignUpAndLogIn() {
+function goToChatsArea() {
     $('#registration').hide();
+    $('#chats').show();
 }
 
 function updateChatUsers(accessToken, userId, chatRoomId, eb) {
