@@ -20,6 +20,14 @@ public class ChatController {
     @Autowired
     private ChatRoomService chatRoomService;
 
+    @RequestMapping(value = "/chat/{chatid}/{userid}", params = {"token"}, method = RequestMethod.GET)
+    @ResponseBody
+    public ChatRoomDto findChat(@RequestParam String token, @PathVariable Long userid, @PathVariable Long chatid) {
+        UserId userId = new UserId(userid);
+        ChatRoomId chatRoomId = new ChatRoomId(chatid);
+        return chatRoomService.findChatRoom(token, userId, chatRoomId);
+    }
+
     @RequestMapping(value = "/chat/{userid}", params = {"token"}, method = RequestMethod.POST)
     @ResponseBody
     public ChatRoomId createChat(@RequestParam String token, @RequestBody ChatRoomDto chatRoomDto, @PathVariable Long userid) {

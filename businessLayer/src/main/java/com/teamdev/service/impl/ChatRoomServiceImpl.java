@@ -77,7 +77,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
             throw new NullPointerException("User with current id wasn't found");
         }
 
-        Set<UserDto> usersDto = new HashSet<>();
+        Set<UserDto> usersDto = new TreeSet<>();
         Set<User> users = currentChatRoom.getUsers();
         for (User user: users) {
             usersDto.add(new UserDto(user.getId(), user.getName(), user.getMail(), null));
@@ -86,5 +86,11 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         return ImmutableSet.copyOf(usersDto);
     }
 
+    @Override
+    public ChatRoomDto findChatRoom(String accessToken, UserId userId, ChatRoomId chatRoomId) {
+        ChatRoom chatRoom = chatRoomRepository.findOne(chatRoomId.getChatRoomId());
+        ChatRoomDto chatRoomDto = new ChatRoomDto(chatRoom.getId(), chatRoom.getRoomName());
 
+        return chatRoomDto;
+    }
 }

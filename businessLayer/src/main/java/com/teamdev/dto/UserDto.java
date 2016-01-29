@@ -1,6 +1,6 @@
 package com.teamdev.dto;
 
-public class UserDto {
+public class UserDto implements Comparable<UserDto> {
     private Long id;
     private String name;
     private String email;
@@ -37,5 +37,10 @@ public class UserDto {
 
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public int compareTo(UserDto anotherUserDto) {
+        return this.id > anotherUserDto.id ? 1 : -1 ;
     }
 }

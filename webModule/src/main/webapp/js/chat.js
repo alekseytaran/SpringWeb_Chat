@@ -20,7 +20,7 @@ var chat = function(rootDivId) {
 
     eb.registerConsumer("GET_USERS_IN_CHAT", function (users) {
         updateChatUsers(appState.accessToken, appState.userId, appState.openChatId, eb);
-        chatRoomView.updateUsersList(users, eb);
+        chatRoomView.updateUsersList(users, appState.openChatId, appState.userId, appState.accessToken, eb);
     });
 
     eb.registerConsumer("UPDATE_CHATS", function (messages) {

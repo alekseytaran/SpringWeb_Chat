@@ -146,7 +146,7 @@ var ChatRoomView = function(rootDivId) {
             $messageswindow.append($ul);
         },
 
-        "updateUsersList": function(users, eb) {
+        "updateUsersList": function(users, chatId, userId, accessToken, eb) {
             $('#userlist').empty();
 
             var $ul  = $('<ul>').addClass("nav nav-tabs");
@@ -167,7 +167,8 @@ var ChatRoomView = function(rootDivId) {
             $publicLi.append($('<a>').text('public'));
             $ul.append($publicLi);
             $publicLi.on('click', function(e) {
-                eb.postMessage();
+                findChat(accessToken, userId, chatId, eb);
+                e.preventDefault(false);
             });
 
             $('#userlist').append($ul);
