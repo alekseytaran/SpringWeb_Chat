@@ -142,6 +142,6 @@ var chatRoom = function() {
             });
 
             $('#userlist').append($ul);
-        },
+        }
     };
 };
