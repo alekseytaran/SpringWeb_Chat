@@ -49,6 +49,7 @@ var chatRoom = function() {
                     $li.on('click', function(e) {
                         joinUserInChat(chats[x], userId, accessToken);
                         eb.postMessage("OPEN_CHAT", chats[x]);
+                        $('#sendbutton').attr('disabled',false);
                         e.preventDefault(false);
                     });
                     $ul.append($li);
@@ -67,7 +68,8 @@ var chatRoom = function() {
         },
 
         "alertLeaveChat": function () {
-          debugger;
+            $('#chatname').append(" You leave this chat!!!");
+            $('#sendbutton').attr('disabled',true);
         },
 
         "displayChatName": function(chatName) {

@@ -49,14 +49,14 @@
             <div class="col-md-4" id="chatsarea">
                 <label class="control-label">Create new chat room:</label>
                 <input name="chatRoomName" class="form-control" type="text" size="40">
-                <button id="createchat" class="btn btn-sm btn-primary" style="margin-top: 10px">Create chat</button>
-                <div id="chatslist"></div>
+                <button id="createchat" class="btn btn-sm btn-primary" style="margin-top: 10px" st>Create chat</button>
+                <div id="chatslist" style="margin-bottom: 10px"></div>
                 <div id="openchat" class="panel panel-default" style="display:none">
                     <label>Users in current chat:</label>
                     <div id="userlist"></div>
                     <div id="openchatarea">
                         <div id="chatname" class="panel-body"></div>
-                        <div id="messagewindow" class="panel-footer" style="height: 400px;"></div>
+                        <div id="messagewindow" class="panel-footer" style="height: 400px; overflow: scroll"></div>
                         <input id="messageinput">
                         <button id="sendbutton" class="btn btn-sm btn-primary">Send</button>
                         <button id="leavechat" class="btn btn-sm btn-primary pull-right">Leave chat</button>
