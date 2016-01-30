@@ -93,4 +93,21 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
         return chatRoomDto;
     }
+
+    @Override
+    public void leaveChat(String accessToken, UserId userId, ChatRoomId chatRoomId) {
+        ChatRoom currentChatRoom = chatRoomRepository.findOne(chatRoomId.getChatRoomId());
+        if (currentChatRoom == null) {
+            throw new NullPointerException("Chat room with current id wasn't found");
+        }
+
+        User user = userRepository.findOne(userId.getUserId());
+        if (user == null) {
+            throw new NullPointerException("User with current id wasn't found");
+        }
+
+        user.getChatRooms().remove(currentChatRoom);
+        currentChatRoom.getUsers().remove(user);
+        userRepository.save(user);
+    }
 }

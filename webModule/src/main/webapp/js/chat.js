@@ -9,26 +9,30 @@ var chat = function() {
         openChatId: null
     };
 
-    var chatRoomView = new chatRoom();
+    var chatUi = new chatRoom();
 
-    chatRoomView.init(eb);
+    chatUi.init(eb);
+
+    eb.registerConsumer("LEAVE_CHAT", function() {
+        chatUi.alertLeaveChat();
+    });
 
     eb.registerConsumer("POST_PUBLIC_MESSAGE", function() {
-        chatRoomView.sendPublicMessage(appState.openChatId, appState.accessToken, appState.userId, eb);
+        chatUi.sendPublicMessage(appState.openChatId, appState.accessToken, appState.userId, eb);
     });
 
     eb.registerConsumer("OPEN_PRIVATE_CHAT", function(recipient) {
-        chatRoomView.sendPrivateMessage(appState.userId, appState.accessToken, recipient.id, appState.openChatId, eb)
+        chatUi.sendPrivateMessage(appState.userId, appState.accessToken, recipient.id, appState.openChatId, eb)
     });
 
     eb.registerConsumer("GET_USERS_IN_CHAT", function (users) {
         updateChatUsers(appState.accessToken, appState.userId, appState.openChatId, eb);
-        chatRoomView.updateUsersList(users, appState.openChatId, appState.userId, appState.accessToken, eb);
+        chatUi.updateUsersList(users, appState.openChatId, appState.userId, appState.accessToken, eb);
     });
 
     eb.registerConsumer("UPDATE_CHATS", function (messages) {
         updateChat(appState.accessToken, appState.userId, appState.openChatId, eb);
-        chatRoomView.updateChatMessages(messages);
+        chatUi.updateChatMessages(messages);
     });
 
     eb.registerConsumer("POST_MESSAGE", function (messageId) {
@@ -36,16 +40,17 @@ var chat = function() {
     });
 
     eb.registerConsumer("OPEN_CHAT", function (chatInfo) {
-        chatRoomView.cleanOldMessages();
-        chatRoomView.displayChatName(chatInfo.roomName);
-        chatRoomView.sendPublicMessage(chatInfo.id, appState.accessToken, appState.userId, eb);
+        chatUi.cleanOldMessages();
+        chatUi.displayChatName(chatInfo.roomName);
+        chatUi.sendPublicMessage(chatInfo.id, appState.accessToken, appState.userId, eb);
         appState.openChatId = chatInfo.id;
         updateChat(appState.accessToken, appState.userId, appState.openChatId, eb);
         updateChatUsers(appState.accessToken, appState.userId, appState.openChatId, eb);
+        chatUi.leaveChat(appState.openChatId, appState.accessToken, appState.userId, eb)
     });
 
     eb.registerConsumer("FIND_ALL_CHATS", function (chats) {
-        chatRoomView.renderListChats(chats, appState.userId, appState.accessToken, eb);
+        chatUi.renderListChats(chats, appState.userId, appState.accessToken, eb);
         updateChatsRoomList(appState.accessToken, appState.userId, eb);
     });
 
@@ -54,7 +59,7 @@ var chat = function() {
     });
 
     eb.registerConsumer("LOGIN", function (logInDto) {
-        chatRoomView.createChatRoom(logInDto.accessToken, logInDto.userId, eb);
+        chatUi.createChatRoom(logInDto.accessToken, logInDto.userId, eb);
         appState.accessToken = logInDto.accessToken;
         appState.userId = logInDto.userId;
         updateUserStatus('Congratulations! You are in chat!');

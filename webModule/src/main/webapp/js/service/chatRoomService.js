@@ -71,3 +71,16 @@ function findChat(accessToken, userId, chatId, eb) {
         dataType: 'json'
     });
 }
+
+function leaveChat(chatId, userId, accessToken, eb) {
+    $.ajax({
+        url: "http://localhost:8080/chats/chat/leave/" + chatId + "/" + userId + "?token=" + accessToken,
+        type: "POST",
+        success: function () {
+            eb.postMessage("LEAVE_CHAT");
+        },
+        error: function () {
+            alert("can't leave chat");
+        }
+    });
+}

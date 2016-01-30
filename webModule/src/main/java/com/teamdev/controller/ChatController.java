@@ -60,4 +60,12 @@ public class ChatController {
         return chatRoomService.getUsersDataInChat(token, userId, chatRoomId);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "/leave/{chatid}/{userid}", params = {"token"}, method = RequestMethod.POST)
+    @ResponseBody
+    public void leaveChat(@RequestParam String token, @PathVariable Long userid, @PathVariable Long chatid) {
+        UserId userId = new UserId(userid);
+        ChatRoomId chatRoomId = new ChatRoomId(chatid);
+        chatRoomService.leaveChat(token, userId, chatRoomId);
+    }
 }

@@ -20,4 +20,6 @@ public interface ChatRoomService {
     ImmutableSet<UserDto> getUsersDataInChat(String accessToken, UserId userId, ChatRoomId chatRoomId);
 
     ChatRoomDto findChatRoom(String accessToken, UserId userId, ChatRoomId chatRoomId);
+
+    void leaveChat(String accessToken, UserId userId, ChatRoomId chatRoomId);
 }

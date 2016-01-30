@@ -59,16 +59,25 @@ var chatRoom = function() {
             $chatslist.append($ul);
         },
 
+        "leaveChat": function (chatId, accessToken, userId, eb) {
+            $('#leavechat').on('click', function(e) {
+                leaveChat(chatId, userId, accessToken, eb);
+                e.preventDefault(false);
+            })
+        },
+
+        "alertLeaveChat": function () {
+          debugger;
+        },
+
         "displayChatName": function(chatName) {
-            $('#chatname').text(chatName + ':');
+            $('#chatname').html('<b>' + chatName + ':</b>');
 
         },
 
         "sendPublicMessage": function(chatRoomId, accessToken, userId, eb) {
             var $sendbutton = $('#sendbutton');
-
             $sendbutton.off('click');
-
             $sendbutton.on('click', function(e) {
                 var text = $('#messageinput').val();
                 var messageDto = {};
@@ -82,8 +91,9 @@ var chatRoom = function() {
         },
 
         "sendPrivateMessage": function (userId, accessToken, recipientId, chatRoomId, eb) {
-            $('#sendbutton').off('click');
-            $('#sendbutton').on('click', function(e) {
+            var $sendbutton = $('#sendbutton');
+            $sendbutton.off('click');
+            $sendbutton.on('click', function(e) {
                 var text = $('#messageinput').val();
                 var messageDto = {};
                 messageDto.text = text;
