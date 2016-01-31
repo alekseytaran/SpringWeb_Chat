@@ -57,21 +57,6 @@ function getUsersFromChat(accessToken, userId, chatRoomId, eb) {
     });
 }
 
-function findChat(accessToken, userId, chatId, eb) {
-    $.ajax({
-        url: "http://localhost:8080/chats/chat/chat/" + chatId + "/" + userId + "?token=" + accessToken,
-        type: "GET",
-        contentType:"application/json; charset=utf-8",
-        success: function (response) {
-            eb.postMessage("BACK_TO_PUBLIC_CHAT", response);
-        },
-        error: function () {
-            alert('ChatRooms was not got');
-        },
-        dataType: 'json'
-    });
-}
-
 function leaveChat(chatId, userId, accessToken, eb) {
     $.ajax({
         url: "http://localhost:8080/chats/chat/leave/" + chatId + "/" + userId + "?token=" + accessToken,

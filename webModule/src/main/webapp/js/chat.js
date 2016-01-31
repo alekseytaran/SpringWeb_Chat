@@ -13,6 +13,10 @@ var chat = function() {
 
     chatUi.init(eb);
 
+    eb.registerConsumer("LOG_OUT", function() {
+        location.reload();
+    });
+
     eb.registerConsumer("LEAVE_CHAT", function() {
         chatUi.alertLeaveChat();
     });
@@ -64,6 +68,7 @@ var chat = function() {
         appState.userId = logInDto.userId;
         updateUserStatus('Congratulations! You are in chat!');
         goToChatsArea();
+        chatUi.logOut(appState.userId, appState.accessToken, eb);
     });
 
     eb.registerConsumer("GET_USERID", function (userId) {

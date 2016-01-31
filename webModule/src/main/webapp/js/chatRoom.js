@@ -154,6 +154,14 @@ var chatRoom = function() {
             });
 
             $('#userlist').append($ul);
+        },
+
+        "logOut": function(userId, accessToken, eb) {
+            var $logout = $('#logout');
+            $logout.show();
+            $logout.on('click', function () {
+                logOut(accessToken, userId, eb);
+            })
         }
     };
 };

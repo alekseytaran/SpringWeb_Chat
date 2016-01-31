@@ -32,4 +32,17 @@ function logIn(logInDto, eb) {
     });
 }
 
+function logOut(accessToken, userId, eb) {
+    $.ajax({
+        url: "http://localhost:8080/chats/chat/logout/" + userId + "?token=" + accessToken,
+        type: "GET",
+        success: function () {
+            eb.postMessage("LOG_OUT");
+        },
+        error: function () {
+            alert('User was not logged out');
+        }
+    });
+}
+
 
