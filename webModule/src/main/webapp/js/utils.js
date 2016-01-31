@@ -1,3 +1,5 @@
+var isNeedUpdateChat = true;
+
 function getSignUpData() {
     var name = $('#signup input[name=name]').val();
     var email = $('#signup  input[name=email]').val();
@@ -31,9 +33,14 @@ function updateChatsRoomList (accessToken, userId, eb) {
 }
 
 function updateChat(accessToken, userId, chatRoomsId, eb) {
-    setTimeout(function () {
-        getPublicMessagesFromChat(accessToken, userId, chatRoomsId, eb);
-    }, 5000);
+    if (accessToken === -1) {
+        isNeedUpdateChat = false;
+    }
+    if (isNeedUpdateChat) {
+        setTimeout(function () {
+            getPublicMessagesFromChat(accessToken, userId, chatRoomsId, eb);
+        }, 5000);
+    }
 }
 
 function updateUserStatus (text) {

@@ -9,6 +9,8 @@ var chat = function() {
         openChatId: null
     };
 
+    var BRAKE_UPDATE = -1;
+
     var chatUi = new chatRoom();
 
     chatUi.init(eb);
@@ -19,6 +21,7 @@ var chat = function() {
 
     eb.registerConsumer("LEAVE_CHAT", function() {
         chatUi.alertLeaveChat();
+        updateChat(BRAKE_UPDATE);
     });
 
     eb.registerConsumer("POST_PUBLIC_MESSAGE", function() {
@@ -40,17 +43,17 @@ var chat = function() {
     });
 
     eb.registerConsumer("POST_MESSAGE", function (messageId) {
-        updateChat(appState.accessToken, appState.userId, appState.openChatId, eb);
     });
 
     eb.registerConsumer("OPEN_CHAT", function (chatInfo) {
+        isNeedUpdateChat = true;
         chatUi.cleanOldMessages();
         chatUi.displayChatName(chatInfo.roomName);
         chatUi.sendPublicMessage(chatInfo.id, appState.accessToken, appState.userId, eb);
         appState.openChatId = chatInfo.id;
         updateChat(appState.accessToken, appState.userId, appState.openChatId, eb);
         updateChatUsers(appState.accessToken, appState.userId, appState.openChatId, eb);
-        chatUi.leaveChat(appState.openChatId, appState.accessToken, appState.userId, eb)
+        chatUi.leaveChat(appState.openChatId, appState.accessToken, appState.userId, eb);
     });
 
     eb.registerConsumer("FIND_ALL_CHATS", function (chats) {

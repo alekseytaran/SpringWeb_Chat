@@ -10,13 +10,15 @@ public class MessageDto implements Comparable<MessageDto> {
     private String text;
     private UserId userId;
     private String userName;
+    private String recipientName;
     private ChatRoomId chatRoomId;
     private Date creationTime;
 
-    public MessageDto(String text, UserId userId, String userName, ChatRoomId chatRoomId, Date creationTime) {
+    public MessageDto(String text, UserId userId, String userName, String recipientName, ChatRoomId chatRoomId, Date creationTime) {
         this.text = text;
         this.userId = userId;
         this.userName = userName;
+        this.recipientName = recipientName;
         this.chatRoomId = chatRoomId;
         this.creationTime = creationTime;
     }
@@ -51,6 +53,14 @@ public class MessageDto implements Comparable<MessageDto> {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getRecipientName() {
+        return recipientName;
+    }
+
+    public void setRecipientName(String recipientName) {
+        this.recipientName = recipientName;
     }
 
     @Override
