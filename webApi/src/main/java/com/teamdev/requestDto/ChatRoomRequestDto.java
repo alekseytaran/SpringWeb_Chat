@@ -1,10 +1,10 @@
 package com.teamdev.requestDto;
 
-public class ChatRoomDto {
+public class ChatRoomRequestDto {
     private Long id;
     private String roomName;
 
-    public ChatRoomDto(Long id, String roomName) {
+    public ChatRoomRequestDto(Long id, String roomName) {
         this.id = id;
         this.roomName = roomName;
     }

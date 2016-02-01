@@ -4,12 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.teamdev.requestDto.ChatRoomDto;
+import com.teamdev.requestDto.ChatRoomRequestDto;
 import com.teamdev.requestDto.LogInDto;
 import com.teamdev.requestDto.MessageRequestDto;
 import com.teamdev.requestDto.UserDto;
-import com.teamdev.requestDto.wrappers.ChatRoomId;
-import com.teamdev.requestDto.wrappers.UserId;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -41,8 +39,8 @@ public class MessageTest extends ConfigData{
         json = gson.toJson(logInDto);
         String token = logIn(json, httpClient, URL_LOG_IN);
 
-        ChatRoomDto chatRoomDto = new ChatRoomDto(0L, "myRoom");
-        json = gson.toJson(chatRoomDto);
+        ChatRoomRequestDto chatRoomRequestDto = new ChatRoomRequestDto(0L, "myRoom");
+        json = gson.toJson(chatRoomRequestDto);
         String URL_CREATE_ROOM = URL + "/chat/" + userId + "?token=" + token;
         String roomId = createRoom(json, httpClient, URL_CREATE_ROOM);
 

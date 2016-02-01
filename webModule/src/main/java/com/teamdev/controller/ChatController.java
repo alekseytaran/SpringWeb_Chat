@@ -2,13 +2,11 @@ package com.teamdev.controller;
 
 import com.google.common.collect.ImmutableSet;
 import com.teamdev.dto.ChatRoomDto;
-import com.teamdev.dto.MessageDto;
 import com.teamdev.dto.UserDto;
+import com.teamdev.requestDto.ChatRoomRequestDto;
 import com.teamdev.requestDto.wrappers.ChatRoomId;
-import com.teamdev.requestDto.wrappers.MessageId;
 import com.teamdev.requestDto.wrappers.UserId;
 import com.teamdev.service.ChatRoomService;
-import com.teamdev.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -30,7 +28,7 @@ public class ChatController {
 
     @RequestMapping(value = "/chat/{userid}", params = {"token"}, method = RequestMethod.POST)
     @ResponseBody
-    public ChatRoomId createChat(@RequestParam String token, @RequestBody ChatRoomDto chatRoomDto, @PathVariable Long userid) {
+    public ChatRoomId createChat(@RequestParam String token, @RequestBody ChatRoomRequestDto chatRoomDto, @PathVariable Long userid) {
         UserId userId = new UserId(userid);
         String roomName = chatRoomDto.getRoomName();
         return chatRoomService.createChatRoom(token, userId, roomName);

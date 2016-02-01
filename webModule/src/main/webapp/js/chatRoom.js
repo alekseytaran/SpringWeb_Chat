@@ -20,9 +20,7 @@ var chatRoom = function() {
         "createChatRoom": function(accessToken, userId, eb) {
             $('#createchat').on('click', function(e) {
                 var name = $('#chatsarea input[name=chatRoomName]').val();
-                var chatRoomDto = {};
-                chatRoomDto.id = 0;
-                chatRoomDto.roomName = name;
+                var chatRoomDto = new ChatRoom(name);
 
                 createRoom(chatRoomDto, userId, accessToken, eb);
                 e.preventDefault(false);
@@ -82,10 +80,7 @@ var chatRoom = function() {
             $sendbutton.off('click');
             $sendbutton.on('click', function(e) {
                 var text = $('#messageinput').val();
-                var messageDto = {};
-                messageDto.text = text;
-                messageDto.userId = userId;
-                messageDto.chatRoomId = chatRoomId;
+                var messageDto = new Message(text, userId, chatRoomId);
 
                 postUserMessage(accessToken, userId, messageDto, eb);
                 e.preventDefault(false);
@@ -117,7 +112,8 @@ var chatRoom = function() {
             var newIds = messages.map(function(a) {return a.id;});
             var diffIds = newIds.diff(existedMessagesId);
 
-            for(var i = 0; i < diffIds.length; i++) {
+            var startPosition = messages.length - diffIds.length;
+            for(var i = startPosition; i < messages.length; i++) {
                 var messageText = messages[i].userName + ":  <b>" + messages[i].text + '</b> :   ' + messages[i].creationTime;
                 var $li = $('<li>').html(messageText).attr({role: "presentation"}).addClass("list-group-item");
                 $('#messagewindow ul').append($li);

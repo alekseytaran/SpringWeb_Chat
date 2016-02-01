@@ -1,7 +1,7 @@
 package com.teamdev;
 
 import com.google.gson.*;
-import com.teamdev.requestDto.ChatRoomDto;
+import com.teamdev.requestDto.ChatRoomRequestDto;
 import com.teamdev.requestDto.UserDto;
 import com.teamdev.requestDto.LogInDto;
 import org.apache.http.HttpEntity;
@@ -33,8 +33,8 @@ public class UserTest extends ConfigData {
         json = gson.toJson(logInDto);
         String token = logIn(json, httpClient, URL_LOG_IN);
 
-        ChatRoomDto chatRoomDto = new ChatRoomDto(0L, "myRoom");
-        json = gson.toJson(chatRoomDto);
+        ChatRoomRequestDto chatRoomRequestDto = new ChatRoomRequestDto(0L, "myRoom");
+        json = gson.toJson(chatRoomRequestDto);
         String URL_CREATE_ROOM = URL + "/chat/" + userId + "?token=" + token;
         createRoom(json, httpClient, URL_CREATE_ROOM);
 
@@ -78,8 +78,8 @@ public class UserTest extends ConfigData {
         json = gson.toJson(logInDto);
         String token = logIn(json, httpClient, URL_LOG_IN);
 
-        ChatRoomDto chatRoomDto = new ChatRoomDto(0L, "myRoom");
-        json = gson.toJson(chatRoomDto);
+        ChatRoomRequestDto chatRoomRequestDto = new ChatRoomRequestDto(0L, "myRoom");
+        json = gson.toJson(chatRoomRequestDto);
         String URL_CREATE_ROOM = URL + "/chat/" + userId + "?token=" + token;
         String roomId = createRoom(json, httpClient, URL_CREATE_ROOM);
 
