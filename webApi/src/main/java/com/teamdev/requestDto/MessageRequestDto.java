@@ -1,8 +1,5 @@
 package com.teamdev.requestDto;
 
-import com.teamdev.requestDto.wrappers.ChatRoomId;
-import com.teamdev.requestDto.wrappers.UserId;
-
 import java.util.Date;
 
 public class MessageRequestDto {

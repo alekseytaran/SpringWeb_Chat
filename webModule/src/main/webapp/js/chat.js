@@ -9,6 +9,8 @@ var chat = function() {
         openChatId: null
     };
 
+    var existedMessagesId = [];
+
     var BRAKE_UPDATE = -1;
 
     var chatUi = new chatRoom();
@@ -39,10 +41,12 @@ var chat = function() {
 
     eb.registerConsumer("UPDATE_CHATS", function (messages) {
         updateChat(appState.accessToken, appState.userId, appState.openChatId, eb);
-        chatUi.updateChatMessages(messages);
+        var newExistedMessageId = chatUi.updateChatMessages(messages, existedMessagesId);
+        existedMessagesId = newExistedMessageId;
     });
 
     eb.registerConsumer("POST_MESSAGE", function (messageId) {
+        existedMessagesId.push(messageId);
     });
 
     eb.registerConsumer("OPEN_CHAT", function (chatInfo) {

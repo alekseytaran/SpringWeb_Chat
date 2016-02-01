@@ -45,8 +45,8 @@ public class MessageServiceImpl implements MessageService {
         User user = userRepository.findOne(userId.getUserId());
         for (Message message: messageRepository.findByChatRoomId(chatRoomId.getChatRoomId())) {
             if (message.getRecipient() == null || message.getRecipient() == user || message.getUser() == user) {
-                allMessagesFromChat.add(new MessageDto(message.getText(), new UserId(message.getUser().getId()), message.getUser().getName(),
-                        null, new ChatRoomId(message.getChatRoom().getId()), message.getCreationTime()));
+                allMessagesFromChat.add(new MessageDto(message.getId(), message.getText(), message.getUser().getId(), message.getUser().getName(),
+                        null, message.getChatRoom().getId(), message.getCreationTime()));
             }
         }
 

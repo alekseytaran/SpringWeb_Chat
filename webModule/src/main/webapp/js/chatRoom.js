@@ -113,17 +113,16 @@ var chatRoom = function() {
             $('#meesagewindow').empty();
         },
 
-        "updateChatMessages": function(messages) {
-            var $messageswindow = $('#messagewindow');
-            $messageswindow.empty();
-            var $ul = $('<ul>').addClass("list-group");
+        "updateChatMessages": function(messages, existedMessagesId) {
+            var newIds = messages.map(function(a) {return a.id;});
+            var diffIds = newIds.diff(existedMessagesId);
 
-            for(var i = 0; i < messages.length; i++) {
+            for(var i = 0; i < diffIds.length; i++) {
                 var messageText = messages[i].userName + ":  <b>" + messages[i].text + '</b> :   ' + messages[i].creationTime;
                 var $li = $('<li>').html(messageText).attr({role: "presentation"}).addClass("list-group-item");
-                $ul.append($li);
+                $('#messagewindow ul').append($li);
             }
-            $messageswindow.append($ul);
+            return newIds;
         },
 
         "updateUsersList": function(users, chatId, userId, accessToken, eb) {

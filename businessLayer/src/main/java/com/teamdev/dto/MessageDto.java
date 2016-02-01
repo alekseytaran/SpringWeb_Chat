@@ -1,6 +1,7 @@
 package com.teamdev.dto;
 
 import com.teamdev.requestDto.wrappers.ChatRoomId;
+import com.teamdev.requestDto.wrappers.MessageId;
 import com.teamdev.requestDto.wrappers.UserId;
 
 import java.util.Date;
@@ -8,13 +9,14 @@ import java.util.Date;
 public class MessageDto implements Comparable<MessageDto> {
     private Long id;
     private String text;
-    private UserId userId;
+    private Long userId;
     private String userName;
     private String recipientName;
-    private ChatRoomId chatRoomId;
+    private Long chatRoomId;
     private Date creationTime;
 
-    public MessageDto(String text, UserId userId, String userName, String recipientName, ChatRoomId chatRoomId, Date creationTime) {
+    public MessageDto(Long messageId, String text, Long userId, String userName, String recipientName, Long chatRoomId, Date creationTime) {
+        this.id = messageId;
         this.text = text;
         this.userId = userId;
         this.userName = userName;
@@ -31,15 +33,15 @@ public class MessageDto implements Comparable<MessageDto> {
         return creationTime;
     }
 
-    public UserId getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(UserId userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public ChatRoomId getChatRoomId() {
+    public Long getChatRoomId() {
         return chatRoomId;
     }
 

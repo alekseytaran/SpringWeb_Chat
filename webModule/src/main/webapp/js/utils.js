@@ -1,5 +1,9 @@
 var isNeedUpdateChat = true;
 
+Array.prototype.diff = function(a) {
+    return this.filter(function(i) {return a.indexOf(i) < 0;});
+};
+
 function getSignUpData() {
     var name = $('#signup input[name=name]').val();
     var email = $('#signup  input[name=email]').val();

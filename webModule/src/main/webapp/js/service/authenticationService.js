@@ -8,8 +8,8 @@ function signUp(signUpDto, eb) {
         success: function (response) {
             eb.postMessage("GET_USERID", response.userId);
         },
-        error: function () {
-            alert('User was not registered');
+        error: function (response) {
+            alert(response.responseText);
         },
         dataType: 'json'
     });
@@ -25,8 +25,8 @@ function logIn(logInDto, eb) {
         success: function (response) {
             eb.postMessage("LOGIN", response);
         },
-        error: function () {
-            alert('User was not logged in');
+        error: function (response) {
+            alert(response.responseText);
         },
         dataType: 'json'
     });
