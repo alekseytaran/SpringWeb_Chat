@@ -36,6 +36,7 @@ var ChatArea = function() {
                     var $a = $('<a>').text(chats[x].roomName);
                     $li.append($a);
                     $li.on('click', function(e) {
+                        $li.addClass('active').siblings().removeClass('active');
                         joinUserInChat(chats[x], userId, accessToken);
                         eb.postMessage("OPEN_CHAT", chats[x]);
                         $('#sendbutton').attr('disabled',false);
@@ -105,7 +106,12 @@ var ChatArea = function() {
 
             var startPosition = messages.length - diffIds.length;
             for(var i = startPosition; i < messages.length; i++) {
-                var messageText = messages[i].userName + ":  <b>" + messages[i].text + '</b> :   ' + messages[i].creationTime;
+                var messageText;
+                if ('recipientName' in messages[i]) {
+                    messageText = 'from <em>' + messages[i].userName + "</em> (to " + messages[i].recipientName +"):   <b>" + messages[i].text + '</b> :    ' + messages[i].creationTime;
+                } else {
+                    messageText = 'from <em>' + messages[i].userName + "</em> (to all):   <b>" + messages[i].text + '</b> :    ' + messages[i].creationTime;
+                }
                 var $li = $('<li>').html(messageText).attr({role: "presentation"}).addClass("list-group-item");
                 $('#messagewindow ul').append($li);
             }
@@ -124,6 +130,7 @@ var ChatArea = function() {
                     var $a = $('<a>').text(users[x].name);
                     $li.append($a);
                     $li.on('click', function(e) {
+                        $li.addClass('active').siblings().removeClass('active');
                         eb.postMessage("OPEN_PRIVATE_CHAT", users[x]);
                         e.preventDefault(false);
                     });
@@ -136,10 +143,11 @@ var ChatArea = function() {
 
         "addChatPublicButton": function(eb) {
             var $ul  = $('<ul>').addClass("users nav nav-tabs");
-            var $publicLi = $('<li>').attr({role: "presentation"}).addClass("dropdown");
+            var $publicLi = $('<li>').attr({role: "presentation"}).addClass("active");
             $publicLi.append($('<a>').text('public'));
             $ul.append($publicLi);
             $publicLi.on('click', function(e) {
+                $publicLi.addClass('active').siblings().removeClass('active');
                 eb.postMessage("POST_PUBLIC_MESSAGE");
                 e.preventDefault(false);
             });

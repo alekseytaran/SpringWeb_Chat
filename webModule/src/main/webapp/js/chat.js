@@ -2,7 +2,9 @@ var Chat = function(parentNode) {
 
     var eb = new EventBus();
 
-    var timeout;
+    var timeoutForUsers;
+    var timeoutForMessages;
+    var timeoutForChats;
 
     var appState = {
         userId: null,
@@ -25,8 +27,16 @@ var Chat = function(parentNode) {
 
     chatUi.init(eb, parentNode);
 
-    eb.registerConsumer("NEW_TIMEOUT_VALUE",function(timeoutValue) {
-        timeout = timeoutValue;
+    eb.registerConsumer("TIMEOUT_CHATS_VALUE",function(timeoutValue) {
+        timeoutForChats = timeoutValue;
+    });
+
+    eb.registerConsumer("TIMEOUT_MESSAGES_VALUE",function(timeoutValue) {
+        timeoutForMessages = timeoutValue;
+    });
+
+    eb.registerConsumer("TIMEOUT_USERS_VALUE",function(timeoutValue) {
+        timeoutForUsers = timeoutValue;
     });
 
     eb.registerConsumer("LOG_OUT", function() {
@@ -64,7 +74,8 @@ var Chat = function(parentNode) {
 
     eb.registerConsumer("OPEN_CHAT", function (chatInfo) {
         if (appState.openChatId !== chatInfo.id) {
-            clearTimeout(timeout);
+            clearTimeout(timeoutForUsers);
+            clearTimeout(timeoutForMessages);
         }
 
         isNeedUpdateChat = true;

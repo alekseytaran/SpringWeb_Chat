@@ -44,9 +44,14 @@ public class MessageServiceImpl implements MessageService {
         Set<MessageDto> allMessagesFromChat = new TreeSet<>();
         User user = userRepository.findOne(userId.getUserId());
         for (Message message: messageRepository.findByChatRoomId(chatRoomId.getChatRoomId())) {
-            if (message.getRecipient() == null || message.getRecipient() == user || message.getUser() == user) {
+            if (message.getRecipient() == null) {
                 allMessagesFromChat.add(new MessageDto(message.getId(), message.getText(), message.getUser().getId(), message.getUser().getName(),
                         null, message.getChatRoom().getId(), message.getCreationTime()));
+            }
+
+            if (message.getRecipient() != null && (message.getRecipient() == user || message.getUser() == user)) {
+                allMessagesFromChat.add(new MessageDto(message.getId(), message.getText(), message.getUser().getId(), message.getUser().getName(),
+                        message.getRecipient().getName(), message.getChatRoom().getId(), message.getCreationTime()));
             }
         }
 

@@ -5,10 +5,11 @@ Array.prototype.diff = function(a) {
 };
 
 function updateChatsRoomList (accessToken, userId, eb) {
-    this._eb = eb;
-    setTimeout(function() {
-        findChatRooms(accessToken, userId, this._eb);
+    var timeout = setTimeout(function() {
+        findChatRooms(accessToken, userId, eb);
     }, 5000);
+
+    eb.postMessage("TIMEOUT_CHATS_VALUE", timeout);
 }
 
 function updateChat(accessToken, userId, chatRoomsId, eb) {
@@ -16,10 +17,11 @@ function updateChat(accessToken, userId, chatRoomsId, eb) {
         isNeedUpdateChat = false;
     }
     if (isNeedUpdateChat) {
-        setTimeout(function () {
+        var timeout = setTimeout(function () {
             getPublicMessagesFromChat(accessToken, userId, chatRoomsId, eb);
         }, 5000);
     }
+    eb.postMessage("TIMEOUT_MESSAGES_VALUE", timeout);
 }
 
 function updateUserStatus (text) {
@@ -35,8 +37,8 @@ function goToChatsArea() {
 
 function updateChatUsers(accessToken, userId, chatRoomId, eb, onRequestSend) {
     var timeout = setTimeout(function () {
-        var xhr = getUsersFromChat(accessToken, userId, chatRoomId, eb);
+        getUsersFromChat(accessToken, userId, chatRoomId, eb);
     }, 5000);
 
-    eb.postMessage("NEW_TIMEOUT_VALUE", timeout);
+    eb.postMessage("TIMEOUT_USERS_VALUE", timeout);
 }

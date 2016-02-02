@@ -1,9 +1,5 @@
 package com.teamdev.dto;
 
-import com.teamdev.requestDto.wrappers.ChatRoomId;
-import com.teamdev.requestDto.wrappers.MessageId;
-import com.teamdev.requestDto.wrappers.UserId;
-
 import java.util.Date;
 
 public class MessageDto implements Comparable<MessageDto> {
