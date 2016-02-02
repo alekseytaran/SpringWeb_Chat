@@ -131,7 +131,7 @@ var ChatArea = function() {
             return newIds;
         },
 
-        "addChatPublicButton": function() {
+        "addChatPublicButton": function(eb) {
             var $ul  = $('<ul>').addClass("users nav nav-tabs");
             var $publicLi = $('<li>').attr({role: "presentation"}).addClass("dropdown");
             $publicLi.append($('<a>').text('public'));

@@ -78,7 +78,7 @@ var Chat = function(parentNode) {
 
         chatArea.leaveChat(appState.openChatId, appState.accessToken, appState.userId, eb);
         chatArea.sendPublicMessage(chatInfo.id, appState.accessToken, appState.userId, eb);
-        chatArea.addChatPublicButton();
+        chatArea.addChatPublicButton(eb);
     });
 
     eb.registerConsumer("FIND_ALL_CHATS", function (chats) {
