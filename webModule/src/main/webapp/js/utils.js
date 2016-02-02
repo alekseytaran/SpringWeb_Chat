@@ -33,8 +33,10 @@ function goToChatsArea() {
     $('#chats').show();
 }
 
-function updateChatUsers(accessToken, userId, chatRoomId, eb) {
-    setTimeout(function () {
-        getUsersFromChat(accessToken, userId, chatRoomId, eb);
+function updateChatUsers(accessToken, userId, chatRoomId, eb, onRequestSend) {
+    var timeout = setTimeout(function () {
+        var xhr = getUsersFromChat(accessToken, userId, chatRoomId, eb);
     }, 5000);
+
+    eb.postMessage("NEW_TIMEOUT_VALUE", timeout);
 }

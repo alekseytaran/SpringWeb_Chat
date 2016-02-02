@@ -94,9 +94,11 @@ var ChatArea = function() {
             })
         },
 
-        "cleanOldMessages": function() {
+        "cleanOldData": function() {
             $('#openchat').show();
             $('#meesagewindow').empty();
+            $('#userlist').empty();
+            $('#messagewindow ul').empty();
         },
 
         "updateChatMessages": function(messages, existedMessagesId) {
@@ -112,17 +114,18 @@ var ChatArea = function() {
             return newIds;
         },
 
-        "updateUsersList": function(users, chatId, userId, accessToken, eb) {
-            $('#userlist').empty();
+        "updateUsersList": function(users, existedUserId, eb) {
+            var newIds = users.map(function(a) {return a.id;});
+            var diffIds = newIds.diff(existedUserId);
 
-            var $ul  = $('<ul>').addClass("nav nav-tabs");
-            for(var i = 0; i < users.length; i++) {
+            var startPosition = users.length - diffIds.length;
+            var $ul  = $('.users');
+            for(var i = startPosition; i < users.length; i++) {
                 var catchIndex = (function(x) {
                     var $li = $('<li>').attr({role: "presentation"});
                     var $a = $('<a>').text(users[x].name);
                     $li.append($a);
                     $li.on('click', function(e) {
-                        $li.addClass("active");
                         eb.postMessage("OPEN_PRIVATE_CHAT", users[x]);
                         e.preventDefault(false);
                     });
@@ -130,16 +133,21 @@ var ChatArea = function() {
                 })(i);
             }
 
+            return newIds;
+        },
+
+        "addChatPublicButton": function() {
+            var $ul  = $('<ul>').addClass("users nav nav-tabs");
             var $publicLi = $('<li>').attr({role: "presentation"}).addClass("dropdown");
             $publicLi.append($('<a>').text('public'));
             $ul.append($publicLi);
             $publicLi.on('click', function(e) {
-                $publicLi.addClass("active");
                 eb.postMessage("POST_PUBLIC_MESSAGE");
                 e.preventDefault(false);
             });
 
             $('#userlist').append($ul);
+
         },
 
         "logOut": function(userId, accessToken, eb) {

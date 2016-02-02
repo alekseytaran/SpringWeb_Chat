@@ -52,7 +52,7 @@ public class ChatController {
 
     @RequestMapping(value = "/users/{chatid}/{userid}", params = {"token"}, method = RequestMethod.GET)
     @ResponseBody
-    public ImmutableSet<UserDto> getUsersFromChat(@RequestParam String token, @PathVariable Long userid, @PathVariable Long chatid) {
+    public ImmutableSet<UserDto> findUsersFromChat(@RequestParam String token, @PathVariable Long userid, @PathVariable Long chatid) {
         UserId userId = new UserId(userid);
         ChatRoomId chatRoomId = new ChatRoomId(chatid);
         return chatRoomService.getUsersDataInChat(token, userId, chatRoomId);

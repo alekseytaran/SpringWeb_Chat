@@ -2,6 +2,8 @@ var Chat = function(parentNode) {
 
     var eb = new EventBus();
 
+    var timeout;
+
     var appState = {
         userId: null,
         accessToken: null,
@@ -10,14 +12,21 @@ var Chat = function(parentNode) {
     };
 
     var chatArea;
+    var lastRequestXHR;
 
     var existedMessagesId = [];
+
+    var existedUsersId = [];
 
     var BRAKE_UPDATE = -1;
 
     var chatUi = new chatRoom();
 
     chatUi.init(eb, parentNode);
+
+    eb.registerConsumer("NEW_TIMEOUT_VALUE",function(timeoutValue) {
+        timeout = timeoutValue;
+    });
 
     eb.registerConsumer("LOG_OUT", function() {
         location.reload();
@@ -38,7 +47,8 @@ var Chat = function(parentNode) {
 
     eb.registerConsumer("GET_USERS_IN_CHAT", function (users) {
         updateChatUsers(appState.accessToken, appState.userId, appState.openChatId, eb);
-        chatArea.updateUsersList(users, appState.openChatId, appState.userId, appState.accessToken, eb);
+        var newUsersId = chatArea.updateUsersList(users, existedUsersId, eb);
+        existedUsersId = newUsersId;
     });
 
     eb.registerConsumer("UPDATE_CHATS", function (messages) {
@@ -52,14 +62,22 @@ var Chat = function(parentNode) {
     });
 
     eb.registerConsumer("OPEN_CHAT", function (chatInfo) {
+        if (appState.openChatId !== chatInfo.id) {
+            clearTimeout(timeout);
+        }
+
         isNeedUpdateChat = true;
-        chatArea.cleanOldMessages();
+        chatArea.cleanOldData();
+        existedUsersId = [];
         chatArea.displayChatName(chatInfo.roomName);
-        chatArea.sendPublicMessage(chatInfo.id, appState.accessToken, appState.userId, eb);
         appState.openChatId = chatInfo.id;
+
         updateChat(appState.accessToken, appState.userId, appState.openChatId, eb);
         updateChatUsers(appState.accessToken, appState.userId, appState.openChatId, eb);
+
         chatArea.leaveChat(appState.openChatId, appState.accessToken, appState.userId, eb);
+        chatArea.sendPublicMessage(chatInfo.id, appState.accessToken, appState.userId, eb);
+        chatArea.addChatPublicButton();
     });
 
     eb.registerConsumer("FIND_ALL_CHATS", function (chats) {
