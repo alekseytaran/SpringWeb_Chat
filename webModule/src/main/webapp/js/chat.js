@@ -92,6 +92,4 @@ var Chat = function(parentNode) {
 
 $(function() {
     new Chat('#Main_chat');
-    //new Chat('#Main_chat2');
-    //new Chat('#Main_chat3');
 });
