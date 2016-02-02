@@ -1,0 +1,7 @@
+.chat-size {
+    height: 400px;
+    overflow: scroll;
+}
+.button-padding {
+    margin-bottom: 10px
+}
