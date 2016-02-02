@@ -12,11 +12,12 @@ var Chat = function(parentNode) {
     };
 
     var chatArea;
-    var lastRequestXHR;
 
     var existedMessagesId = [];
 
     var existedUsersId = [];
+
+    var existedChatsId = [];
 
     var BRAKE_UPDATE = -1;
 
@@ -81,7 +82,8 @@ var Chat = function(parentNode) {
     });
 
     eb.registerConsumer("FIND_ALL_CHATS", function (chats) {
-        chatArea.renderListChats(chats, appState.userId, appState.accessToken, eb);
+        var newChatsId = chatArea.renderListChats(chats, existedChatsId, appState.userId, appState.accessToken, eb);
+        existedChatsId = newChatsId;
         updateChatsRoomList(appState.accessToken, appState.userId, eb);
     });
 

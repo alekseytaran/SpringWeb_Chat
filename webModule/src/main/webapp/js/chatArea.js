@@ -23,18 +23,14 @@ var ChatArea = function() {
             findChatRooms(accessToken, userId, eb);
         },
 
-        "renderListChats": function(chats, userId, accessToken, eb) {
-            var $chatslist = $('#chatslist');
-            $chatslist.empty();
+        "renderListChats": function(chats, existedChatsId, userId, accessToken, eb) {
+            var newIds = chats.map(function(a) {return a.id;});
+            var diffIds = newIds.diff(existedChatsId);
 
-            var $ul  = $('<ul>').addClass("nav nav-tabs");
-            var $chatsTxt = $('<h3>');
-            if (chats.length === 0) {
-                $chatsTxt.html('Available chats: empty');
-            } else {
-                $chatsTxt.html('Available chats:');
-            }
-            for(var i = 0; i < chats.length; i++) {
+            var $ul = $('#chatslist ul');
+
+            var startPosition = chats.length - diffIds.length;
+            for(var i = startPosition; i < chats.length; i++) {
                 var catchIndex = (function(x) {
                     var $li = $('<li>').attr({role: "presentation"}).addClass("dropdown");
                     var $a = $('<a>').text(chats[x].roomName);
@@ -49,8 +45,7 @@ var ChatArea = function() {
                 })(i);
             }
 
-            $chatslist.append($chatsTxt);
-            $chatslist.append($ul);
+            return newIds;
         },
 
         "leaveChat": function (chatId, accessToken, userId, eb) {
