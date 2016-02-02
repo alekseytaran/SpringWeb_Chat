@@ -70,6 +70,7 @@ var Chat = function(parentNode) {
         isNeedUpdateChat = true;
         chatArea.cleanOldData();
         existedUsersId = [];
+        existedMessagesId = [];
         chatArea.displayChatName(chatInfo.roomName);
         appState.openChatId = chatInfo.id;
 

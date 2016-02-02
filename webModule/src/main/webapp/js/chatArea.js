@@ -39,6 +39,8 @@ var ChatArea = function() {
                         joinUserInChat(chats[x], userId, accessToken);
                         eb.postMessage("OPEN_CHAT", chats[x]);
                         $('#sendbutton').attr('disabled',false);
+                        $('#leavechat').attr('disabled',false);
+                        $('#messagewindow .leave-chat-message').empty();
                         e.preventDefault(false);
                     });
                     $ul.append($li);
@@ -56,7 +58,8 @@ var ChatArea = function() {
         },
 
         "alertLeaveChat": function () {
-            $('#chatname').append(" You leave this chat!!!");
+            $('#messagewindow .leave-chat-message').text(" You leave this chat!!!");
+            $('#leavechat').attr('disabled',true);
             $('#sendbutton').attr('disabled',true);
         },
 
