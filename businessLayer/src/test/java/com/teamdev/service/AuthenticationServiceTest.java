@@ -20,7 +20,7 @@ public class AuthenticationServiceTest extends InitialData {
         UserDto userDto = new UserDto(name, email, password);
 
         try {
-            UserId userId = authenticationService.signUp(userDto);
+            UserId userId = authenticationService.signUp(name, email, password);
             assertNotEquals("User wasn't registered", 0 , userId);
         } catch (RegistrationException e) {
             fail("User has already existed in db");
@@ -30,9 +30,8 @@ public class AuthenticationServiceTest extends InitialData {
 
     @Test
     public void testLogIn() {
-        UserDto userDto = new UserDto(name, email, password);
         try {
-            authenticationService.signUp(userDto);
+            authenticationService.signUp(name, email, password);
         } catch (RegistrationException e) {
             fail("User's already existed in db");
         }

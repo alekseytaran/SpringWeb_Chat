@@ -27,10 +27,9 @@ public class InitialData {
     protected MessageService messageService;
 
     public UserId signUp(String name, String email, String password) {
-        UserDto userDto = new UserDto(name, email, password);
         UserId userId = null;
         try {
-            userId = authenticationService.signUp(userDto);
+            userId = authenticationService.signUp(name, email, password);
         } catch (RegistrationException e) {
             fail("User's already existed in db");
         }

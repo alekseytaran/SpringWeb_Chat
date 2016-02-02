@@ -7,7 +7,7 @@ import com.google.gson.JsonParser;
 import com.teamdev.requestDto.ChatRoomRequestDto;
 import com.teamdev.requestDto.LogInDto;
 import com.teamdev.requestDto.MessageRequestDto;
-import com.teamdev.requestDto.UserDto;
+import com.teamdev.requestDto.UserRequestDto;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -30,9 +30,9 @@ public class MessageTest extends ConfigData{
     public void testSendMessage() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserDto userDto = new UserDto(0L, NAME, MAIL, PASSWORD);
+        UserRequestDto userRequestDto = new UserRequestDto(NAME, MAIL, PASSWORD);
         Gson gson = new Gson();
-        String json = gson.toJson(userDto);
+        String json = gson.toJson(userRequestDto);
         String userId = signUp(json, httpClient, URL_SIGN_UP);
 
         LogInDto logInDto = new LogInDto(PASSWORD, NAME);

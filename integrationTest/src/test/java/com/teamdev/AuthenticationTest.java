@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.teamdev.requestDto.LogInDto;
-import com.teamdev.requestDto.UserDto;
+import com.teamdev.requestDto.UserRequestDto;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -27,9 +27,9 @@ public class AuthenticationTest extends ConfigData {
 
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserDto userDto = new UserDto(0L, NAME, MAIL, PASSWORD);
+        UserRequestDto userRequestDto = new UserRequestDto(NAME, MAIL, PASSWORD);
         Gson gson = new Gson();
-        String json = gson.toJson(userDto);
+        String json = gson.toJson(userRequestDto);
 
         String userId = "";
         String token = "";
@@ -93,9 +93,9 @@ public class AuthenticationTest extends ConfigData {
     public void testFailSignUp() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserDto userDto = new UserDto(0L, NAME, MAIL, PASSWORD);
+        UserRequestDto userRequestDto = new UserRequestDto(NAME, MAIL, PASSWORD);
         Gson gson = new Gson();
-        String json = gson.toJson(userDto);
+        String json = gson.toJson(userRequestDto);
 
         String URL_SIGN_UP = URL + "/signup";
 
@@ -160,9 +160,9 @@ public class AuthenticationTest extends ConfigData {
     public void testCheckToken() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserDto userDto = new UserDto(0L, NAME, MAIL, PASSWORD);
+        UserRequestDto userRequestDto = new UserRequestDto(NAME, MAIL, PASSWORD);
         Gson gson = new Gson();
-        String json = gson.toJson(userDto);
+        String json = gson.toJson(userRequestDto);
         String userId = signUp(json, httpClient, URL_SIGN_UP);
 
         LogInDto logInDto = new LogInDto(PASSWORD, NAME);
@@ -188,9 +188,9 @@ public class AuthenticationTest extends ConfigData {
     public void testLogOut() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserDto userDto = new UserDto(0L, NAME, MAIL, PASSWORD);
+        UserRequestDto userRequestDto = new UserRequestDto(NAME, MAIL, PASSWORD);
         Gson gson = new Gson();
-        String json = gson.toJson(userDto);
+        String json = gson.toJson(userRequestDto);
         String userId = signUp(json, httpClient, URL_SIGN_UP);
 
         LogInDto logInDto = new LogInDto(PASSWORD, NAME);
@@ -219,9 +219,9 @@ public class AuthenticationTest extends ConfigData {
     public void testDeleteUser() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserDto userDto = new UserDto(0L, NAME, MAIL, PASSWORD);
+        UserRequestDto userRequestDto = new UserRequestDto(NAME, MAIL, PASSWORD);
         Gson gson = new Gson();
-        String json = gson.toJson(userDto);
+        String json = gson.toJson(userRequestDto);
         String userId = signUp(json, httpClient, URL_SIGN_UP);
 
         LogInDto logInDto = new LogInDto(PASSWORD, NAME);

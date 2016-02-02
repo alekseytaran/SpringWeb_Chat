@@ -7,9 +7,10 @@
 </head>
 
 <body>
-<div id="Main_chat" class="col-md-12">
-    <h2 id="userstatus">Hello! Register or log in, please!</h2>
-    <div id="registration">
+<div id="Main_chat"></div>
+
+<script type="text/template" id="sign-up-tpl">
+    <div>
         <h4>Sign Up form:</h4>
         <form class="form-horizontal">
             <div class="form-group">
@@ -24,9 +25,11 @@
             </div>
             <button id="sb" class="btn btn-sm btn-primary">Sign Up</button>
         </form>
-        <div class="row">
-            <hr class="col-md-4">
-        </div>
+    </div>
+</script>
+
+<script type="text/template" id="log-in-tpl">
+    <div>
         <h4>Log In form:</h4>
         <form class="form-horizontal">
             <div class="form-group">
@@ -39,38 +42,60 @@
             </div>
             <button id="lb" class="btn btn-sm btn-primary">Log In</button>
         </form>
-        <div class="row">
-            <hr class="col-md-4">
-        </div>
     </div>
+</script>
 
-    <form id="chats" class="form-horizontal" style="display:none">
-        <div class="form-group">
-            <div class="col-md-4" id="chatsarea">
-                <label class="control-label">Create new chat room:</label>
-                <input name="chatRoomName" class="form-control" type="text" size="40">
-                <button id="createchat" class="btn btn-sm btn-primary" style="margin-top: 10px">Create chat</button>
-                <div id="chatslist" style="margin-bottom: 10px"></div>
-                <div id="openchat" class="panel panel-default" style="display:none">
-                    <label>Users in current chat:</label>
-                    <div id="userlist"></div>
-                    <div id="openchatarea">
-                        <div id="chatname" class="panel-body"></div>
-                        <div id="messagewindow" class="panel-footer" style="height: 400px; overflow: scroll">
-                            <ul class="list-group"></ul>
+<script type="text/template" id="chat-area-tpl">
+    <div>
+        <form id="chats" class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-4" id="chatsarea">
+                    <label class="control-label">Create new chat room:</label>
+                    <input name="chatRoomName" class="form-control" type="text" size="40">
+                    <button id="createchat" class="btn btn-sm btn-primary" style="margin-top: 10px">Create chat</button>
+                    <div id="chatslist" style="margin-bottom: 10px"></div>
+                    <div id="openchat" class="panel panel-default" style="display:none">
+                        <label>Users in current chat:</label>
+                        <div id="userlist"></div>
+                        <div id="openchatarea">
+                            <div id="chatname" class="panel-body"></div>
+                            <div id="messagewindow" class="panel-footer" style="height: 400px; overflow: scroll">
+                                <ul class="list-group"></ul>
+                            </div>
+                            <input id="messageinput">
+                            <button id="sendbutton" class="btn btn-sm btn-primary">Send</button>
+                            <button id="leavechat" class="btn btn-sm btn-primary pull-right">Leave chat</button>
                         </div>
-                        <input id="messageinput">
-                        <button id="sendbutton" class="btn btn-sm btn-primary">Send</button>
-                        <button id="leavechat" class="btn btn-sm btn-primary pull-right">Leave chat</button>
                     </div>
                 </div>
             </div>
+        </form>
+    </div>
+</script>
+
+<script type="text/template" id="chat-tpl">
+    <div class="col-md-12">
+        <h2 id="userstatus">Hello! Register or log in, please!</h2>
+        <div id="registration">
+
+            <div class="sign-up"></div>
+
+            <div class="row">
+                <hr class="col-md-4">
+            </div>
+
+            <div class="log-in"></div>
+
+            <div class="row">
+                <hr class="col-md-4">
+            </div>
         </div>
-    </form>
 
-    <button id="logout" class="btn btn-sm btn-primary" style="display: none"> Log Out</button>
+        <div class="chat-area"></div>
 
-</div>
+        <button id="logout" class="btn btn-sm btn-primary" style="display: none"> Log Out</button>
+    </div>
+</script>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
@@ -83,6 +108,9 @@
 <script type="text/javascript" src="js/service/chatRoomService.js"> </script>
 <script type="text/javascript" src="js/service/messageService.js"> </script>
 <script type="text/javascript" src="js/eventbus.js"> </script>
+<script type="text/javascript" src="js/signUpForm.js"> </script>
+<script type="text/javascript" src="js/logInForm.js"> </script>
+<script type="text/javascript" src="js/chatArea.js"> </script>
 <script type="text/javascript" src="js/chatRoom.js"> </script>
 <script type="text/javascript" src="js/chat.js"> </script>
 </body>

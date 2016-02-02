@@ -2,7 +2,7 @@ package com.teamdev;
 
 import com.google.gson.*;
 import com.teamdev.requestDto.ChatRoomRequestDto;
-import com.teamdev.requestDto.UserDto;
+import com.teamdev.requestDto.UserRequestDto;
 import com.teamdev.requestDto.LogInDto;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -24,9 +24,9 @@ public class UserTest extends ConfigData {
     public void testGetUserData() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserDto userDto = new UserDto(0L, NAME, MAIL, PASSWORD);
+        UserRequestDto userRequestDto = new UserRequestDto(NAME, MAIL, PASSWORD);
         Gson gson = new Gson();
-        String json = gson.toJson(userDto);
+        String json = gson.toJson(userRequestDto);
         String userId = signUp(json, httpClient, URL_SIGN_UP);
 
         LogInDto logInDto = new LogInDto(PASSWORD, NAME);
@@ -69,9 +69,9 @@ public class UserTest extends ConfigData {
     public void testGetUserChats() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserDto userDto = new UserDto(0L, NAME, MAIL, PASSWORD);
+        UserRequestDto userRequestDto = new UserRequestDto(NAME, MAIL, PASSWORD);
         Gson gson = new Gson();
-        String json = gson.toJson(userDto);
+        String json = gson.toJson(userRequestDto);
         String userId = signUp(json, httpClient, URL_SIGN_UP);
 
         LogInDto logInDto = new LogInDto(PASSWORD, NAME);

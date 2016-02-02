@@ -1,9 +1,8 @@
 package com.teamdev.controller;
 
 import com.teamdev.dto.AuthenticationTokenDto;
-import com.teamdev.dto.UserDto;
-
 import com.teamdev.requestDto.LogInDto;
+import com.teamdev.requestDto.UserRequestDto;
 import com.teamdev.requestDto.wrappers.UserId;
 import com.teamdev.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,8 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     @ResponseBody
-    public UserId signUp(@RequestBody UserDto userDto) {
-        return authenticationService.signUp(userDto);
+    public UserId signUp(@RequestBody UserRequestDto userDto) {
+        return authenticationService.signUp(userDto.getName(), userDto.getMail(), userDto.getPassword());
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)

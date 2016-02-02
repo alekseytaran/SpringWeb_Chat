@@ -25,15 +25,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private UserRepository userRepository;
 
     @Override
-    public UserId signUp(UserDto userDto) {
-        if (userDto == null) {
-            throw new NullPointerException("user is null");
-        }
-        if (!(userRepository.findByPasswordAndName(userDto.getPassword(), userDto.getName()) == null)) {
+    public UserId signUp(String name, String email, String password) {
+
+        if (!(userRepository.findByPasswordAndName(password, name) == null)) {
             throw new RegistrationException("user with this credentials has already existed in DB");
         }
 
-        User userEntity = new User(userDto.getName(), userDto.getMail(), userDto.getPassword());
+        User userEntity = new User(name, email, password);
         User user = userRepository.save(userEntity);
 
         return new UserId(user.getId());

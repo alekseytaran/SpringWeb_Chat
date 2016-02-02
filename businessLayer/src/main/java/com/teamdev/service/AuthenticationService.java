@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface AuthenticationService {
 
-    UserId signUp(UserDto user) throws RegistrationException;
+    UserId signUp(String name, String email, String password) throws RegistrationException;
 
     AuthenticationTokenDto logIn(String password, String name);
 
