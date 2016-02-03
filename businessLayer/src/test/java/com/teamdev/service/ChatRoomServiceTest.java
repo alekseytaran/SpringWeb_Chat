@@ -69,4 +69,23 @@ public class ChatRoomServiceTest extends InitialData {
         assertEquals("Incorrect name", "vasya", userData.getName());
         assertEquals("Incorrect email", "vasya@gemail.com", userData.getMail());
     }
+
+    @Test
+    public void testFindChatRoom() {
+        UserId userId = signUp(name, email, password);
+        AuthenticationTokenDto tokenDto = logIn(name, password);
+
+        ChatRoomId chatRoomId = chatRoomService.createChatRoom(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()), name);
+
+        assertEquals("Incorrect name of room", name, chatRoomService.findChatRoom(tokenDto.getAccessToken(), userId, chatRoomId).getRoomName());
+    }
+
+    @Test
+    public void testFindAllChats() {
+        UserId userId = signUp(name, email, password);
+        AuthenticationTokenDto tokenDto = logIn(name, password);
+
+        ChatRoomId chatRoomId = chatRoomService.createChatRoom(tokenDto.getAccessToken(), new UserId(tokenDto.getUserId()), name);
+        assertEquals("Incorrect number of room", 1, chatRoomService.findAllChatRooms(tokenDto.getAccessToken(), userId).size());
+    }
 }
