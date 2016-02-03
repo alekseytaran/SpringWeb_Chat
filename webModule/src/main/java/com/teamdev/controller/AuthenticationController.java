@@ -41,12 +41,4 @@ public class AuthenticationController {
         UserId userId = new UserId(userid);
         authenticationService.logOut(token, userId);
     }
-
-    @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(value = "/delete/{userid}", params = {"token"}, method = RequestMethod.GET)
-    public void deleteUser(@RequestParam String token, @PathVariable Long userid) {
-        UserId userId = new UserId(userid);
-        authenticationService.deleteUser(token, userId);
-    }
-
 }

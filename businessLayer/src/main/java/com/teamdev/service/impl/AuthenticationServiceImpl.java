@@ -79,11 +79,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void deleteUser(String accessToken, UserId userId) {
-        userRepository.delete(userId.getUserId());
-    }
-
-    @Override
     public void checkToken(String accessToken, UserId userId) {
         if (accessToken == null) {
             throw new NullPointerException("Access token is null");

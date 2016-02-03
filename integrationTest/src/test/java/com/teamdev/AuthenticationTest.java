@@ -215,48 +215,4 @@ public class AuthenticationTest extends ConfigData {
 
     }
 
-    @Test
-    public void testDeleteUser() {
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-
-        UserRequestDto userRequestDto = new UserRequestDto(NAME, MAIL, PASSWORD);
-        Gson gson = new Gson();
-        String json = gson.toJson(userRequestDto);
-        String userId = signUp(json, httpClient, URL_SIGN_UP);
-
-        LogInDto logInDto = new LogInDto(PASSWORD, NAME);
-        json = gson.toJson(logInDto);
-        String token = logIn(json, httpClient, URL_LOG_IN);
-
-        try {
-            HttpGet request = new HttpGet(URL + "/delete/" + userId + "?token=" + token);
-            HttpResponse response = httpClient.execute(request);
-            int code = response.getStatusLine().getStatusCode();
-
-            assertEquals("Response code is incorrect for get user data", 200, code);
-
-        } catch (IOException e) {
-            fail("IOException was appeared");
-        }
-
-        try {
-            HttpPost request = new HttpPost(URL + "/login");
-            request.setHeader("Content-Type", "application/json");
-            StringEntity stringEntity = new StringEntity(json);
-            request.setEntity(stringEntity);
-
-            HttpResponse response = httpClient.execute(request);
-            HttpEntity entity = response.getEntity();
-
-            int code = response.getStatusLine().getStatusCode();
-            String responseString = EntityUtils.toString(entity, "UTF-8");
-
-            assertEquals("Response code is incorrect for log in", 403, code);
-            assertEquals("Exception message is incorrect", "User with current credentials not found", responseString);
-
-        } catch (IOException e) {
-            fail("IOException during request for log in user");
-        }
-    }
-
 }

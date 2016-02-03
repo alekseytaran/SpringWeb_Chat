@@ -54,10 +54,17 @@ public class AuthenticationServiceTest extends InitialData {
         } catch (ValidationException e) {
             assertEquals("Exception message is incorrect", "Validation data is invalid", e.getMessage());
         }
-
-
-
-
     }
 
+    @Test
+    public void testCheckToken() {
+        UserId userId = signUp(name, email, password);
+        AuthenticationTokenDto tokenDto = logIn(name, password);
+
+        try {
+            authenticationService.checkToken(tokenDto.getAccessToken(), userId);
+        } catch (ValidationException e) {
+            fail("Token is invalid");
+        }
+    }
 }

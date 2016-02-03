@@ -15,8 +15,6 @@ public interface AuthenticationService {
 
     void logOut(String accessToken, UserId userId);
 
-    void deleteUser(String accessToken, UserId userId);
-
     void checkToken(String accessToken, UserId userId);
 
 }
