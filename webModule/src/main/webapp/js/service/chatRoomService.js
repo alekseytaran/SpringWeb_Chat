@@ -42,8 +42,8 @@ function joinUserInChat(chatsInfo, userid, accessToken) {
     });
 }
 
-function getUsersFromChat(accessToken, userId, chatRoomId, eb, timeout) {
-    var xhr = $.ajax({
+function getUsersFromChat(accessToken, userId, chatRoomId, eb) {
+    $.ajax({
         url: "http://localhost:8080/chats/chat/users/" + chatRoomId + "/" + userId + "?token=" + accessToken,
         type: "GET",
         contentType:"application/json; charset=utf-8",
@@ -55,8 +55,6 @@ function getUsersFromChat(accessToken, userId, chatRoomId, eb, timeout) {
         },
         dataType: 'json'
     });
-
-    return xhr;
 }
 
 function leaveChat(chatId, userId, accessToken, eb) {
