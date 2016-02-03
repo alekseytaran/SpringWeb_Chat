@@ -27,8 +27,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public UserId signUp(String name, String email, String password) {
 
-        if (!(userRepository.findByPasswordAndName(password, name) == null)) {
-            throw new RegistrationException("user with this credentials has already existed in DB");
+        if (!(userRepository.findByEmail(email) == null)) {
+            throw new RegistrationException("user with this email has already existed in DB");
         }
 
         User userEntity = new User(name, email, password);
