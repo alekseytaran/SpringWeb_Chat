@@ -3,7 +3,6 @@ package com.teamdev;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.teamdev.requestDto.LogInDto;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -12,17 +11,13 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 
-import javax.xml.ws.Response;
+import com.teamdev.exception.ValidationException;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public abstract class ConfigData {
-
-    public final String NAME = "vasya";
-    public final String MAIL = "vasya@gemail.com";
-    public final String PASSWORD = "qwerty";
 
     public final String QUERY = "http://";
     public final String SERVER = "localhost:";
@@ -55,6 +50,8 @@ public abstract class ConfigData {
 
             return result;
 
+        } catch (ValidationException e) {
+            fail("Validation data is incorrect");
         } catch (IOException e) {
             fail("IOException during request for sign up user");
         }
@@ -80,6 +77,8 @@ public abstract class ConfigData {
             JsonObject jobject = jelement.getAsJsonObject();
 
             return jobject.get("accessToken").getAsString();
+        } catch (ValidationException e) {
+            fail("Validation data is incorrect");
         } catch (IOException e) {
             fail("IOException during request for log in user");
         }
@@ -115,7 +114,7 @@ public abstract class ConfigData {
 
     public static void joinUserToChat(CloseableHttpClient httpClient, String URL) {
         try {
-            HttpGet request = new HttpGet(URL);
+            HttpPost request = new HttpPost(URL);
             httpClient.execute(request);
         } catch (IOException e) {
             fail("IOException during request for sign up user");

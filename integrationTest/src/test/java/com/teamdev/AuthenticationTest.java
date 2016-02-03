@@ -22,12 +22,15 @@ import static org.junit.Assert.*;
 
 public class AuthenticationTest extends ConfigData {
 
+    public final String MAIL = "vasya@gemail.com";
+    public final String PASSWORD = "qwerty";
+
     @Test
     public void testSignUpAndLogIn() {
 
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserRequestDto userRequestDto = new UserRequestDto(NAME, MAIL, PASSWORD);
+        UserRequestDto userRequestDto = new UserRequestDto("vasya", MAIL, PASSWORD);
         Gson gson = new Gson();
         String json = gson.toJson(userRequestDto);
 
@@ -58,7 +61,7 @@ public class AuthenticationTest extends ConfigData {
         }
 
         try {
-            LogInDto logInDto = new LogInDto(PASSWORD, NAME);
+            LogInDto logInDto = new LogInDto(PASSWORD, "vasya");
             json = gson.toJson(logInDto);
             HttpPost request = new HttpPost(URL + "/login");
             request.setHeader("Content-Type", "application/json");
@@ -79,21 +82,17 @@ public class AuthenticationTest extends ConfigData {
             JsonObject jobject = jelement.getAsJsonObject();
             token = jobject.get("accessToken").getAsString();
 
-            assertEquals("Log in is fail", PASSWORD+NAME,  token);
+            assertEquals("Log in is fail", PASSWORD+"vasya",  token);
         } catch (IOException e) {
             fail("IOException during request for log in user");
         }
-
-        String URL_CLEAN_DB = URL + "/delete/" + userId + "?token=" + token;
-
-        cleanDb(URL_CLEAN_DB, httpClient);
     }
 
     @Test
     public void testFailSignUp() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserRequestDto userRequestDto = new UserRequestDto(NAME, MAIL, PASSWORD);
+        UserRequestDto userRequestDto = new UserRequestDto("vasya1", MAIL, PASSWORD);
         Gson gson = new Gson();
         String json = gson.toJson(userRequestDto);
 
@@ -119,13 +118,6 @@ public class AuthenticationTest extends ConfigData {
             fail("IOException was appeared");
         }
 
-        LogInDto logInDto = new LogInDto(PASSWORD, NAME);
-        json = gson.toJson(logInDto);
-        String token = logIn(json, httpClient, URL_LOG_IN);
-
-        String URL_CLEAN_DB = URL + "/delete/" + userId + "?token=" + token;
-
-        cleanDb(URL_CLEAN_DB, httpClient);
     }
 
     @Test
@@ -160,12 +152,12 @@ public class AuthenticationTest extends ConfigData {
     public void testCheckToken() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserRequestDto userRequestDto = new UserRequestDto(NAME, MAIL, PASSWORD);
+        UserRequestDto userRequestDto = new UserRequestDto("vasya2", MAIL, PASSWORD);
         Gson gson = new Gson();
         String json = gson.toJson(userRequestDto);
         String userId = signUp(json, httpClient, URL_SIGN_UP);
 
-        LogInDto logInDto = new LogInDto(PASSWORD, NAME);
+        LogInDto logInDto = new LogInDto(PASSWORD, "vasya2");
         json = gson.toJson(logInDto);
         String token = logIn(json, httpClient, URL_LOG_IN);
 
@@ -179,21 +171,18 @@ public class AuthenticationTest extends ConfigData {
             fail("IOException was appeared");
         }
 
-        String URL_CLEAN_DB = URL + "/delete/" + userId + "?token=" + token;
-
-        cleanDb(URL_CLEAN_DB, httpClient);
     }
 
     @Test
     public void testLogOut() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserRequestDto userRequestDto = new UserRequestDto(NAME, MAIL, PASSWORD);
+        UserRequestDto userRequestDto = new UserRequestDto("vasya3", MAIL, PASSWORD);
         Gson gson = new Gson();
         String json = gson.toJson(userRequestDto);
         String userId = signUp(json, httpClient, URL_SIGN_UP);
 
-        LogInDto logInDto = new LogInDto(PASSWORD, NAME);
+        LogInDto logInDto = new LogInDto(PASSWORD, "vasya3");
         json = gson.toJson(logInDto);
         String token = logIn(json, httpClient, URL_LOG_IN);
 
@@ -206,13 +195,6 @@ public class AuthenticationTest extends ConfigData {
         } catch (IOException e) {
             fail("IOException was appeared");
         }
-
-        token = logIn(json, httpClient, URL_LOG_IN);
-
-        String URL_CLEAN_DB = URL + "/delete/" + userId + "?token=" + token;
-
-        cleanDb(URL_CLEAN_DB, httpClient);
-
     }
 
 }

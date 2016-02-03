@@ -20,21 +20,24 @@ import static org.junit.Assert.*;
 
 public class ChatRoomTest extends ConfigData {
 
+    public final String MAIL = "vasya@gemail.com";
+    public final String PASSWORD = "qwerty";
+
     @Test
     public void testCreateChatRoom() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserRequestDto userRequestDto = new UserRequestDto(NAME, MAIL, PASSWORD);
+        UserRequestDto userRequestDto = new UserRequestDto("alex", MAIL, PASSWORD);
         Gson gson = new Gson();
         String json = gson.toJson(userRequestDto);
         String userId = signUp(json, httpClient, URL_SIGN_UP);
 
-        LogInDto logInDto = new LogInDto(PASSWORD, NAME);
+        LogInDto logInDto = new LogInDto(PASSWORD, "alex");
         json = gson.toJson(logInDto);
         String token = logIn(json, httpClient, URL_LOG_IN);
 
         try {
-            ChatRoomRequestDto chatRoomRequestDto = new ChatRoomRequestDto(0L, "roomName");
+            ChatRoomRequestDto chatRoomRequestDto = new ChatRoomRequestDto("roomName");
             json = gson.toJson(chatRoomRequestDto);
             HttpPost request = new HttpPost(URL + "/chat/" + userId + "?token=" + token);
             request.setHeader("Content-Type", "application/json");
@@ -60,25 +63,22 @@ public class ChatRoomTest extends ConfigData {
             fail("IOException was appeared");
         }
 
-        String URL_CLEAN_DB = URL + "/delete/" + userId + "?token=" + token;
-
-        cleanDb(URL_CLEAN_DB, httpClient);
     }
 
     @Test
     public void testFindAllChats() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserRequestDto userRequestDto = new UserRequestDto(NAME, MAIL, PASSWORD);
+        UserRequestDto userRequestDto = new UserRequestDto("alex1", MAIL, PASSWORD);
         Gson gson = new Gson();
         String json = gson.toJson(userRequestDto);
         String userId = signUp(json, httpClient, URL_SIGN_UP);
 
-        LogInDto logInDto = new LogInDto(PASSWORD, NAME);
+        LogInDto logInDto = new LogInDto(PASSWORD, "alex1");
         json = gson.toJson(logInDto);
         String token = logIn(json, httpClient, URL_LOG_IN);
 
-        ChatRoomRequestDto chatRoomRequestDto = new ChatRoomRequestDto(0L, "myRoom");
+        ChatRoomRequestDto chatRoomRequestDto = new ChatRoomRequestDto("myRoom");
         json = gson.toJson(chatRoomRequestDto);
         String URL_CREATE_ROOM = URL + "/chat/" + userId + "?token=" + token;
         createRoom(json, httpClient, URL_CREATE_ROOM);
@@ -108,38 +108,35 @@ public class ChatRoomTest extends ConfigData {
             fail("IOException was appeared");
         }
 
-        String URL_CLEAN_DB = URL + "/delete/" + userId + "?token=" + token;
-
-        cleanDb(URL_CLEAN_DB, httpClient);
     }
 
     @Test
     public void testJoinUserToChat() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserRequestDto userRequestDto = new UserRequestDto(NAME, MAIL, PASSWORD);
+        UserRequestDto userRequestDto = new UserRequestDto("alex2", MAIL, PASSWORD);
         Gson gson = new Gson();
         String json = gson.toJson(userRequestDto);
         String userId = signUp(json, httpClient, URL_SIGN_UP);
 
-        LogInDto logInDto = new LogInDto(PASSWORD, NAME);
+        LogInDto logInDto = new LogInDto(PASSWORD, "alex2");
         json = gson.toJson(logInDto);
         String token = logIn(json, httpClient, URL_LOG_IN);
 
-        ChatRoomRequestDto chatRoomRequestDto = new ChatRoomRequestDto(0L, "myRoom");
+        ChatRoomRequestDto chatRoomRequestDto = new ChatRoomRequestDto("myRoom");
         json = gson.toJson(chatRoomRequestDto);
         String URL_CREATE_ROOM = URL + "/chat/" + userId + "?token=" + token;
         String roomId = createRoom(json, httpClient, URL_CREATE_ROOM);
 
         try {
-            HttpGet request = new HttpGet(URL + "/join/" + roomId + "/" + userId + "?token=" + token);
+            HttpPost request = new HttpPost(URL + "/join/" + roomId + "/" + userId + "?token=" + token);
             HttpResponse response = httpClient.execute(request);
             int code = response.getStatusLine().getStatusCode();
 
             assertEquals("Response code is incorrect for join user to chat", 200, code);
 
-            request = new HttpGet(URL + "/user/chats/" + userId + "?token=" + token);
-            response = httpClient.execute(request);
+            HttpGet requestGet = new HttpGet(URL + "/user/chats/" + userId + "?token=" + token);
+            response = httpClient.execute(requestGet);
             code = response.getStatusLine().getStatusCode();
 
             assertEquals("Response code is incorrect for get user data", 200, code);
@@ -155,25 +152,22 @@ public class ChatRoomTest extends ConfigData {
             fail("IOException was appeared");
         }
 
-        String URL_CLEAN_DB = URL + "/delete/" + userId + "?token=" + token;
-
-        cleanDb(URL_CLEAN_DB, httpClient);
     }
 
     @Test
     public void testGetDataUserInChat() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserRequestDto userRequestDto = new UserRequestDto(NAME, MAIL, PASSWORD);
+        UserRequestDto userRequestDto = new UserRequestDto("alex3", MAIL, PASSWORD);
         Gson gson = new Gson();
         String json = gson.toJson(userRequestDto);
         String userId = signUp(json, httpClient, URL_SIGN_UP);
 
-        LogInDto logInDto = new LogInDto(PASSWORD, NAME);
+        LogInDto logInDto = new LogInDto(PASSWORD, "alex3");
         json = gson.toJson(logInDto);
         String token = logIn(json, httpClient, URL_LOG_IN);
 
-        ChatRoomRequestDto chatRoomRequestDto = new ChatRoomRequestDto(0L, "myRoom");
+        ChatRoomRequestDto chatRoomRequestDto = new ChatRoomRequestDto("myRoom");
         json = gson.toJson(chatRoomRequestDto);
         String URL_CREATE_ROOM = URL + "/chat/" + userId + "?token=" + token;
         String roomId = createRoom(json, httpClient, URL_CREATE_ROOM);
@@ -201,15 +195,12 @@ public class ChatRoomTest extends ConfigData {
                 JsonObject jobject = jsonElement.getAsJsonObject();
                 String name = jobject.get("name").getAsString();
                 String email = jobject.get("email").getAsString();
-                assertEquals("Room name is incorrect", NAME, name);
+                assertEquals("Room name is incorrect", "alex3", name);
                 assertEquals("Room name is incorrect", MAIL, email);
             }
         } catch (IOException e) {
             fail("IOException was appeared");
         }
 
-        String URL_CLEAN_DB = URL + "/delete/" + userId + "?token=" + token;
-
-        cleanDb(URL_CLEAN_DB, httpClient);
     }
 }

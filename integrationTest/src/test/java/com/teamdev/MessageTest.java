@@ -26,20 +26,23 @@ import static org.junit.Assert.fail;
 
 public class MessageTest extends ConfigData{
 
+    public final String MAIL = "vasya@gemail.com";
+    public final String PASSWORD = "qwerty";
+
     @Test
     public void testSendMessage() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        UserRequestDto userRequestDto = new UserRequestDto(NAME, MAIL, PASSWORD);
+        UserRequestDto userRequestDto = new UserRequestDto("petya2", MAIL, PASSWORD);
         Gson gson = new Gson();
         String json = gson.toJson(userRequestDto);
         String userId = signUp(json, httpClient, URL_SIGN_UP);
 
-        LogInDto logInDto = new LogInDto(PASSWORD, NAME);
+        LogInDto logInDto = new LogInDto(PASSWORD, "petya2");
         json = gson.toJson(logInDto);
         String token = logIn(json, httpClient, URL_LOG_IN);
 
-        ChatRoomRequestDto chatRoomRequestDto = new ChatRoomRequestDto(0L, "myRoom");
+        ChatRoomRequestDto chatRoomRequestDto = new ChatRoomRequestDto("myRoom");
         json = gson.toJson(chatRoomRequestDto);
         String URL_CREATE_ROOM = URL + "/chat/" + userId + "?token=" + token;
         String roomId = createRoom(json, httpClient, URL_CREATE_ROOM);

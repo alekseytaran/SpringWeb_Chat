@@ -1,11 +1,9 @@
 package com.teamdev.requestDto;
 
 public class ChatRoomRequestDto {
-    private Long id;
     private String roomName;
 
-    public ChatRoomRequestDto(Long id, String roomName) {
-        this.id = id;
+    public ChatRoomRequestDto(String roomName) {
         this.roomName = roomName;
     }
 
@@ -13,11 +11,4 @@ public class ChatRoomRequestDto {
         return roomName;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }
