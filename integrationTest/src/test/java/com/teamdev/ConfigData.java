@@ -3,18 +3,16 @@ package com.teamdev;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.teamdev.exception.ValidationException;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 
-import com.teamdev.exception.ValidationException;
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public abstract class ConfigData {
@@ -122,15 +120,4 @@ public abstract class ConfigData {
 
     }
 
-    public static void cleanDb(String URL, CloseableHttpClient httpClient) {
-        try {
-            HttpGet request = new HttpGet(URL);
-            HttpResponse response = httpClient.execute(request);
-            int code = response.getStatusLine().getStatusCode();
-
-            assertEquals("BD wasn't clean after test", 200, code);
-        } catch (IOException e) {
-            fail("IOException during request for clean db");
-        }
-    }
 }
